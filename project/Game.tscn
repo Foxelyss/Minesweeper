@@ -6,16 +6,17 @@
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 100.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
-[node name="CenterContainer" type="CenterContainer" parent="Control"]
+[node name="DraggableSpace" type="CenterContainer" parent="Control"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+use_top_left = true
 
-[node name="MineGrid" type="GridContainer" parent="Control/CenterContainer"]
+[node name="MineGrid" type="GridContainer" parent="Control/DraggableSpace"]
 layout_mode = 2
 
 [node name="MineGrid2" type="MineGrid" parent="Control"]

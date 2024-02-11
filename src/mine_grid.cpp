@@ -3,6 +3,7 @@
 #include "field.h"
 #include "godot_cpp/classes/engine.hpp"
 #include "godot_cpp/classes/grid_container.hpp"
+#include "godot_cpp/variant/utility_functions.hpp"
 #include <godot_cpp/classes/global_constants.hpp>
 #include <godot_cpp/classes/label.hpp>
 #include <godot_cpp/core/class_db.hpp>
@@ -32,7 +33,8 @@ void MineGrid::_ready() {
 
   p = get_node<Field>("/root/MineField"); //("/MineField");
 
-  grid = get_node<GridContainer>("../MineGrid"); //("/MineField");
+  grid =
+      get_node<GridContainer>("../DraggableSpace/MineGrid"); //("/MineField");
   p->height = 8;
   p->width = 12;
   p->prepare_field();
@@ -68,5 +70,11 @@ void MineGrid::update_grid() {
     }
 
     ((Button *)grid->get_child(i))->set_text(text);
+
   }
+    int k = p->see_gameover();
+    if (k) {
+      UtilityFunctions::print(k);
+    }
+
 }

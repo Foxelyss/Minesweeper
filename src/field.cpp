@@ -7,11 +7,7 @@ void Field::_bind_methods(){};
 
 Field::Field(){};
 Field::~Field(){};
-//
-// void Field::_init(){}; // our initializer called by Godot
-//
-// void Field::_process(float delta){};
-//
+
 int Field::get_index_of_cell(int x, int y) { return x + y * width; }
 
 Vector2i Field::get_coords_of_cell(int index) {
@@ -44,20 +40,19 @@ void Field::reveal(int cell_index) {
     if (field[index].mines_around > 0 || index >= height * width)
       continue;
 
-    if (0 <= x < width - 1)
+    if (0 <= x && x < width - 1)
       cells_to_reveal.push(get_index_of_cell(x + 1, y));
-    if (0 < x <= width - 1)
+    if (0 < x && x <= width - 1)
       cells_to_reveal.push(get_index_of_cell(x - 1, y));
-    if (0 <= y < height - 1)
+    if (0 <= y && y < height - 1)
       cells_to_reveal.push(get_index_of_cell(x, y + 1));
-    if (0 < y <= height - 1)
+    if (0 < y && y <= height - 1)
       cells_to_reveal.push(get_index_of_cell(x, y - 1));
   }
 }
 
 void Field::prepare_field() {
   for (int i = 0; i < width * height; i++) {
-
     field.push_back(Cell());
   }
 }
@@ -87,23 +82,24 @@ void Field::plant_mines() {
   }
 }
 
-// def see_gameover():
-//     flagged = 0
-//     guessed = 0
-//     hidden = 0
+int Field::see_gameover() {
+  int flagged = 0;
+  int guessed = 0;
+  int hidden = 0;
 
-//     for x in field:
-//         if x.mine and not x.hidden:
-//             print("whoops")
-//             return True
-//         if x.hidden and x.mine:
-//             guessed += 1
-//         if x.flagged and x.mine:
-//             flagged += 1
-//         if x.hidden:
-//             hidden += 1
+  for (Cell x : field) {
+    if (x.mine and not x.hidden)
+      return 2;
+    if (x.hidden and x.mine)
+      guessed += 1;
+    if (x.flagged and x.mine)
+      flagged += 1;
+    if (x.hidden)
+      hidden += 1;
+  }
+  if (flagged == mines_quantity ||
+      guessed == mines_quantity && hidden == mines_quantity)
+    return 1;
 
-//     if flagged == mines_quantity or guessed == mines_quantity and hidden ==
-//     mines_quantity:
-//         print("well, you win!")
-//         return True
+  return 0;
+}

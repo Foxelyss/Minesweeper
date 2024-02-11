@@ -46,6 +46,8 @@ public:
   void prepare_field();
 
   void plant_mines();
+
+  int see_gameover();
 };
 
 } // namespace godot
