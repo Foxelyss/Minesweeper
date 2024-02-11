@@ -6,10 +6,9 @@
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
+anchors_preset = 0
 offset_right = 100.0
 offset_bottom = 100.0
-grow_horizontal = 2
-grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="DraggableSpace" type="CenterContainer" parent="Control"]
@@ -20,3 +19,24 @@ use_top_left = true
 layout_mode = 2
 
 [node name="MineGrid2" type="MineGrid" parent="Control"]
+
+[node name="MinesCounter" type="Label" parent="Control"]
+layout_mode = 2
+offset_left = -60.0
+offset_top = -12.0
+offset_right = 60.0
+offset_bottom = 11.0
+text = "MINESAROUND"
+language = "ru"
+metadata/_edit_use_anchors_ = true
+
+[node name="Control2" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Control2"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0

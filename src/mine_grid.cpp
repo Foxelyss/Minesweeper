@@ -10,7 +10,8 @@
 using namespace godot;
 
 void MineGrid::_bind_methods() {
-  ClassDB::bind_method(D_METHOD("cringe", "index"), &MineGrid::cringe);
+  ClassDB::bind_method(D_METHOD("on_button_pressed", "index"),
+                       &MineGrid::_on_button_pressed);
 };
 
 MineGrid::MineGrid(){};
@@ -21,6 +22,7 @@ void MineGrid::_init() {
     set_process_mode(Node::ProcessMode::PROCESS_MODE_DISABLED);
   }
 }; // our initializer called by Godot
+
 void MineGrid::_ready() {
 
   if (!Engine::get_singleton()->is_editor_hint()) {
@@ -31,50 +33,57 @@ void MineGrid::_ready() {
     return;
   }
 
-  p = get_node<Field>("/root/MineField"); //("/MineField");
+  _game_field = get_node<Field>("/root/MineField");
+  grid = get_node<GridContainer>("../DraggableSpace/MineGrid");
 
-  grid =
-      get_node<GridContainer>("../DraggableSpace/MineGrid"); //("/MineField");
-  p->height = 8;
-  p->width = 12;
-  p->prepare_field();
-  p->plant_mines();
-  grid->set_columns(p->width);
-  for (int i = 0; i < p->field.size(); i++) {
-    auto but = memnew(Button());
-    grid->add_child(but);
+  _game_field->height = 8;
+  _game_field->width = 12;
+  _game_field->mines_quantity = 6;
 
-    auto calp = Callable(this, "cringe").bind(i);
-    but->connect("pressed", calp);
+  _game_field->prepare_field();
+  _game_field->plant_mines();
+
+  grid->set_columns(_game_field->width);
+
+  for (int i = 0; i < _game_field->field.size(); i++) {
+    Button *button = memnew(Button());
+    grid->add_child(button);
+
+    button->connect("pressed", Callable(this, "on_button_pressed").bind(i));
   }
   update_grid();
+
+  auto i = get_node<Label>("../MinesCounter");
+
+  auto b = Variant(_game_field->mines_quantity);
+  i->set_text(tr("MINESAROUND")+" " +b.stringify());
 }
+
 void MineGrid::_process(float delta){};
-void MineGrid::cringe(int index) {
-  p->reveal(index);
+
+void MineGrid::_on_button_pressed(int index) {
+  _game_field->reveal(index);
   update_grid();
   UtilityFunctions::print("%d", index);
 }
 
 void MineGrid::update_grid() {
-
-  for (int i = 0; i < p->width * p->height; i++) {
+  for (int i = 0; i < _game_field->width * _game_field->height; i++) {
     char text[1];
 
-    text[0] = p->field[i].mines_around + '0';
+    text[0] = _game_field->field[i].mines_around + '0';
 
-    if (p->field[i].hidden) {
+    if (_game_field->field[i].hidden) {
       text[0] = ' ';
-    } else if (p->field[i].mine) {
+    } else if (_game_field->field[i].mine) {
       text[0] = 'x';
     }
 
     ((Button *)grid->get_child(i))->set_text(text);
-
   }
-    int k = p->see_gameover();
-    if (k) {
-      UtilityFunctions::print(k);
-    }
 
+  int k = _game_field->see_gameover();
+  if (k) {
+    UtilityFunctions::print(k);
+  }
 }

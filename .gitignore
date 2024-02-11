@@ -1,5 +1,5 @@
 .sconsign.dblite
 .cache
-game/.import
+project/.import
 **/*.os
 project/.godot

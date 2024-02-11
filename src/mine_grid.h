@@ -29,11 +29,10 @@ namespace godot {
 
 class MineGrid : public Node {
   GDCLASS(MineGrid, Node)
-  // Signal cringe;
 
 private:
   float time_passed;
-  Field *p;
+  Field *_game_field;
 GridContainer* grid;
 public:
   static void _bind_methods();
@@ -45,8 +44,7 @@ public:
 
   void _ready();
   void _process(float delta);
-  void cringe(int index);
-  void _on_pressed(int index){};
+  void _on_button_pressed(int index);
 
   void update_grid();
 };
