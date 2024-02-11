@@ -1,1 +1,33 @@
-[]
+[
+    {
+        "arguments": [
+            "c++",
+            "-c",
+            "-o",
+            "src/mine_grid.os",
+            "-fno-gnu-unique",
+            "-fno-exceptions",
+            "-std=c++17",
+            "-fPIC",
+            "-Wwrite-strings",
+            "-m64",
+            "-march=x86-64",
+            "-O2",
+            "-fvisibility=hidden",
+            "-fPIC",
+            "-DHOT_RELOAD_ENABLED",
+            "-DLINUX_ENABLED",
+            "-DUNIX_ENABLED",
+            "-DDEBUG_ENABLED",
+            "-DDEBUG_METHODS_ENABLED",
+            "-DNDEBUG",
+            "-Igodot-cpp/gdextension",
+            "-Igodot-cpp/include",
+            "-Igodot-cpp/gen/include",
+            "-Isrc",
+            "src/mine_grid.cpp"
+        ],
+        "directory": "/home/stephan/Sources/minesweeper",
+        "file": "src/mine_grid.cpp"
+    }
+]
