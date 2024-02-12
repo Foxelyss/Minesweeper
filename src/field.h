@@ -1,6 +1,7 @@
 #ifndef FIELD_H
 #define FIELD_H
 
+#include "godot_cpp/variant/vector2i.hpp"
 #include <cstdint>
 #include <godot_cpp/classes/control.hpp>
 #include <godot_cpp/classes/random_number_generator.hpp>
@@ -21,8 +22,17 @@ class Field : public Node {
   GDCLASS(Field, Node);
 
 private:
-  float time_passed;
+  uint8_t _width, _height;
+  uint8_t _mines_quantity = 6;
   RandomNumberGenerator random;
+
+  int get_index_of_cell(int x, int y);
+
+  Vector2i get_coords_of_cell(int index);
+
+  void prepare_field();
+
+  void plant_mines();
 
 public:
   static void _bind_methods();
@@ -30,24 +40,18 @@ public:
   Field();
   ~Field();
 
-  //void _init(); // our initializer called by Godot
+  // void _process(float delta);
 
-  //void _process(float delta);
   vector<Cell> field;
-  uint8_t width, height;
-  uint8_t mines_quantity = 6;
 
-  int get_index_of_cell(int x, int y);
-
-  Vector2i get_coords_of_cell(int index);
-
+  void clear();
+  void start_game(Vector2i resolution, int mines_quntity);
   void reveal(int cell_index);
-
-  void prepare_field();
-
-  void plant_mines();
-
   int see_gameover();
+
+  int get_mines_quantity() { return _mines_quantity; }
+  Vector2i get_field_resolution() { return Vector2i(_width, _height); }
+  int get_cells_quantity() { return _width * _height; }
 };
 
 } // namespace godot

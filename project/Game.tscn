@@ -1,42 +1,84 @@
-[gd_scene format=3 uid="uid://b81dt7bbbxlb6"]
+[gd_scene load_steps=3 format=3 uid="uid://b81dt7bbbxlb6"]
 
-[node name="Control" type="Node2D"]
+[ext_resource type="Texture2D" uid="uid://ci41bk8obv10g" path="res://icon.png" id="1_j5sgt"]
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[sub_resource type="SpriteFrames" id="SpriteFrames_la3bs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_j5sgt")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
-[node name="Control" type="Control" parent="."]
+[node name="Control" type="Control"]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 100.0
-offset_bottom = 100.0
-metadata/_edit_use_anchors_ = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="DraggableSpace" type="CenterContainer" parent="Control"]
-layout_mode = 0
-use_top_left = true
+[node name="DraggableSpace" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="MineGrid" type="GridContainer" parent="Control/DraggableSpace"]
+[node name="MineGrid" type="GridContainer" parent="DraggableSpace"]
 layout_mode = 2
 
-[node name="MineGrid2" type="MineGrid" parent="Control"]
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
 
-[node name="MinesCounter" type="Label" parent="Control"]
+[node name="Control" type="Control" parent="MarginContainer"]
+clip_contents = true
 layout_mode = 2
-offset_left = -60.0
-offset_top = -12.0
-offset_right = 60.0
-offset_bottom = 11.0
+mouse_filter = 2
+
+[node name="MinesCounter" type="Label" parent="MarginContainer/Control"]
+layout_mode = 1
+offset_right = 120.0
+offset_bottom = 23.0
 text = "MINESAROUND"
 language = "ru"
-metadata/_edit_use_anchors_ = true
 
-[node name="Control2" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="TimeCounter" type="Label" parent="MarginContainer/Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -120.0
+offset_bottom = 23.0
+grow_horizontal = 0
+text = "MINESAROUND"
+language = "ru"
 
-[node name="MarginContainer" type="MarginContainer" parent="Control2"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="MineGrid" type="MineGrid" parent="."]
+mines_around_label = "../MarginContainer/Control/MinesCounter"
+
+[node name="Button" type="Button" parent="."]
+visible = false
+clip_contents = true
+offset_right = 102.0
+offset_bottom = 101.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Button"]
+sprite_frames = SubResource("SpriteFrames_la3bs")
+centered = false
