@@ -2,4 +2,7 @@
 .cache
 project/.import
 **/*.os
+**/*.o
+**/*.lib
+**/*.dll
 project/.godot

@@ -1,0 +1,180 @@
+[gd_scene load_steps=6 format=3 uid="uid://b81dt7bbbxlb6"]
+
+[ext_resource type="Texture2D" uid="uid://ci41bk8obv10g" path="res://icon.png" id="1_j6y1a"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_x6fef"]
+lifetime_randomness = 0.44
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(8.14, 1, 1)
+emission_shape = 1
+emission_sphere_radius = 118.58
+velocity_pivot = Vector3(0, -1, 0)
+spread = 25.306
+initial_velocity_min = 73.17
+initial_velocity_max = 276.42
+gravity = Vector3(0, 98, 0)
+turbulence_enabled = true
+turbulence_noise_strength = 3.79
+turbulence_noise_speed = Vector3(0, -2, 0)
+turbulence_influence_min = 0.031
+turbulence_influence_max = 0.123
+
+[sub_resource type="Gradient" id="Gradient_xg410"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ov5aj"]
+gradient = SubResource("Gradient_xg410")
+width = 16
+height = 16
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0.2)
+metadata/_snap_enabled = true
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_la3bs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_j6y1a")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Game" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.509804, 0.807843, 0.980392, 1)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="ColorRect"]
+position = Vector2(492, -43)
+amount = 22
+process_material = SubResource("ParticleProcessMaterial_x6fef")
+texture = SubResource("GradientTexture2D_ov5aj")
+lifetime = 16.0
+speed_scale = 3.41
+randomness = 0.61
+visibility_rect = Rect2(0, 0, 900, 600)
+trail_lifetime = 6.41
+
+[node name="DraggableSpace" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+use_top_left = true
+
+[node name="MineGrid" type="GridContainer" parent="DraggableSpace"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Control" type="Control" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="MinesCounter" type="Label" parent="MarginContainer/Control"]
+layout_mode = 1
+offset_right = 120.0
+offset_bottom = 23.0
+text = "MINESAROUND"
+language = "ru"
+
+[node name="TimeCounter" type="Label" parent="MarginContainer/Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -120.0
+offset_bottom = 23.0
+grow_horizontal = 0
+text = "TIMECOUNTER"
+language = "ru"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Control"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -31.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 265
+alignment = 1
+
+[node name="BackButton" type="Button" parent="MarginContainer/Control/HBoxContainer"]
+layout_mode = 2
+text = "BACKTOMENU"
+
+[node name="FlaggingMode" type="CheckButton" parent="MarginContainer/Control/HBoxContainer"]
+layout_mode = 2
+text = "FLAGGINGMODE"
+
+[node name="RetryButton" type="Button" parent="MarginContainer/Control/HBoxContainer"]
+layout_mode = 2
+text = "RETRY"
+
+[node name="GameOverLabel" type="Label" parent="MarginContainer/Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "WIN"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MarginContainer/Control"]
+root_node = NodePath("../GameOverLabel")
+
+[node name="FieldGrid" type="FieldGrid" parent="."]
+mines_around_label = "../MarginContainer/Control/MinesCounter"
+time_label = "../MarginContainer/Control/TimeCounter"
+retry_button = "../MarginContainer/Control/HBoxContainer/RetryButton"
+flagging_radio-button = "../MarginContainer/Control/HBoxContainer/FlaggingMode"
+game_status_label = "../MarginContainer/Control/GameOverLabel"
+back_to_menu_button = "../MarginContainer/Control/HBoxContainer/BackButton"
+process_mode = 4
+
+[node name="Button" type="Button" parent="."]
+visible = false
+clip_contents = true
+layout_mode = 0
+offset_right = 102.0
+offset_bottom = 101.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Button"]
+sprite_frames = SubResource("SpriteFrames_la3bs")
+centered = false

@@ -52,6 +52,17 @@ void Field::reveal(int cell_index) {
   }
 }
 
+void Field::reveal_all_hidden() {
+  for (int i = 0; i < get_cells_quantity(); i++) {
+    if (field[i].hidden) {
+      field[i].hidden = false;
+    }
+  }
+}
+void Field::toggle_flag(int index) {
+  field[index].flagged = !field[index].flagged;
+}
+
 void Field::prepare_field() {
   for (int i = 0; i < _width * _height; i++) {
     field.push_back(Cell());
@@ -83,9 +94,7 @@ void Field::plant_mines() {
   }
 }
 
-void Field::clear(){
-field.clear();
-}
+void Field::clear() { field.clear(); }
 
 void Field::start_game(Vector2i resolution, int mines_quantity) {
   clear();

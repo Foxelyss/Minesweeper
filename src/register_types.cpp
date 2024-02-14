@@ -1,6 +1,7 @@
 #include "register_types.h"
 #include "field.h"
-#include "mine_grid.h"
+#include "field_grid.h"
+#include "menu.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/defs.hpp>
@@ -14,7 +15,8 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
   }
 
   ClassDB::register_class<godot::Field>();
-  ClassDB::register_class<godot::MineGrid>();
+  ClassDB::register_class<godot::FieldGrid>();
+  ClassDB::register_class<godot::MainMenu>();
 }
 
 void uninitialize_example_module(ModuleInitializationLevel p_level) {

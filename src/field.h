@@ -46,7 +46,12 @@ public:
 
   void clear();
   void start_game(Vector2i resolution, int mines_quntity);
+
   void reveal(int cell_index);
+  void reveal_all_hidden();
+
+  void toggle_flag(int index);
+
   int see_gameover();
 
   int get_mines_quantity() { return _mines_quantity; }
