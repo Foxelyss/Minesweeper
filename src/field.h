@@ -8,7 +8,7 @@
 #include <queue>
 
 struct Cell {
-  int mines_around = 0;
+  uint8_t mines_around = 0;
   bool mine = false;
   bool hidden = true;
   bool flagged = false;

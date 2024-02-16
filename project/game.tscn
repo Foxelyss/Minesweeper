@@ -177,6 +177,7 @@ retry_button = "../MarginContainer/Control/RetryButton"
 flagging_radio-button = "../MarginContainer/Control/FlaggingMode"
 game_status_label = "../MarginContainer/Control/GameStatusLabel"
 back_to_menu_button = "../MarginContainer/Control/BackButton"
+process_mode = 4
 
 [node name="Button" type="Button" parent="."]
 visible = false

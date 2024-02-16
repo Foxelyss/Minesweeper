@@ -152,18 +152,18 @@ void FieldGrid::update_grid() {
   }
 
   for (int i = 0; i < _game_field->get_cells_quantity(); i++) {
-    char text[1];
-    text[0] = _game_field->field[i].mines_around + '0';
+    String text;
+    text = Variant(_game_field->field[i].mines_around).stringify();
 
-    if (_game_field->field[i].hidden) {
-      text[0] = ' ';
-    } else if (_game_field->field[i].flagged) {
-      text[0] = 'F';
+    if (_game_field->field[i].flagged) {
+      text = "F";
+    } else if (_game_field->field[i].hidden) {
+      text = " ";
     } else if (_game_field->field[i].mine) {
-      text[0] = 'x';
+      text = "x";
     } else if (_game_field->field[i].mines_around == 0 &&
                !_game_field->field[i].hidden) {
-      text[0] = ' ';
+      text = " ";
     }
 
     if (!_game_field->field[i].hidden && !_game_field->field[i].flagged) {
