@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://b81dt7bbbxlb6"]
+[gd_scene load_steps=7 format=3 uid="uid://b81dt7bbbxlb6"]
 
 [ext_resource type="Texture2D" uid="uid://ci41bk8obv10g" path="res://icon.png" id="1_j6y1a"]
+[ext_resource type="Theme" uid="uid://m313wodg5ka8" path="res://game_theme.tres" id="1_mbmnw"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_x6fef"]
 lifetime_randomness = 0.44
@@ -61,7 +62,7 @@ color = Color(0.509804, 0.807843, 0.980392, 1)
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="ColorRect"]
 position = Vector2(492, -43)
-amount = 22
+amount = 34
 process_material = SubResource("ParticleProcessMaterial_x6fef")
 texture = SubResource("GradientTexture2D_ov5aj")
 lifetime = 16.0
@@ -79,7 +80,6 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
-use_top_left = true
 
 [node name="MineGrid" type="GridContainer" parent="DraggableSpace"]
 layout_mode = 2
@@ -105,6 +105,7 @@ mouse_filter = 2
 layout_mode = 1
 offset_right = 120.0
 offset_bottom = 23.0
+theme = ExtResource("1_mbmnw")
 text = "MINESAROUND"
 language = "ru"
 
@@ -119,31 +120,44 @@ grow_horizontal = 0
 text = "TIMECOUNTER"
 language = "ru"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Control"]
+[node name="BackButton" type="Button" parent="MarginContainer/Control"]
 layout_mode = 1
-anchors_preset = 12
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -31.0
+offset_right = 120.0
+grow_vertical = 0
+text = "BACKTOMENU"
+
+[node name="FlaggingMode" type="CheckButton" parent="MarginContainer/Control"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -88.5
+offset_top = -31.0
+offset_right = 88.5
+grow_horizontal = 2
+grow_vertical = 0
+text = "FLAGGINGMODE"
+
+[node name="RetryButton" type="Button" parent="MarginContainer/Control"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -56.0
 offset_top = -31.0
-grow_horizontal = 2
+grow_horizontal = 0
 grow_vertical = 0
-theme_override_constants/separation = 265
-alignment = 1
-
-[node name="BackButton" type="Button" parent="MarginContainer/Control/HBoxContainer"]
-layout_mode = 2
-text = "BACKTOMENU"
-
-[node name="FlaggingMode" type="CheckButton" parent="MarginContainer/Control/HBoxContainer"]
-layout_mode = 2
-text = "FLAGGINGMODE"
-
-[node name="RetryButton" type="Button" parent="MarginContainer/Control/HBoxContainer"]
-layout_mode = 2
 text = "RETRY"
 
-[node name="GameOverLabel" type="Label" parent="MarginContainer/Control"]
+[node name="GameStatusLabel" type="Label" parent="MarginContainer/Control"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -152,19 +166,17 @@ offset_left = -20.0
 offset_right = 20.0
 offset_bottom = 23.0
 grow_horizontal = 2
-text = "WIN"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="MarginContainer/Control"]
-root_node = NodePath("../GameOverLabel")
+root_node = NodePath("../GameStatusLabel")
 
 [node name="FieldGrid" type="FieldGrid" parent="."]
 mines_around_label = "../MarginContainer/Control/MinesCounter"
 time_label = "../MarginContainer/Control/TimeCounter"
-retry_button = "../MarginContainer/Control/HBoxContainer/RetryButton"
-flagging_radio-button = "../MarginContainer/Control/HBoxContainer/FlaggingMode"
-game_status_label = "../MarginContainer/Control/GameOverLabel"
-back_to_menu_button = "../MarginContainer/Control/HBoxContainer/BackButton"
-process_mode = 4
+retry_button = "../MarginContainer/Control/RetryButton"
+flagging_radio-button = "../MarginContainer/Control/FlaggingMode"
+game_status_label = "../MarginContainer/Control/GameStatusLabel"
+back_to_menu_button = "../MarginContainer/Control/BackButton"
 
 [node name="Button" type="Button" parent="."]
 visible = false

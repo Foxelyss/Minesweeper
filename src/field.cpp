@@ -69,13 +69,13 @@ void Field::prepare_field() {
   }
 }
 
-void Field::plant_mines() {
+void Field::place_mines(int selected_cell = -1) {
   for (int i = 0; i < _mines_quantity; i++) {
     int index = 0;
 
     do {
       index = random.randi_range(0, _width * _height - 1);
-    } while (field[index].mine);
+    } while (field[index].mine || index == selected_cell);
 
     field[index].mine = true;
 
@@ -96,14 +96,21 @@ void Field::plant_mines() {
 
 void Field::clear() { field.clear(); }
 
-void Field::start_game(Vector2i resolution, int mines_quantity) {
+void Field::start_game(Vector2i resolution, int mines_quantity,
+                       int selected_cell) {
   clear();
   _width = resolution.x;
   _height = resolution.y;
   _mines_quantity = mines_quantity;
 
   prepare_field();
-  plant_mines();
+  place_mines(selected_cell);
+}
+
+void Field::set(Vector2i resolution, int mines_quantity, int selected_cell) {
+  _width = resolution.x;
+  _height = resolution.y;
+  _mines_quantity = mines_quantity;
 }
 
 int Field::see_gameover() {

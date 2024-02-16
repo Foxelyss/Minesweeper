@@ -45,3 +45,4 @@ layout_mode = 2
 text = "QUIT"
 
 [node name="MainMenu2" type="MainMenu" parent="CenterContainer/VBoxContainer"]
+process_mode = 4

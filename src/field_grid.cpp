@@ -1,23 +1,8 @@
 #include "field_grid.h"
 
 #include "field.h"
-#include "godot_cpp/classes/button.hpp"
-#include "godot_cpp/classes/engine.hpp"
-#include "godot_cpp/classes/grid_container.hpp"
-#include "godot_cpp/classes/node.hpp"
-#include "godot_cpp/classes/scene_tree.hpp"
-#include "godot_cpp/core/object.hpp"
-#include "godot_cpp/core/property_info.hpp"
-#include "godot_cpp/variant/callable.hpp"
-#include "godot_cpp/variant/node_path.hpp"
-#include "godot_cpp/variant/string.hpp"
-#include "godot_cpp/variant/utility_functions.hpp"
-#include "godot_cpp/variant/variant.hpp"
 #include "godot_cpp/variant/vector2.hpp"
 #include "godot_cpp/variant/vector2i.hpp"
-#include <godot_cpp/classes/global_constants.hpp>
-#include <godot_cpp/classes/label.hpp>
-#include <godot_cpp/core/class_db.hpp>
 using namespace godot;
 
 void FieldGrid::_bind_methods() {
@@ -84,6 +69,8 @@ void FieldGrid::_ready() {
   if (Engine::get_singleton()->is_editor_hint()) {
     set_process_mode(Node::ProcessMode::PROCESS_MODE_DISABLED);
     return;
+  } else {
+    set_process_mode(Node::ProcessMode::PROCESS_MODE_INHERIT);
   }
 
   _time_label = get_node<Label>(NodePath(_time_label_path));
@@ -105,35 +92,37 @@ void FieldGrid::_ready() {
 }
 
 void FieldGrid::start_game(Vector2i resolution, int mines_quantity) {
-
-  _game_field->start_game(resolution, mines_quantity);
-
   grid->set_columns(resolution.x);
 
-  for (int i = 0; i < _game_field->field.size(); i++) {
+  for (int i = 0; i < _game_field->get_cells_quantity(); i++) {
     Button *button = memnew(Button());
     grid->add_child(button);
 
     button->set_custom_minimum_size(Vector2(40, 40));
     button->connect("pressed", Callable(this, "on_button_pressed").bind(i));
   }
-
-  auto b = Variant(_game_field->get_mines_quantity());
-  _mines_around_label->set_text(tr("MINESAROUND") + " " + b.stringify());
-
-  update_grid();
 }
 
 void FieldGrid::retry_game() {
-  _game_field->start_game(_game_field->get_field_resolution(),
-                          _game_field->get_mines_quantity());
+  _first_cell = -1;
 
-  grid->set_columns(_game_field->get_field_resolution().x);
-  update_grid();
+  for (int i = 0; i < _game_field->get_cells_quantity(); i++) {
+    ((Button *)grid->get_child(i))->set_disabled(false);
+    ((Button *)grid->get_child(i))->set_text("");
+  }
 }
 void FieldGrid::_process(float delta){};
 
 void FieldGrid::_on_button_pressed(int index) {
+  if (_first_cell == -1) {
+    _game_field->start_game(_game_field->get_field_resolution(),
+                            _game_field->get_mines_quantity(), index);
+    auto string = tr("MINESAROUND") + " " +
+                  Variant(_game_field->get_mines_quantity()).stringify();
+    _mines_around_label->set_text(string);
+    _first_cell = index;
+  }
+
   if (_flagging_radio_button->is_pressed()) {
     _game_field->toggle_flag(index);
   } else if (!_game_field->field[index].flagged) {
@@ -145,23 +134,36 @@ void FieldGrid::_on_button_pressed(int index) {
 
 void FieldGrid::update_grid() {
   int k = _game_field->see_gameover();
-  if (k == 1) {
-    UtilityFunctions::print("You won!");
-  } else if (k == 2) {
+  if (_first_cell == -1) {
+    k = 0;
+  }
+
+  switch (k) {
+  case 1:
+    _game_status_label->set_text(tr("WIN"));
+    break;
+  case 2:
+    _game_status_label->set_text(tr("LOSE"));
     _game_field->reveal_all_hidden();
+    break;
+  default:
+    _game_status_label->set_text("");
+    break;
   }
 
   for (int i = 0; i < _game_field->get_cells_quantity(); i++) {
     char text[1];
-
     text[0] = _game_field->field[i].mines_around + '0';
 
-    if (_game_field->field[i].flagged) {
+    if (_game_field->field[i].hidden) {
+      text[0] = ' ';
+    } else if (_game_field->field[i].flagged) {
       text[0] = 'F';
-    } else if (_game_field->field[i].hidden) {
-      text[0] = 'H';
     } else if (_game_field->field[i].mine) {
       text[0] = 'x';
+    } else if (_game_field->field[i].mines_around == 0 &&
+               !_game_field->field[i].hidden) {
+      text[0] = ' ';
     }
 
     if (!_game_field->field[i].hidden && !_game_field->field[i].flagged) {
@@ -176,6 +178,25 @@ void FieldGrid::update_grid() {
 
 void FieldGrid::go_to_menu() {
   get_tree()->change_scene_to_file("res://menu.tscn");
+}
+
+void FieldGrid::_input(InputEvent *event) {
+  auto input = Input::get_singleton();
+  if (event->get_class() == "InputEventMouseMotion" &&
+      input->is_action_pressed("move_mode")) {
+
+    auto ev = (InputEventMouseMotion *)event;
+    auto rot = grid->get_position();
+    Vector2 sizp = grid->get_size();
+    sizp.x /= 2;
+    sizp.y /= 2;
+
+    rot.y =
+        Math::clamp<float>(rot.y + ev->get_relative().y / 1, -sizp.y, sizp.y);
+    rot.x =
+        Math::clamp<float>(rot.x + ev->get_relative().x / 1, -sizp.x, sizp.x);
+    grid->set_position(rot);
+  }
 }
 
 String FieldGrid::get_mines_around_label() { return _mines_around_label_path; };

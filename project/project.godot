@@ -11,7 +11,11 @@ config_version=5
 [application]
 
 config/name="Minesweeper"
-run/main_scene="res://game.tscn"
+config/name_localized={
+"ru_RU": "Сапёр"
+}
+config/version="v1.b"
+run/main_scene="res://menu.tscn"
 config/features=PackedStringArray("4.2")
 config/icon="res://icon.png"
 
@@ -19,6 +23,18 @@ config/icon="res://icon.png"
 
 MineField="*res://mine_field.gd"
 
+[input]
+
+move_mode={
+"deadzone": 0.5,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":2,"position":Vector2(189, 16),"global_position":Vector2(193, 57),"factor":1.0,"button_index":2,"canceled":false,"pressed":true,"double_click":false,"script":null)
+]
+}
+
 [internationalization]
 
 locale/translations=PackedStringArray("res://translations.en.translation", "res://translations.ru.translation")
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"

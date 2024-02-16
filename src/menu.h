@@ -22,7 +22,7 @@ public:
   ~MainMenu();
 
   void _ready() override;
-  void handle_input(int index);
+  void handle_button_press(int index);
   void _process(double delta) override;
 };
 
