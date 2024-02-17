@@ -63,12 +63,6 @@ void Field::toggle_flag(int index) {
   field[index].flagged = !field[index].flagged;
 }
 
-void Field::prepare_field() {
-  for (int i = 0; i < _width * _height; i++) {
-    field.push_back(Cell());
-  }
-}
-
 void Field::place_mines(int selected_cell = -1) {
   for (int i = 0; i < _mines_quantity; i++) {
     int index = 0;
@@ -94,16 +88,12 @@ void Field::place_mines(int selected_cell = -1) {
   }
 }
 
-void Field::clear() { field.clear(); }
-
 void Field::start_game(Vector2i resolution, int mines_quantity,
                        int selected_cell) {
-  clear();
   _width = resolution.x;
   _height = resolution.y;
   _mines_quantity = mines_quantity;
 
-  prepare_field();
   place_mines(selected_cell);
 }
 
@@ -118,7 +108,8 @@ int Field::see_gameover() {
   int guessed = 0;
   int hidden = 0;
 
-  for (Cell x : field) {
+  for (int i = 0; i < get_cells_quantity(); i++) {
+    auto x = field[i];
     if (x.mine and not x.hidden)
       return 2;
     if (x.hidden and x.mine)
@@ -129,8 +120,9 @@ int Field::see_gameover() {
       hidden += 1;
   }
   if (flagged == _mines_quantity ||
-      guessed == _mines_quantity && hidden == _mines_quantity)
+      guessed == _mines_quantity && hidden == _mines_quantity) {
     return 1;
+  }
 
   return 0;
 }

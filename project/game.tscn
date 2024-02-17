@@ -1,7 +1,27 @@
-[gd_scene load_steps=7 format=3 uid="uid://b81dt7bbbxlb6"]
+[gd_scene load_steps=9 format=3 uid="uid://b81dt7bbbxlb6"]
 
 [ext_resource type="Texture2D" uid="uid://ci41bk8obv10g" path="res://icon.png" id="1_j6y1a"]
 [ext_resource type="Theme" uid="uid://m313wodg5ka8" path="res://game_theme.tres" id="1_mbmnw"]
+
+[sub_resource type="Animation" id="Animation_hpkgp"]
+resource_name = "popin"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, -1200), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_e06fh"]
+_data = {
+"popin": SubResource("Animation_hpkgp")
+}
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_x6fef"]
 lifetime_randomness = 0.44
@@ -51,6 +71,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_e06fh")
+}
+
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -80,6 +105,7 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_mbmnw")
 
 [node name="MineGrid" type="GridContainer" parent="DraggableSpace"]
 layout_mode = 2
@@ -92,6 +118,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme = ExtResource("1_mbmnw")
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
@@ -100,6 +127,7 @@ theme_override_constants/margin_bottom = 20
 [node name="Control" type="Control" parent="MarginContainer"]
 layout_mode = 2
 mouse_filter = 2
+theme = ExtResource("1_mbmnw")
 
 [node name="MinesCounter" type="Label" parent="MarginContainer/Control"]
 layout_mode = 1
@@ -117,6 +145,7 @@ anchor_right = 1.0
 offset_left = -120.0
 offset_bottom = 23.0
 grow_horizontal = 0
+theme = ExtResource("1_mbmnw")
 text = "TIMECOUNTER"
 language = "ru"
 
@@ -128,6 +157,7 @@ anchor_bottom = 1.0
 offset_top = -31.0
 offset_right = 120.0
 grow_vertical = 0
+theme = ExtResource("1_mbmnw")
 text = "BACKTOMENU"
 
 [node name="FlaggingMode" type="CheckButton" parent="MarginContainer/Control"]
@@ -142,6 +172,7 @@ offset_top = -31.0
 offset_right = 88.5
 grow_horizontal = 2
 grow_vertical = 0
+theme = ExtResource("1_mbmnw")
 text = "FLAGGINGMODE"
 
 [node name="RetryButton" type="Button" parent="MarginContainer/Control"]
@@ -155,6 +186,7 @@ offset_left = -56.0
 offset_top = -31.0
 grow_horizontal = 0
 grow_vertical = 0
+theme = ExtResource("1_mbmnw")
 text = "RETRY"
 
 [node name="GameStatusLabel" type="Label" parent="MarginContainer/Control"]
@@ -166,9 +198,7 @@ offset_left = -20.0
 offset_right = 20.0
 offset_bottom = 23.0
 grow_horizontal = 2
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="MarginContainer/Control"]
-root_node = NodePath("../GameStatusLabel")
+theme = ExtResource("1_mbmnw")
 
 [node name="FieldGrid" type="FieldGrid" parent="."]
 mines_around_label = "../MarginContainer/Control/MinesCounter"
@@ -177,7 +207,6 @@ retry_button = "../MarginContainer/Control/RetryButton"
 flagging_radio-button = "../MarginContainer/Control/FlaggingMode"
 game_status_label = "../MarginContainer/Control/GameStatusLabel"
 back_to_menu_button = "../MarginContainer/Control/BackButton"
-process_mode = 4
 
 [node name="Button" type="Button" parent="."]
 visible = false

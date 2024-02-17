@@ -11,7 +11,6 @@ class MainMenu : public Node {
   GDCLASS(MainMenu, Node)
 
 private:
-  double time_passed;
   Field *_game_field;
 
 protected:

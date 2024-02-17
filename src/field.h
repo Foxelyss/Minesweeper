@@ -2,6 +2,7 @@
 #define FIELD_H
 
 #include "godot_cpp/variant/vector2i.hpp"
+#include <array>
 #include <cstdint>
 #include <godot_cpp/classes/control.hpp>
 #include <godot_cpp/classes/random_number_generator.hpp>
@@ -30,8 +31,6 @@ private:
 
   Vector2i get_coords_of_cell(int index);
 
-  void prepare_field();
-
   void place_mines(int selected_cell);
 
 public:
@@ -42,9 +41,8 @@ public:
 
   // void _process(float delta);
 
-  vector<Cell> field;
+  array<Cell, 4000> field;
 
-  void clear();
   void start_game(Vector2i resolution, int mines_quntity,
                   int selected_cell = -1);
   void set(Vector2i resolution, int mines_quntity, int selected_cell = -1);

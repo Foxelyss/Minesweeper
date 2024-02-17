@@ -13,14 +13,9 @@ void MainMenu::_bind_methods() {
                        &MainMenu::handle_button_press);
 }
 
-MainMenu::MainMenu() {
-  // Initialize any variables here.
-  time_passed = 0.0;
-}
+MainMenu::MainMenu() {}
 
-MainMenu::~MainMenu() {
-  // Add your cleanup here.
-}
+MainMenu::~MainMenu() {}
 
 void MainMenu::_ready() {
   if (Engine::get_singleton()->is_editor_hint()) {
@@ -36,7 +31,7 @@ void MainMenu::_ready() {
     p->get_child(i)->get_node<Button>(".")->connect("pressed", v);
   }
 
-  _game_field = get_node<Field>("/root/MineField");
+  _game_field = get_node<Field>("/root/FieldRepresenter");
 }
 
 void MainMenu::handle_button_press(int index) {

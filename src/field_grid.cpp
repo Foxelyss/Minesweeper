@@ -1,6 +1,7 @@
 #include "field_grid.h"
 
 #include "field.h"
+#include "godot_cpp/classes/global_constants.hpp"
 #include "godot_cpp/variant/vector2.hpp"
 #include "godot_cpp/variant/vector2i.hpp"
 using namespace godot;
@@ -84,7 +85,7 @@ void FieldGrid::_ready() {
   _back_to_menu_button->connect("pressed", Callable(this, "go_to_menu"));
   _retry_button->connect("pressed", Callable(this, "retry_game"));
 
-  _game_field = get_node<Field>("/root/MineField");
+  _game_field = get_node<Field>("/root/FieldRepresenter");
   grid = get_node<GridContainer>("../DraggableSpace/MineGrid");
 
   start_game(_game_field->get_field_resolution(),
@@ -98,7 +99,8 @@ void FieldGrid::start_game(Vector2i resolution, int mines_quantity) {
     Button *button = memnew(Button());
     grid->add_child(button);
 
-    button->set_custom_minimum_size(Vector2(40, 40));
+    button->set_custom_minimum_size(Vector2(28, 28));
+    button->set_button_mask(MOUSE_BUTTON_LEFT | MOUSE_BUTTON_RIGHT);
     button->connect("pressed", Callable(this, "on_button_pressed").bind(i));
   }
 }
@@ -114,19 +116,23 @@ void FieldGrid::retry_game() {
 void FieldGrid::_process(float delta){};
 
 void FieldGrid::_on_button_pressed(int index) {
-  if (_first_cell == -1) {
-    _game_field->start_game(_game_field->get_field_resolution(),
-                            _game_field->get_mines_quantity(), index);
-    auto string = tr("MINESAROUND") + " " +
-                  Variant(_game_field->get_mines_quantity()).stringify();
-    _mines_around_label->set_text(string);
-    _first_cell = index;
-  }
+  auto input = Input::get_singleton();
 
-  if (_flagging_radio_button->is_pressed()) {
+  if (input->is_action_pressed("flag")) {
     _game_field->toggle_flag(index);
-  } else if (!_game_field->field[index].flagged) {
-    _game_field->reveal(index);
+  } else {
+    if (_first_cell == -1) {
+      _game_field->start_game(_game_field->get_field_resolution(),
+                              _game_field->get_mines_quantity(), index);
+      auto string = tr("MINESAROUND") + " " +
+                    Variant(_game_field->get_mines_quantity()).stringify();
+      _mines_around_label->set_text(string);
+      _first_cell = index;
+    }
+
+    if (!_game_field->field[index].flagged) {
+      _game_field->reveal(index);
+    }
   }
 
   update_grid();
@@ -191,10 +197,8 @@ void FieldGrid::_input(InputEvent *event) {
     sizp.x /= 2;
     sizp.y /= 2;
 
-    rot.y =
-        Math::clamp<float>(rot.y + ev->get_relative().y / 1, -sizp.y, sizp.y);
-    rot.x =
-        Math::clamp<float>(rot.x + ev->get_relative().x / 1, -sizp.x, sizp.x);
+    rot.y = Math::clamp<float>(rot.y + ev->get_relative().y, -sizp.y, sizp.y);
+    rot.x = Math::clamp<float>(rot.x + ev->get_relative().x, -sizp.x, sizp.x);
     grid->set_position(rot);
   }
 }
