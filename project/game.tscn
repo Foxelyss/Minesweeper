@@ -1,30 +1,95 @@
-[gd_scene load_steps=9 format=3 uid="uid://b81dt7bbbxlb6"]
+[gd_scene load_steps=10 format=3 uid="uid://b81dt7bbbxlb6"]
 
 [ext_resource type="Texture2D" uid="uid://ci41bk8obv10g" path="res://icon.png" id="1_j6y1a"]
 [ext_resource type="Theme" uid="uid://m313wodg5ka8" path="res://game_theme.tres" id="1_mbmnw"]
 
 [sub_resource type="Animation" id="Animation_hpkgp"]
 resource_name = "popin"
+length = 0.4
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 2
+tracks/0/path = NodePath("MarginContainer:position")
+tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.6),
+"times": PackedFloat32Array(0, 0.4),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(0, -1200), Vector2(0, 0)]
+"values": [Vector2(0, -900), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = false
+tracks/1/path = NodePath("DraggableSpace:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-900, 324), Vector2(-900, 324)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ColorRect:color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.509804, 0.807843, 0.980392, 1), Color(0.121569, 0.533333, 0.72549, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ColorRect/GPUParticles2D:amount")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [34, 60]
+}
+
+[sub_resource type="Animation" id="Animation_uwq2i"]
+resource_name = "retry"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.509804, 0.807843, 0.980392, 1), Color(0.121569, 0.533333, 0.72549, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ColorRect/GPUParticles2D:amount")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [34, 60]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_e06fh"]
 _data = {
-"popin": SubResource("Animation_hpkgp")
+"popin": SubResource("Animation_hpkgp"),
+"retry": SubResource("Animation_uwq2i")
 }
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_x6fef"]
-lifetime_randomness = 0.44
 particle_flag_disable_z = true
 emission_shape_scale = Vector3(8.14, 1, 1)
 emission_shape = 1
@@ -40,11 +105,11 @@ turbulence_noise_speed = Vector3(0, -2, 0)
 turbulence_influence_min = 0.031
 turbulence_influence_max = 0.123
 
-[sub_resource type="Gradient" id="Gradient_xg410"]
+[sub_resource type="Gradient" id="Gradient_va8lu"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_ov5aj"]
-gradient = SubResource("Gradient_xg410")
+gradient = SubResource("Gradient_va8lu")
 width = 16
 height = 16
 fill = 1

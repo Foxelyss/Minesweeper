@@ -1,13 +1,17 @@
 #include "field_grid.h"
 
 #include "field.h"
+#include "godot_cpp/classes/animation_player.hpp"
 #include "godot_cpp/classes/global_constants.hpp"
+#include "godot_cpp/classes/input_event_mouse_button.hpp"
+#include "godot_cpp/core/memory.hpp"
+#include "godot_cpp/variant/utility_functions.hpp"
 #include "godot_cpp/variant/vector2.hpp"
 #include "godot_cpp/variant/vector2i.hpp"
 using namespace godot;
 
 void FieldGrid::_bind_methods() {
-  ClassDB::bind_method(D_METHOD("on_button_pressed", "index"),
+  ClassDB::bind_method(D_METHOD("on_button_pressed", "input", "index"),
                        &FieldGrid::_on_button_pressed);
   ClassDB::bind_method(D_METHOD("retry_game"), &FieldGrid::retry_game);
   ClassDB::bind_method(D_METHOD("go_to_menu"), &FieldGrid::go_to_menu);
@@ -88,6 +92,14 @@ void FieldGrid::_ready() {
   _game_field = get_node<Field>("/root/FieldRepresenter");
   grid = get_node<GridContainer>("../DraggableSpace/MineGrid");
 
+  _ui_tweener = get_node<AnimationPlayer>("../AnimationPlayer");
+  _ui_tweener->play("popin");
+
+  _timer = memnew(Timer);
+  add_child(_timer);
+  _timer->set_one_shot(true);
+  _timer->start(20 * 60);
+
   start_game(_game_field->get_field_resolution(),
              _game_field->get_mines_quantity());
 }
@@ -101,54 +113,65 @@ void FieldGrid::start_game(Vector2i resolution, int mines_quantity) {
 
     button->set_custom_minimum_size(Vector2(28, 28));
     button->set_button_mask(MOUSE_BUTTON_LEFT | MOUSE_BUTTON_RIGHT);
-    button->connect("pressed", Callable(this, "on_button_pressed").bind(i));
+    button->connect("gui_input", Callable(this, "on_button_pressed").bind(i));
   }
 }
 
 void FieldGrid::retry_game() {
   _first_cell = -1;
 
+  _timer->set_paused(false);
+  _timer->start();
+
   for (int i = 0; i < _game_field->get_cells_quantity(); i++) {
     ((Button *)grid->get_child(i))->set_disabled(false);
     ((Button *)grid->get_child(i))->set_text("");
   }
 }
-void FieldGrid::_process(float delta){};
+void FieldGrid::_process(float delta) {
+  String time_left = tr("TIMECOUNTER") + Variant(int(20 * 60 - _timer->get_time_left())).stringify();
+_time_label->set_text(time_left);
+};
 
-void FieldGrid::_on_button_pressed(int index) {
-  auto input = Input::get_singleton();
+void FieldGrid::_on_button_pressed(InputEvent *event, int index) {
+  if (event->get_class() == "InputEventMouseButton" && event->is_pressed()) {
+    auto inp = (InputEventMouseButton *)event;
 
-  if (input->is_action_pressed("flag")) {
-    _game_field->toggle_flag(index);
-  } else {
-    if (_first_cell == -1) {
-      _game_field->start_game(_game_field->get_field_resolution(),
-                              _game_field->get_mines_quantity(), index);
-      auto string = tr("MINESAROUND") + " " +
-                    Variant(_game_field->get_mines_quantity()).stringify();
-      _mines_around_label->set_text(string);
-      _first_cell = index;
+    if (inp->get_button_index() == MOUSE_BUTTON_RIGHT ||
+        _flagging_radio_button->is_pressed()) {
+      _game_field->toggle_flag(index);
+    } else if (inp->get_button_index() == MOUSE_BUTTON_LEFT) {
+      if (_first_cell == -1) {
+        _game_field->start_game(index);
+        auto string = tr("MINESAROUND") + " " +
+                      Variant(_game_field->get_mines_quantity()).stringify();
+        _mines_around_label->set_text(string);
+        _first_cell = index;
+      }
+
+      if (!_game_field->field[index].flagged) {
+        _game_field->reveal(index);
+      }
     }
-
-    if (!_game_field->field[index].flagged) {
-      _game_field->reveal(index);
-    }
+    update_grid();
   }
-
-  update_grid();
 }
 
 void FieldGrid::update_grid() {
   int k = _game_field->see_gameover();
   if (_first_cell == -1) {
+    return;
     k = 0;
   }
 
   switch (k) {
   case 1:
+      _timer->set_paused(true);
     _game_status_label->set_text(tr("WIN"));
+    _game_field->reveal_all_hidden();
     break;
   case 2:
+      _timer->set_paused(true);
     _game_status_label->set_text(tr("LOSE"));
     _game_field->reveal_all_hidden();
     break;

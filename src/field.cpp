@@ -38,7 +38,7 @@ void Field::reveal(int cell_index) {
 
     field[index].hidden = false;
 
-    if (field[index].mines_around > 0 || index >= _height * _width)
+    if (field[index].mines_around > 0)
       continue;
 
     if (0 <= x && x < _width - 1)
@@ -60,7 +60,11 @@ void Field::reveal_all_hidden() {
   }
 }
 void Field::toggle_flag(int index) {
-  field[index].flagged = !field[index].flagged;
+  if (field[index].hidden) {
+    field[index].flagged = !field[index].flagged;
+  } else {
+    field[index].flagged = false;
+  }
 }
 
 void Field::place_mines(int selected_cell = -1) {
@@ -87,17 +91,21 @@ void Field::place_mines(int selected_cell = -1) {
     }
   }
 }
+void Field::prepare_field() {
+  for (int i = 0; i < _width * _height; i++) {
+    field.push_back(Cell());
+  }
+}
 
-void Field::start_game(Vector2i resolution, int mines_quantity,
-                       int selected_cell) {
-  _width = resolution.x;
-  _height = resolution.y;
-  _mines_quantity = mines_quantity;
+void Field::clear() { field.clear(); }
 
+void Field::start_game(int selected_cell) {
+  clear();
+  prepare_field();
   place_mines(selected_cell);
 }
 
-void Field::set(Vector2i resolution, int mines_quantity, int selected_cell) {
+void Field::set(Vector2i resolution, int mines_quantity) {
   _width = resolution.x;
   _height = resolution.y;
   _mines_quantity = mines_quantity;
@@ -110,15 +118,18 @@ int Field::see_gameover() {
 
   for (int i = 0; i < get_cells_quantity(); i++) {
     auto x = field[i];
-    if (x.mine and not x.hidden)
+    if (x.mine && !x.hidden)
       return 2;
-    if (x.hidden and x.mine)
+    if (x.hidden && x.mine)
       guessed += 1;
-    if (x.flagged and x.mine)
+    if (x.flagged && x.mine)
       flagged += 1;
     if (x.hidden)
       hidden += 1;
+    if (x.flagged && !x.mine)
+      flagged -= 1;
   }
+
   if (flagged == _mines_quantity ||
       guessed == _mines_quantity && hidden == _mines_quantity) {
     return 1;

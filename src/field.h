@@ -33,6 +33,10 @@ private:
 
   void place_mines(int selected_cell);
 
+  void prepare_field();
+
+  void clear();
+
 public:
   static void _bind_methods();
 
@@ -41,11 +45,10 @@ public:
 
   // void _process(float delta);
 
-  array<Cell, 4000> field;
+  vector<Cell> field;
 
-  void start_game(Vector2i resolution, int mines_quntity,
-                  int selected_cell = -1);
-  void set(Vector2i resolution, int mines_quntity, int selected_cell = -1);
+  void start_game(int selected_cell = -1);
+  void set(Vector2i resolution, int mines_quantity);
   void reveal(int cell_index);
   void reveal_all_hidden();
 

@@ -17,6 +17,9 @@ config/name_localized={
 config/version="v1.b"
 run/main_scene="res://menu.tscn"
 config/features=PackedStringArray("4.2")
+boot_splash/bg_color=Color(0.176471, 0.376471, 0.882353, 1)
+boot_splash/image="res://splash.png"
+boot_splash/fullsize=false
 config/icon="res://icon.png"
 
 [autoload]

@@ -22,7 +22,6 @@ void MainMenu::_ready() {
     set_process_mode(Node::ProcessMode::PROCESS_MODE_DISABLED);
     return;
   }
-  print_tree();
   auto p = get_node<VBoxContainer>("../Buttons");
 
   for (int i = 0; i < p->get_child_count(); i++) {

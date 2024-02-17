@@ -2,6 +2,8 @@
 #define MINE_GRID_H
 
 #include "field.h"
+#include "godot_cpp/classes/animation_player.hpp"
+#include "godot_cpp/classes/timer.hpp"
 #include "godot_cpp/variant/string.hpp"
 #include "godot_cpp/variant/string_name.hpp"
 #include "godot_cpp/variant/vector2i.hpp"
@@ -59,6 +61,10 @@ private:
   StringName _back_to_menu_button_path;
   int _first_cell = -1;
 
+  Timer* _timer;
+
+  AnimationPlayer* _ui_tweener;
+
 public:
   static void _bind_methods();
 
@@ -68,7 +74,7 @@ public:
   void _ready() override;
   void _process(float delta);
   void _input(InputEvent *event);
-  void _on_button_pressed(int index);
+  void _on_button_pressed(InputEvent *event, int index);
 
   void start_game(Vector2i resolution, int mines_quantity);
   void update_grid();
