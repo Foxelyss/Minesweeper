@@ -1,6 +1,5 @@
-[gd_scene load_steps=10 format=3 uid="uid://b81dt7bbbxlb6"]
+[gd_scene load_steps=8 format=3 uid="uid://b81dt7bbbxlb6"]
 
-[ext_resource type="Texture2D" uid="uid://ci41bk8obv10g" path="res://icon.png" id="1_j6y1a"]
 [ext_resource type="Theme" uid="uid://m313wodg5ka8" path="res://game_theme.tres" id="1_mbmnw"]
 
 [sub_resource type="Animation" id="Animation_hpkgp"]
@@ -116,17 +115,6 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.8, 0.2)
 metadata/_snap_enabled = true
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_la3bs"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("1_j6y1a")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
 
 [node name="Game" type="Control"]
 layout_mode = 3
@@ -272,16 +260,3 @@ retry_button = "../MarginContainer/Control/RetryButton"
 flagging_radio-button = "../MarginContainer/Control/FlaggingMode"
 game_status_label = "../MarginContainer/Control/GameStatusLabel"
 back_to_menu_button = "../MarginContainer/Control/BackButton"
-
-[node name="Button" type="Button" parent="."]
-visible = false
-clip_contents = true
-layout_mode = 0
-offset_right = 102.0
-offset_bottom = 101.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Button"]
-sprite_frames = SubResource("SpriteFrames_la3bs")
-centered = false

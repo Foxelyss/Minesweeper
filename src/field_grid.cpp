@@ -3,7 +3,10 @@
 #include "field.h"
 #include "godot_cpp/classes/animation_player.hpp"
 #include "godot_cpp/classes/global_constants.hpp"
+#include "godot_cpp/classes/image.hpp"
 #include "godot_cpp/classes/input_event_mouse_button.hpp"
+#include "godot_cpp/classes/resource_loader.hpp"
+#include "godot_cpp/classes/texture2d.hpp"
 #include "godot_cpp/core/memory.hpp"
 #include "godot_cpp/variant/utility_functions.hpp"
 #include "godot_cpp/variant/vector2.hpp"
@@ -123,18 +126,23 @@ void FieldGrid::retry_game() {
   _timer->set_paused(false);
   _timer->start();
 
+  _ui_tweener->play("retry");
   for (int i = 0; i < _game_field->get_cells_quantity(); i++) {
     ((Button *)grid->get_child(i))->set_disabled(false);
     ((Button *)grid->get_child(i))->set_text("");
+    ((Button *)grid->get_child(i))->set_button_icon(Texture2D().create_placeholder());
   }
 }
 void FieldGrid::_process(float delta) {
-  String time_left = tr("TIMECOUNTER") + Variant(int(20 * 60 - _timer->get_time_left())).stringify();
-_time_label->set_text(time_left);
+  String time_left =
+      tr("TIMECOUNTER") +
+      Variant(int(20 * 60 - _timer->get_time_left())).stringify();
+  _time_label->set_text(time_left);
 };
 
 void FieldGrid::_on_button_pressed(InputEvent *event, int index) {
-  if (event->get_class() == "InputEventMouseButton" && event->is_pressed()) {
+  if (event->get_class() == "InputEventMouseButton" && event->is_pressed() &&
+      !((Button *)grid->get_child(index))->is_disabled()) {
     auto inp = (InputEventMouseButton *)event;
 
     if (inp->get_button_index() == MOUSE_BUTTON_RIGHT ||
@@ -161,19 +169,19 @@ void FieldGrid::update_grid() {
   int k = _game_field->see_gameover();
   if (_first_cell == -1) {
     return;
-    k = 0;
+  }
+  if (k > 0) {
+    _timer->set_paused(true);
+    _game_field->reveal_all_hidden();
+    _ui_tweener->play_backwards("retry");
   }
 
   switch (k) {
   case 1:
-      _timer->set_paused(true);
     _game_status_label->set_text(tr("WIN"));
-    _game_field->reveal_all_hidden();
     break;
   case 2:
-      _timer->set_paused(true);
     _game_status_label->set_text(tr("LOSE"));
-    _game_field->reveal_all_hidden();
     break;
   default:
     _game_status_label->set_text("");
@@ -184,24 +192,32 @@ void FieldGrid::update_grid() {
     String text;
     text = Variant(_game_field->field[i].mines_around).stringify();
 
+    Button *target = ((Button *)grid->get_child(i));
+    target->set_button_icon(Texture2D().create_placeholder());
     if (_game_field->field[i].flagged) {
-      text = "F";
+      text = "";
+      auto _icon_b =
+          ResourceLoader::get_singleton()->load("res://assets/Page 1.png");
+      target->set_button_icon(_icon_b);
     } else if (_game_field->field[i].hidden) {
       text = " ";
     } else if (_game_field->field[i].mine) {
-      text = "x";
+      text = "";
+      auto _icon_a =
+          ResourceLoader::get_singleton()->load("res://assets/Page 2.png");
+      target->set_button_icon(_icon_a);
     } else if (_game_field->field[i].mines_around == 0 &&
                !_game_field->field[i].hidden) {
       text = " ";
     }
 
     if (!_game_field->field[i].hidden && !_game_field->field[i].flagged) {
-      ((Button *)grid->get_child(i))->set_disabled(true);
+      target->set_disabled(true);
     } else {
-      ((Button *)grid->get_child(i))->set_disabled(false);
+      target->set_disabled(false);
     }
 
-    ((Button *)grid->get_child(i))->set_text(text);
+    target->set_text(text);
   }
 }
 
