@@ -13,3 +13,5 @@ MEDIUM,Medium difficulty,Средняя сложность
 HARD,Hard difficulty,Сложная сложность
 QUIT,Quit to desktop,Выход из игры
 RECORD,Your personal record,Ваш рекорд
+NORECORD,You have no record in this category,У вас нет персонального рекорда в категории
+COPYRIGHT,© Foxelyss,© Степан Смирнов

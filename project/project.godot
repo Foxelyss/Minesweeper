@@ -24,7 +24,7 @@ config/icon="res://icon.png"
 
 [autoload]
 
-FieldRepresenter="*res://field_representer.gd"
+FieldRepresenter="*res://singleton/field_representer.gd"
 
 [input]
 

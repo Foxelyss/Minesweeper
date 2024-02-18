@@ -1,14 +1,17 @@
 #include "field_grid.h"
 
 #include "field.h"
+#include "godot_cpp/classes/animated_sprite2d.hpp"
 #include "godot_cpp/classes/animation_player.hpp"
 #include "godot_cpp/classes/global_constants.hpp"
 #include "godot_cpp/classes/image.hpp"
 #include "godot_cpp/classes/input_event_mouse_button.hpp"
 #include "godot_cpp/classes/resource_loader.hpp"
 #include "godot_cpp/classes/texture2d.hpp"
+#include "godot_cpp/classes/texture_button.hpp"
 #include "godot_cpp/core/memory.hpp"
 #include "godot_cpp/variant/utility_functions.hpp"
+#include "godot_cpp/variant/variant.hpp"
 #include "godot_cpp/variant/vector2.hpp"
 #include "godot_cpp/variant/vector2i.hpp"
 using namespace godot;
@@ -93,31 +96,38 @@ void FieldGrid::_ready() {
   _retry_button->connect("pressed", Callable(this, "retry_game"));
 
   _game_field = get_node<Field>("/root/FieldRepresenter");
-  grid = get_node<GridContainer>("../DraggableSpace/MineGrid");
+  _grid = get_node<GridContainer>("../DraggableSpace/MineGrid");
 
   _ui_tweener = get_node<AnimationPlayer>("../AnimationPlayer");
   _ui_tweener->play("popin");
 
+  _pop_animator = get_node<AnimatedSprite2D>("../AnimatedSprite2D");
+
   _timer = memnew(Timer);
   add_child(_timer);
   _timer->set_one_shot(true);
-  _timer->start(20 * 60);
+  _timer->set_wait_time(20 * 60);
+
+  for (int i = 1; i <= 24; i++) {
+    _cells_textures.push_back(ResourceLoader::get_singleton()->load(
+        "res://assets/Cell_Page " + Variant(i).stringify() + ".png"));
+  }
 
   start_game(_game_field->get_field_resolution(),
              _game_field->get_mines_quantity());
 }
 
 void FieldGrid::start_game(Vector2i resolution, int mines_quantity) {
-  grid->set_columns(resolution.x);
+  _grid->set_columns(resolution.x);
 
   for (int i = 0; i < _game_field->get_cells_quantity(); i++) {
-    Button *button = memnew(Button());
-    grid->add_child(button);
+    TextureButton *button = memnew(TextureButton());
+    _grid->add_child(button);
 
-    button->set_custom_minimum_size(Vector2(28, 28));
-    button->set_button_mask(MOUSE_BUTTON_LEFT | MOUSE_BUTTON_RIGHT);
     button->connect("gui_input", Callable(this, "on_button_pressed").bind(i));
   }
+
+  retry_game();
 }
 
 void FieldGrid::retry_game() {
@@ -127,13 +137,21 @@ void FieldGrid::retry_game() {
   _timer->start();
 
   _ui_tweener->play("retry");
+
   for (int i = 0; i < _game_field->get_cells_quantity(); i++) {
-    ((Button *)grid->get_child(i))->set_disabled(false);
-    ((Button *)grid->get_child(i))->set_text("");
-    ((Button *)grid->get_child(i))->set_button_icon(Texture2D().create_placeholder());
+    _grid->get_child(i)->get_node<TextureButton>(".")->set_disabled(false);
+
+    int idx = 11;
+    if ((i + i / _game_field->get_field_resolution().x) % 2 == 0) {
+      idx = 23;
+    }
+    _grid->get_child(i)->get_node<TextureButton>(".")->set_texture_normal(
+        _cells_textures[idx]);
   }
 }
 void FieldGrid::_process(float delta) {
+  float min, length;
+
   String time_left =
       tr("TIMECOUNTER") +
       Variant(int(20 * 60 - _timer->get_time_left())).stringify();
@@ -142,7 +160,7 @@ void FieldGrid::_process(float delta) {
 
 void FieldGrid::_on_button_pressed(InputEvent *event, int index) {
   if (event->get_class() == "InputEventMouseButton" && event->is_pressed() &&
-      !((Button *)grid->get_child(index))->is_disabled()) {
+      !_grid->get_child(index)->get_node<TextureButton>(".")->is_disabled()) {
     auto inp = (InputEventMouseButton *)event;
 
     if (inp->get_button_index() == MOUSE_BUTTON_RIGHT ||
@@ -158,6 +176,13 @@ void FieldGrid::_on_button_pressed(InputEvent *event, int index) {
       }
 
       if (!_game_field->field[index].flagged) {
+        _pop_animator->set_position(
+            _grid->get_child(index)
+                ->get_node<TextureButton>(".")
+                ->get_global_position() +
+            _grid->get_child(index)->get_node<TextureButton>(".")->get_size() /
+                2);
+        _pop_animator->play("popit");
         _game_field->reveal(index);
       }
     }
@@ -168,6 +193,7 @@ void FieldGrid::_on_button_pressed(InputEvent *event, int index) {
 void FieldGrid::update_grid() {
   int k = _game_field->see_gameover();
   if (_first_cell == -1) {
+    k = 0;
     return;
   }
   if (k > 0) {
@@ -189,40 +215,35 @@ void FieldGrid::update_grid() {
   }
 
   for (int i = 0; i < _game_field->get_cells_quantity(); i++) {
-    String text;
-    text = Variant(_game_field->field[i].mines_around).stringify();
-
-    Button *target = ((Button *)grid->get_child(i));
-    target->set_button_icon(Texture2D().create_placeholder());
-    if (_game_field->field[i].flagged) {
-      text = "";
-      auto _icon_b =
-          ResourceLoader::get_singleton()->load("res://assets/Page 1.png");
-      target->set_button_icon(_icon_b);
-    } else if (_game_field->field[i].hidden) {
-      text = " ";
-    } else if (_game_field->field[i].mine) {
-      text = "";
-      auto _icon_a =
-          ResourceLoader::get_singleton()->load("res://assets/Page 2.png");
-      target->set_button_icon(_icon_a);
-    } else if (_game_field->field[i].mines_around == 0 &&
-               !_game_field->field[i].hidden) {
-      text = " ";
+    TextureButton *target = _grid->get_child(i)->get_node<TextureButton>(".");
+    int idx = 0;
+    if ((i + i / _game_field->get_field_resolution().x) % 2 == 0) {
+      idx = 12;
     }
+
+    if (_game_field->field[i].flagged) {
+      idx += 10;
+    } else if (_game_field->field[i].hidden) {
+      idx += 11;
+    } else if (_game_field->field[i].mine) {
+      idx += 9;
+    } else if (_game_field->field[i].mines_around >= 0) {
+      idx += _game_field->field[i].mines_around;
+    }
+
+    target->set_texture_normal(_cells_textures[idx]);
 
     if (!_game_field->field[i].hidden && !_game_field->field[i].flagged) {
       target->set_disabled(true);
     } else {
       target->set_disabled(false);
     }
-
-    target->set_text(text);
   }
 }
 
 void FieldGrid::go_to_menu() {
   get_tree()->change_scene_to_file("res://menu.tscn");
+  _ui_tweener->play_backwards("popin");
 }
 
 void FieldGrid::_input(InputEvent *event) {
@@ -231,14 +252,14 @@ void FieldGrid::_input(InputEvent *event) {
       input->is_action_pressed("move_mode")) {
 
     auto ev = (InputEventMouseMotion *)event;
-    auto rot = grid->get_position();
-    Vector2 sizp = grid->get_size();
+    auto rot = _grid->get_position();
+    Vector2 sizp = _grid->get_size();
     sizp.x /= 2;
     sizp.y /= 2;
 
     rot.y = Math::clamp<float>(rot.y + ev->get_relative().y, -sizp.y, sizp.y);
     rot.x = Math::clamp<float>(rot.x + ev->get_relative().x, -sizp.x, sizp.x);
-    grid->set_position(rot);
+    _grid->set_position(rot);
   }
 }
 

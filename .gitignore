@@ -6,3 +6,4 @@ project/.import
 **/*.lib
 **/*.dll
 project/.godot
+**/*.import

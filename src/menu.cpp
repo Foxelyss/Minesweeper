@@ -1,4 +1,5 @@
 #include "menu.h"
+#include "godot_cpp/classes/animation_player.hpp"
 #include "godot_cpp/classes/button.hpp"
 #include "godot_cpp/classes/engine.hpp"
 #include "godot_cpp/classes/scene_tree.hpp"
@@ -31,9 +32,14 @@ void MainMenu::_ready() {
   }
 
   _game_field = get_node<Field>("/root/FieldRepresenter");
+  get_node<AnimationPlayer>("../../../AnimationPlayer")->play("in");
 }
 
 void MainMenu::handle_button_press(int index) {
+  get_node<AnimationPlayer>("../../../AnimationPlayer")->play_backwards("in");
+  // while (get_node<AnimationPlayer>("../../../AnimationPlayer")->is_playing())
+  // {
+  // }
   switch (index) {
   case 0:
     _game_field->set(Vector2i(8, 8), 6);

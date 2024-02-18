@@ -1,6 +1,18 @@
-[gd_scene load_steps=8 format=3 uid="uid://b81dt7bbbxlb6"]
+[gd_scene load_steps=22 format=3 uid="uid://b81dt7bbbxlb6"]
 
 [ext_resource type="Theme" uid="uid://m313wodg5ka8" path="res://game_theme.tres" id="1_mbmnw"]
+[ext_resource type="Texture2D" uid="uid://dw25t0pskt00m" path="res://assets/pop_animation/pop_Page 1.png" id="3_oryvk"]
+[ext_resource type="Texture2D" uid="uid://d3kd7l2gtej16" path="res://assets/pop_animation/pop_Page 2.png" id="4_5twn2"]
+[ext_resource type="Texture2D" uid="uid://hva6glrfh8oa" path="res://assets/pop_animation/pop_Page 3.png" id="5_pvnlq"]
+[ext_resource type="Texture2D" uid="uid://d1tjt2w3mhggl" path="res://assets/pop_animation/pop_Page 4.png" id="6_7mm7i"]
+[ext_resource type="Texture2D" uid="uid://brxf01bpnge1b" path="res://assets/pop_animation/pop_Page 5.png" id="7_paa88"]
+[ext_resource type="Texture2D" uid="uid://b3wpacg1gmr1j" path="res://assets/pop_animation/pop_Page 6.png" id="8_fxwpk"]
+[ext_resource type="Texture2D" uid="uid://oyx7rvloorkd" path="res://assets/pop_animation/pop_Page 7.png" id="9_s1l4v"]
+[ext_resource type="Texture2D" uid="uid://solkpynqag0c" path="res://assets/pop_animation/pop_Page 8.png" id="10_v63ak"]
+[ext_resource type="Texture2D" uid="uid://ds2hdvsvu38kf" path="res://assets/pop_animation/pop_Page 9.png" id="11_fd5c6"]
+[ext_resource type="Texture2D" uid="uid://dvxkb4mu26bdv" path="res://assets/pop_animation/pop_Page 10.png" id="12_bubr1"]
+[ext_resource type="Texture2D" uid="uid://dixgaisdghnic" path="res://assets/pop_animation/pop_Page 11.png" id="13_4jyya"]
+[ext_resource type="Texture2D" uid="uid://bqflrsi4vvma8" path="res://assets/pop_animation/pop_Page 12.png" id="14_43t6i"]
 
 [sub_resource type="Animation" id="Animation_hpkgp"]
 resource_name = "popin"
@@ -44,7 +56,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("ColorRect/GPUParticles2D:amount")
+tracks/3/path = NodePath("GPUParticles2D:amount")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -72,7 +84,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("ColorRect/GPUParticles2D:amount")
+tracks/1/path = NodePath("GPUParticles2D:amount")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -82,8 +94,25 @@ tracks/1/keys = {
 "values": [34, 60]
 }
 
+[sub_resource type="Animation" id="Animation_sxns2"]
+resource_name = "game_over"
+step = 0.0997407
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MarginContainer/Control/GameStatusLabel:theme_override_font_sizes/font_size")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [14, 18, 14]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_e06fh"]
 _data = {
+"game_over": SubResource("Animation_sxns2"),
 "popin": SubResource("Animation_hpkgp"),
 "retry": SubResource("Animation_uwq2i")
 }
@@ -116,6 +145,58 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.8, 0.2)
 metadata/_snap_enabled = true
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_u0d3t"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"empty",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_oryvk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_5twn2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_pvnlq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_7mm7i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_paa88")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_fxwpk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_s1l4v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_v63ak")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_fd5c6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_bubr1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_4jyya")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_43t6i")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"popit",
+"speed": 75.0
+}]
+
 [node name="Game" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -136,18 +217,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.509804, 0.807843, 0.980392, 1)
-
-[node name="GPUParticles2D" type="GPUParticles2D" parent="ColorRect"]
-position = Vector2(492, -43)
-amount = 34
-process_material = SubResource("ParticleProcessMaterial_x6fef")
-texture = SubResource("GradientTexture2D_ov5aj")
-lifetime = 16.0
-speed_scale = 3.41
-randomness = 0.61
-visibility_rect = Rect2(0, 0, 900, 600)
-trail_lifetime = 6.41
+color = Color(0.121569, 0.533333, 0.72549, 1)
 
 [node name="DraggableSpace" type="CenterContainer" parent="."]
 layout_mode = 1
@@ -162,6 +232,26 @@ theme = ExtResource("1_mbmnw")
 
 [node name="MineGrid" type="GridContainer" parent="DraggableSpace"]
 layout_mode = 2
+theme = ExtResource("1_mbmnw")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(492, -43)
+amount = 60
+process_material = SubResource("ParticleProcessMaterial_x6fef")
+texture = SubResource("GradientTexture2D_ov5aj")
+lifetime = 16.0
+speed_scale = 3.41
+randomness = 0.61
+visibility_rect = Rect2(0, 0, 900, 600)
+trail_lifetime = 6.41
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-333, -333)
+scale = Vector2(0.161209, 0.161209)
+sprite_frames = SubResource("SpriteFrames_u0d3t")
+animation = &"popit"
+frame = 12
+frame_progress = 1.0
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -252,6 +342,7 @@ offset_right = 20.0
 offset_bottom = 23.0
 grow_horizontal = 2
 theme = ExtResource("1_mbmnw")
+theme_override_font_sizes/font_size = 14
 
 [node name="FieldGrid" type="FieldGrid" parent="."]
 mines_around_label = "../MarginContainer/Control/MinesCounter"
@@ -260,3 +351,4 @@ retry_button = "../MarginContainer/Control/RetryButton"
 flagging_radio-button = "../MarginContainer/Control/FlaggingMode"
 game_status_label = "../MarginContainer/Control/GameStatusLabel"
 back_to_menu_button = "../MarginContainer/Control/BackButton"
+process_mode = 4

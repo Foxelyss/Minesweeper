@@ -2,8 +2,12 @@
 #define MINE_GRID_H
 
 #include "field.h"
+#include "godot_cpp/classes/animated_sprite2d.hpp"
 #include "godot_cpp/classes/animation_player.hpp"
+#include "godot_cpp/classes/resource.hpp"
+#include "godot_cpp/classes/texture2d.hpp"
 #include "godot_cpp/classes/timer.hpp"
+#include "godot_cpp/variant/array.hpp"
 #include "godot_cpp/variant/string.hpp"
 #include "godot_cpp/variant/string_name.hpp"
 #include "godot_cpp/variant/vector2i.hpp"
@@ -39,10 +43,9 @@ class FieldGrid : public Node {
   GDCLASS(FieldGrid, Node)
 
 private:
-  float time_passed;
   Field *_game_field;
 
-  GridContainer *grid;
+  GridContainer *_grid;
 
   Label *_mines_around_label;
   Label *_time_label;
@@ -59,11 +62,15 @@ private:
   StringName _retry_button_path;
   StringName _flagging_radio_button_path;
   StringName _back_to_menu_button_path;
+
   int _first_cell = -1;
 
-  Timer* _timer;
+  Timer *_timer;
 
-  AnimationPlayer* _ui_tweener;
+  AnimationPlayer *_ui_tweener;
+  AnimatedSprite2D *_pop_animator;
+
+  Array _cells_textures;
 
 public:
   static void _bind_methods();
