@@ -22,3 +22,4 @@ android.release.x86_64 = "res://bin/libgameplay.android.template_release.x86_64.
 android.debug.arm64 = "res://bin/libgameplay.android.template_debug.arm64.so"
 android.release.arm64 = "res://bin/libgameplay.android.template_release.arm64.so"
 web.debug = "res://bin/libgameplay.web.template_debug.wasm32.wasm"
+web.release = "res://bin/libgameplay.web.template_release.wasm32.wasm"

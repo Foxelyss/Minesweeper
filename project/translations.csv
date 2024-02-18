@@ -1,7 +1,7 @@
 keys,en,ru
 MINESAROUND,Mines in field are,Мин вокруг:
-BACKTOMENU,Back to menu,Выход
-RETRY,Retry,Повторить
+BACKTOMENU,Back to menu,Выход в меню
+RETRY,Retry,Попробовать снова
 GAMETITLE,Minesweeper,Сапёр
 FLAGGINGMODE,Cell flagging mode,Режим ставки флажка на клетку
 TIMECOUNTER,You’re solving this field for  ,Ты решаешь это поле уже 
@@ -15,3 +15,4 @@ QUIT,Quit to desktop,Выход из игры
 RECORD,Your personal record,Ваш рекорд
 NORECORD,You have no record in this category,У вас нет персонального рекорда в категории
 COPYRIGHT,© Foxelyss,© Степан Смирнов
+TIMEOUT,Too slow!,Слишком медленно! 

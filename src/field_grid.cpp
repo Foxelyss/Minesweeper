@@ -133,9 +133,6 @@ void FieldGrid::start_game(Vector2i resolution, int mines_quantity) {
 void FieldGrid::retry_game() {
   _first_cell = -1;
 
-  _timer->set_paused(false);
-  _timer->start();
-
   _ui_tweener->play("retry");
 
   for (int i = 0; i < _game_field->get_cells_quantity(); i++) {
@@ -150,11 +147,24 @@ void FieldGrid::retry_game() {
   }
 }
 void FieldGrid::_process(float delta) {
-  float min, length;
+  int time = int(20 * 60 - _timer->get_time_left());
+  int minutes, seconds;
 
-  String time_left =
-      tr("TIMECOUNTER") +
-      Variant(int(20 * 60 - _timer->get_time_left())).stringify();
+  minutes = time / 60;
+  seconds = time % 60;
+
+  String time_left;
+  if (_timer->get_time_left() == 0) {
+    if (_first_cell == -1) {
+      time_left = "";
+    } else {
+      time_left = tr("TIMEOUT");
+    }
+  } else {
+    time_left = tr("TIMECOUNTER") + Variant(minutes).stringify() + ":" +
+                Variant(seconds).stringify();
+  }
+
   _time_label->set_text(time_left);
 };
 
@@ -173,6 +183,8 @@ void FieldGrid::_on_button_pressed(InputEvent *event, int index) {
                       Variant(_game_field->get_mines_quantity()).stringify();
         _mines_around_label->set_text(string);
         _first_cell = index;
+        _timer->set_paused(false);
+        _timer->start();
       }
 
       if (!_game_field->field[index].flagged) {
@@ -182,6 +194,7 @@ void FieldGrid::_on_button_pressed(InputEvent *event, int index) {
                 ->get_global_position() +
             _grid->get_child(index)->get_node<TextureButton>(".")->get_size() /
                 2);
+
         _pop_animator->play("popit");
         _game_field->reveal(index);
       }
@@ -191,28 +204,11 @@ void FieldGrid::_on_button_pressed(InputEvent *event, int index) {
 }
 
 void FieldGrid::update_grid() {
-  int k = _game_field->see_gameover();
   if (_first_cell == -1) {
-    k = 0;
     return;
   }
-  if (k > 0) {
-    _timer->set_paused(true);
-    _game_field->reveal_all_hidden();
-    _ui_tweener->play_backwards("retry");
-  }
 
-  switch (k) {
-  case 1:
-    _game_status_label->set_text(tr("WIN"));
-    break;
-  case 2:
-    _game_status_label->set_text(tr("LOSE"));
-    break;
-  default:
-    _game_status_label->set_text("");
-    break;
-  }
+  update_game_status();
 
   for (int i = 0; i < _game_field->get_cells_quantity(); i++) {
     TextureButton *target = _grid->get_child(i)->get_node<TextureButton>(".");
@@ -238,6 +234,27 @@ void FieldGrid::update_grid() {
     } else {
       target->set_disabled(false);
     }
+  }
+}
+
+void FieldGrid::update_game_status() {
+  int k = _game_field->see_gameover();
+  if (k > 0) {
+    _timer->set_paused(true);
+    _game_field->reveal_all_hidden();
+    _ui_tweener->play_backwards("retry");
+  }
+
+  switch (k) {
+  case 1:
+    _game_status_label->set_text(tr("WIN"));
+    break;
+  case 2:
+    _game_status_label->set_text(tr("LOSE"));
+    break;
+  default:
+    _game_status_label->set_text("");
+    break;
   }
 }
 

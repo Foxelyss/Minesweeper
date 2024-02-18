@@ -43,8 +43,6 @@ public:
   Field();
   ~Field();
 
-  // void _process(float delta);
-
   vector<Cell> field;
 
   void start_game(int selected_cell = -1);

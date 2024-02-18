@@ -85,6 +85,7 @@ public:
 
   void start_game(Vector2i resolution, int mines_quantity);
   void update_grid();
+  void update_game_status();
   void retry_game();
 
   void go_to_menu();
