@@ -8,12 +8,12 @@
 #include <godot_cpp/classes/random_number_generator.hpp>
 #include <queue>
 
-struct Cell {
+typedef struct {
   uint8_t mines_around = 0;
   bool mine = false;
   bool hidden = true;
   bool flagged = false;
-};
+} Cell;
 
 using namespace std;
 
@@ -26,6 +26,8 @@ private:
   RandomNumberGenerator random;
   uint8_t _width, _height;
   uint8_t _mines_quantity = 6;
+
+  vector<Cell> _field;
 
   int get_index_of_cell(int x, int y);
 
@@ -43,8 +45,6 @@ public:
   Field();
   ~Field();
 
-  vector<Cell> field;
-
   void start_game(int selected_cell = -1);
   void set(Vector2i resolution, int mines_quantity);
   void reveal(int cell_index);
@@ -54,6 +54,7 @@ public:
 
   int see_gameover();
 
+  Cell get_cell(int index) { return _field[index]; }
   int get_mines_quantity() { return _mines_quantity; }
   Vector2i get_field_resolution() { return Vector2i(_width, _height); }
   int get_cells_quantity() { return _width * _height; }

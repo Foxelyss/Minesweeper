@@ -218,7 +218,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_mbmnw")
 
-[node name="MineGrid" type="GridContainer" parent="DraggableSpace"]
+[node name="GameGrid" type="GridContainer" parent="DraggableSpace"]
 layout_mode = 2
 theme = ExtResource("1_mbmnw")
 

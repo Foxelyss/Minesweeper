@@ -96,7 +96,7 @@ void FieldGrid::_ready() {
   _retry_button->connect("pressed", Callable(this, "retry_game"));
 
   _game_field = get_node<Field>("/root/FieldRepresenter");
-  _grid = get_node<GridContainer>("../DraggableSpace/MineGrid");
+  _grid = get_node<GridContainer>("../DraggableSpace/GameGrid");
 
   _ui_tweener = get_node<AnimationPlayer>("../AnimationPlayer");
   _ui_tweener->play("popin");
@@ -171,12 +171,12 @@ void FieldGrid::_process(float delta) {
 void FieldGrid::_on_button_pressed(InputEvent *event, int index) {
   if (event->get_class() == "InputEventMouseButton" && event->is_pressed() &&
       !_grid->get_child(index)->get_node<TextureButton>(".")->is_disabled()) {
-    auto inp = (InputEventMouseButton *)event;
+    InputEventMouseButton *mouse_event = (InputEventMouseButton *)event;
 
-    if (inp->get_button_index() == MOUSE_BUTTON_RIGHT ||
+    if (mouse_event->get_button_index() == MOUSE_BUTTON_RIGHT ||
         _flagging_radio_button->is_pressed()) {
       _game_field->toggle_flag(index);
-    } else if (inp->get_button_index() == MOUSE_BUTTON_LEFT) {
+    } else if (mouse_event->get_button_index() == MOUSE_BUTTON_LEFT) {
       if (_first_cell == -1) {
         _game_field->start_game(index);
         auto string = tr("MINESAROUND") + " " +
@@ -187,7 +187,7 @@ void FieldGrid::_on_button_pressed(InputEvent *event, int index) {
         _timer->start();
       }
 
-      if (!_game_field->field[index].flagged) {
+      if (!_game_field->get_cell(index).flagged) {
         _pop_animator->set_position(
             _grid->get_child(index)
                 ->get_node<TextureButton>(".")
@@ -212,24 +212,26 @@ void FieldGrid::update_grid() {
 
   for (int i = 0; i < _game_field->get_cells_quantity(); i++) {
     TextureButton *target = _grid->get_child(i)->get_node<TextureButton>(".");
-    int idx = 0;
+    Cell current_cell = _game_field->get_cell(i);
+    int texture_index = 0;
+
     if ((i + i / _game_field->get_field_resolution().x) % 2 == 0) {
-      idx = 12;
+      texture_index = 12;
     }
 
-    if (_game_field->field[i].flagged) {
-      idx += 10;
-    } else if (_game_field->field[i].hidden) {
-      idx += 11;
-    } else if (_game_field->field[i].mine) {
-      idx += 9;
-    } else if (_game_field->field[i].mines_around >= 0) {
-      idx += _game_field->field[i].mines_around;
+    if (current_cell.flagged) {
+      texture_index += 10;
+    } else if (current_cell.hidden) {
+      texture_index += 11;
+    } else if (current_cell.mine) {
+      texture_index += 9;
+    } else if (current_cell.mines_around >= 0) {
+      texture_index += current_cell.mines_around;
     }
 
-    target->set_texture_normal(_cells_textures[idx]);
+    target->set_texture_normal(_cells_textures[texture_index]);
 
-    if (!_game_field->field[i].hidden && !_game_field->field[i].flagged) {
+    if (!current_cell.hidden && !current_cell.flagged) {
       target->set_disabled(true);
     } else {
       target->set_disabled(false);

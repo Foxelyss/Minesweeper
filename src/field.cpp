@@ -17,8 +17,8 @@ Vector2i Field::get_coords_of_cell(int index) {
 
 void Field::reveal(int cell_index) {
 
-  if (field[cell_index].mines_around) {
-    field[cell_index].hidden = false;
+  if (_field[cell_index].mines_around) {
+    _field[cell_index].hidden = false;
     return;
   }
 
@@ -29,16 +29,16 @@ void Field::reveal(int cell_index) {
     int index = cells_to_reveal.front();
     cells_to_reveal.pop();
 
-    if (!field[index].hidden)
+    if (!_field[index].hidden)
       continue;
 
     Vector2i coordinates = get_coords_of_cell(index);
     int x = coordinates.x;
     int y = coordinates.y;
 
-    field[index].hidden = false;
+    _field[index].hidden = false;
 
-    if (field[index].mines_around > 0)
+    if (_field[index].mines_around > 0)
       continue;
 
     if (0 <= x && x < _width - 1)
@@ -54,16 +54,16 @@ void Field::reveal(int cell_index) {
 
 void Field::reveal_all_hidden() {
   for (int i = 0; i < get_cells_quantity(); i++) {
-    if (field[i].hidden) {
-      field[i].hidden = false;
+    if (_field[i].hidden) {
+      _field[i].hidden = false;
     }
   }
 }
 void Field::toggle_flag(int index) {
-  if (field[index].hidden) {
-    field[index].flagged = !field[index].flagged;
+  if (_field[index].hidden) {
+    _field[index].flagged = !_field[index].flagged;
   } else {
-    field[index].flagged = false;
+    _field[index].flagged = false;
   }
 }
 
@@ -73,9 +73,9 @@ void Field::place_mines(int selected_cell = -1) {
 
     do {
       index = random.randi_range(0, _width * _height - 1);
-    } while (field[index].mine || index == selected_cell);
+    } while (_field[index].mine || index == selected_cell);
 
-    field[index].mine = true;
+    _field[index].mine = true;
 
     for (int j = 0; j < 3; j++) {
       int y = index / _width - 1 + j;
@@ -86,18 +86,18 @@ void Field::place_mines(int selected_cell = -1) {
         int x = index % _width - 1 + k;
         if (x < 0 || x >= _width)
           continue;
-        field[get_index_of_cell(x, y)].mines_around += 1;
+        _field[get_index_of_cell(x, y)].mines_around += 1;
       }
     }
   }
 }
 void Field::prepare_field() {
   for (int i = 0; i < _width * _height; i++) {
-    field.push_back(Cell());
+    _field.push_back(Cell());
   }
 }
 
-void Field::clear() { field.clear(); }
+void Field::clear() { _field.clear(); }
 
 void Field::start_game(int selected_cell) {
   clear();
@@ -117,7 +117,7 @@ int Field::see_gameover() {
   int hidden = 0;
 
   for (int i = 0; i < get_cells_quantity(); i++) {
-    auto x = field[i];
+    auto x = _field[i];
     if (x.mine && !x.hidden)
       return 2;
     if (x.hidden && x.mine)
