@@ -26,7 +26,7 @@ class Field : public Node {
 private:
   RandomNumberGenerator _random_generator;
   uint8_t _width, _height;
-  uint8_t _mines_quantity = 6;
+  uint8_t _mines_quantity;
 
   vector<Cell> _field;
 

@@ -17,16 +17,11 @@
 #include "godot_cpp/classes/grid_container.hpp"
 #include "godot_cpp/classes/input.hpp"
 #include "godot_cpp/classes/input_event.hpp"
-#include "godot_cpp/classes/input_event_mouse_motion.hpp"
 #include "godot_cpp/classes/node.hpp"
 #include "godot_cpp/classes/scene_tree.hpp"
-#include "godot_cpp/core/object.hpp"
-#include "godot_cpp/core/property_info.hpp"
 #include "godot_cpp/variant/callable.hpp"
 #include "godot_cpp/variant/node_path.hpp"
 #include "godot_cpp/variant/string.hpp"
-#include "godot_cpp/variant/utility_functions.hpp"
-#include "godot_cpp/variant/variant.hpp"
 #include "godot_cpp/variant/vector2.hpp"
 #include "godot_cpp/variant/vector2i.hpp"
 #include <godot_cpp/classes/button.hpp>
@@ -63,14 +58,15 @@ private:
   StringName _flagging_radio_button_path;
   StringName _back_to_menu_button_path;
 
-  int _first_cell = -1;
-
   Timer *_timer;
 
   AnimationPlayer *_ui_tweener;
   AnimatedSprite2D *_pop_animator;
 
   Array _cells_textures;
+
+  int _first_cell = -1;
+  const int _time_before_timeout = 40 * 60;
 
 public:
   static void _bind_methods();

@@ -6,6 +6,7 @@
 #include "godot_cpp/classes/global_constants.hpp"
 #include "godot_cpp/classes/image.hpp"
 #include "godot_cpp/classes/input_event_mouse_button.hpp"
+#include "godot_cpp/classes/input_event_mouse_motion.hpp"
 #include "godot_cpp/classes/resource_loader.hpp"
 #include "godot_cpp/classes/texture2d.hpp"
 #include "godot_cpp/classes/texture_button.hpp"
@@ -81,10 +82,12 @@ void FieldGrid::_ready() {
   _timer = memnew(Timer);
   add_child(_timer);
   _timer->set_one_shot(true);
-  _timer->set_wait_time(20 * 60);
+  _timer->set_wait_time(_time_before_timeout);
+
+  ResourceLoader *resource_loader = ResourceLoader::get_singleton();
 
   for (int i = 1; i <= 24; i++) {
-    _cells_textures.push_back(ResourceLoader::get_singleton()->load("res://assets/Cell_Page " + Variant(i).stringify() + ".png"));
+    _cells_textures.push_back(resource_loader->load("res://assets/Cell_Page " + Variant(i).stringify() + ".png"));
   }
 
   start_game(_game_field->get_field_resolution(), _game_field->get_mines_quantity());
@@ -106,21 +109,26 @@ void FieldGrid::start_game(Vector2i resolution, int mines_quantity) {
 void FieldGrid::retry_game() {
   _first_cell = -1;
 
+  _game_status_label->set_text("");
+  _mines_around_label->set_text("");
+
   _ui_tweener->play("retry");
 
   for (int i = 0; i < _game_field->get_cells_quantity(); i++) {
-    _grid->get_child(i)->get_node<TextureButton>(".")->set_disabled(false);
+    TextureButton *target = _grid->get_child(i)->get_node<TextureButton>(".");
 
-    int idx = 11;
+    target->set_disabled(false);
+
+    int index = 11;
     if ((i + i / _game_field->get_field_resolution().x) % 2 == 0) {
-      idx = 23;
+      index = 23;
     }
-    _grid->get_child(i)->get_node<TextureButton>(".")->set_texture_normal(_cells_textures[idx]);
+    target->set_texture_normal(_cells_textures[index]);
   }
 }
 
 void FieldGrid::_process(float delta) {
-  int time = int(20 * 60 - _timer->get_time_left());
+  int time = _time_before_timeout - int(_timer->get_time_left());
   int minutes, seconds;
 
   minutes = time / 60;
@@ -128,20 +136,22 @@ void FieldGrid::_process(float delta) {
 
   String time_left;
   if (_timer->get_time_left() == 0) {
-    if (_first_cell == -1) {
-      time_left = "";
-    } else {
-      time_left = tr("TIMEOUT");
-    }
+    time_left = tr("TIMEOUT");
   } else {
     time_left = vformat(tr("TIMECOUNTER"), Variant(minutes).stringify() + ":" + Variant(seconds).stringify());
+  }
+
+  if (_first_cell == -1) {
+    time_left = "";
   }
 
   _time_label->set_text(time_left);
 };
 
 void FieldGrid::_on_button_pressed(InputEvent *event, int index) {
-  if (event->get_class() == "InputEventMouseButton" && event->is_pressed() && !_grid->get_child(index)->get_node<TextureButton>(".")->is_disabled()) {
+  TextureButton *target = _grid->get_child(index)->get_node<TextureButton>(".");
+
+  if (event->get_class() == "InputEventMouseButton" && event->is_pressed() && !target->is_disabled()) {
     InputEventMouseButton *mouse_event = (InputEventMouseButton *)event;
 
     if (mouse_event->get_button_index() == MOUSE_BUTTON_RIGHT || _flagging_radio_button->is_pressed()) {
@@ -159,8 +169,7 @@ void FieldGrid::_on_button_pressed(InputEvent *event, int index) {
       }
 
       if (!_game_field->get_cell(index).flagged) {
-        _pop_animator->set_position(_grid->get_child(index)->get_node<TextureButton>(".")->get_global_position() +
-                                    _grid->get_child(index)->get_node<TextureButton>(".")->get_size() / 2);
+        _pop_animator->set_position(target->get_global_position() + target->get_size() / 2);
 
         _pop_animator->play("popit");
         _game_field->reveal(index);
@@ -236,15 +245,15 @@ void FieldGrid::_input(InputEvent *event) {
   auto input = Input::get_singleton();
   if (event->get_class() == "InputEventMouseMotion" && input->is_action_pressed("move_mode")) {
 
-    auto ev = (InputEventMouseMotion *)event;
-    auto rot = _grid->get_position();
+    auto mouse_event = (InputEventMouseMotion *)event;
+    auto rotation = _grid->get_position();
     Vector2 sizp = _grid->get_size();
     sizp.x /= 2;
     sizp.y /= 2;
 
-    rot.y = Math::clamp<float>(rot.y + ev->get_relative().y, -sizp.y, sizp.y);
-    rot.x = Math::clamp<float>(rot.x + ev->get_relative().x, -sizp.x, sizp.x);
-    _grid->set_position(rot);
+    rotation.y = Math::clamp<float>(rotation.y + mouse_event->get_relative().y, -sizp.y, sizp.y);
+    rotation.x = Math::clamp<float>(rotation.x + mouse_event->get_relative().x, -sizp.x, sizp.x);
+    _grid->set_position(rotation);
   }
 }
 

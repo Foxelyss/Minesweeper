@@ -129,7 +129,7 @@ GameState Field::get_game_state() {
     if (x.hidden)
       hidden += 1;
     if (x.flagged && !x.mine)
-      flagged -= 1;
+      return PLAYING;
   }
 
   if (flagged == _mines_quantity || guessed == _mines_quantity && hidden == _mines_quantity) {
