@@ -9,10 +9,7 @@
 #include <godot_cpp/core/class_db.hpp>
 using namespace godot;
 
-void MainMenu::_bind_methods() {
-  ClassDB::bind_method(D_METHOD("handle_button_press", "index"),
-                       &MainMenu::handle_button_press);
-}
+void MainMenu::_bind_methods() { ClassDB::bind_method(D_METHOD("handle_button_press", "index"), &MainMenu::handle_button_press); }
 
 MainMenu::MainMenu() {}
 
@@ -36,27 +33,29 @@ void MainMenu::_ready() {
 }
 
 void MainMenu::handle_button_press(int index) {
-  get_node<AnimationPlayer>("../../../AnimationPlayer")->play_backwards("in");
-  // while (get_node<AnimationPlayer>("../../../AnimationPlayer")->is_playing())
-  // {
-  // }
+  Vector2i resolution;
+  int mines_quantity;
+
   switch (index) {
   case 0:
-    _game_field->set(Vector2i(8, 8), 6);
-    get_tree()->change_scene_to_file("res://game.tscn");
+    resolution = Vector2i(8, 8);
+    mines_quantity = 6;
     break;
   case 1:
-    _game_field->set(Vector2i(30, 16), 26);
-    get_tree()->change_scene_to_file("res://game.tscn");
+    resolution = Vector2i(30, 16);
+    mines_quantity = 26;
     break;
   case 2:
-    _game_field->set(Vector2i(80, 50), 60);
-    get_tree()->change_scene_to_file("res://game.tscn");
+    resolution = Vector2i(80, 50);
+    mines_quantity = 60;
     break;
   case 3:
     get_tree()->quit();
     break;
   }
+
+  _game_field->set_properties(resolution, mines_quantity);
+  get_tree()->change_scene_to_file("res://game.tscn");
 }
 
 void MainMenu::_process(double delta) {}

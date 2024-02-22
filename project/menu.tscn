@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://nr1nar7gaja1"]
+[gd_scene load_steps=7 format=3 uid="uid://cfw1q4ifay3ms"]
 
 [ext_resource type="Theme" uid="uid://m313wodg5ka8" path="res://game_theme.tres" id="1_0vs6c"]
 
@@ -99,6 +99,7 @@ layout_mode = 2
 theme = ExtResource("1_0vs6c")
 theme_override_font_sizes/font_size = 36
 text = "GAMETITLE"
+horizontal_alignment = 1
 
 [node name="Buttons" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2

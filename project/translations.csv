@@ -1,10 +1,10 @@
 keys,en,ru
-MINESAROUND,Mines in field are,Мин вокруг:
+MINESAROUND,Mines in field are %s,Мин вокруг: %s
 BACKTOMENU,Back to menu,Выход в меню
 RETRY,Retry,Попробовать снова
 GAMETITLE,Minesweeper,Сапёр
 FLAGGINGMODE,Cell flagging mode,Режим ставки флажка на клетку
-TIMECOUNTER,You’re solving this field for  ,Ты решаешь это поле уже 
+TIMECOUNTER,Time solving: ,Затраченное время: %s
 WIN,You win.,Вы выиграли!
 LOSE,You lose.,Вы проиграли!
 HELP,Help,Помощь

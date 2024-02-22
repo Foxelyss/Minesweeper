@@ -11,9 +11,7 @@ Field::~Field(){};
 
 int Field::get_index_of_cell(int x, int y) { return x + y * _width; }
 
-Vector2i Field::get_coords_of_cell(int index) {
-  return Vector2i(index % _width, index / _width);
-}
+Vector2i Field::get_coords_of_cell(int index) { return Vector2i(index % _width, index / _width); }
 
 void Field::reveal(int cell_index) {
 
@@ -56,6 +54,10 @@ void Field::reveal_all_hidden() {
   for (int i = 0; i < get_cells_quantity(); i++) {
     if (_field[i].hidden) {
       _field[i].hidden = false;
+
+      if (_field[i].flagged && !_field[i].mine) {
+        _field[i].flagged = false;
+      }
     }
   }
 }
@@ -72,7 +74,7 @@ void Field::place_mines(int selected_cell = -1) {
     int index = 0;
 
     do {
-      index = random.randi_range(0, _width * _height - 1);
+      index = _random_generator.randi_range(0, _width * _height - 1);
     } while (_field[index].mine || index == selected_cell);
 
     _field[index].mine = true;
@@ -105,13 +107,13 @@ void Field::start_game(int selected_cell) {
   place_mines(selected_cell);
 }
 
-void Field::set(Vector2i resolution, int mines_quantity) {
+void Field::set_properties(Vector2i resolution, int mines_quantity) {
   _width = resolution.x;
   _height = resolution.y;
   _mines_quantity = mines_quantity;
 }
 
-int Field::see_gameover() {
+GameState Field::get_game_state() {
   int flagged = 0;
   int guessed = 0;
   int hidden = 0;
@@ -119,7 +121,7 @@ int Field::see_gameover() {
   for (int i = 0; i < get_cells_quantity(); i++) {
     auto x = _field[i];
     if (x.mine && !x.hidden)
-      return 2;
+      return LOST;
     if (x.hidden && x.mine)
       guessed += 1;
     if (x.flagged && x.mine)
@@ -130,10 +132,14 @@ int Field::see_gameover() {
       flagged -= 1;
   }
 
-  if (flagged == _mines_quantity ||
-      guessed == _mines_quantity && hidden == _mines_quantity) {
-    return 1;
+  if (flagged == _mines_quantity || guessed == _mines_quantity && hidden == _mines_quantity) {
+    return WIN;
   }
 
-  return 0;
+  return PLAYING;
 }
+
+Cell Field::get_cell(int index) { return _field[index]; }
+int Field::get_mines_quantity() { return _mines_quantity; }
+Vector2i Field::get_field_resolution() { return Vector2i(_width, _height); }
+int Field::get_cells_quantity() { return _width * _height; }

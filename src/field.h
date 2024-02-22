@@ -15,6 +15,7 @@ typedef struct {
   bool flagged = false;
 } Cell;
 
+enum GameState { PLAYING, WIN, LOST };
 using namespace std;
 
 namespace godot {
@@ -23,7 +24,7 @@ class Field : public Node {
   GDCLASS(Field, Node);
 
 private:
-  RandomNumberGenerator random;
+  RandomNumberGenerator _random_generator;
   uint8_t _width, _height;
   uint8_t _mines_quantity = 6;
 
@@ -46,18 +47,18 @@ public:
   ~Field();
 
   void start_game(int selected_cell = -1);
-  void set(Vector2i resolution, int mines_quantity);
+  void set_properties(Vector2i resolution, int mines_quantity);
   void reveal(int cell_index);
   void reveal_all_hidden();
 
   void toggle_flag(int index);
 
-  int see_gameover();
+  GameState get_game_state();
 
-  Cell get_cell(int index) { return _field[index]; }
-  int get_mines_quantity() { return _mines_quantity; }
-  Vector2i get_field_resolution() { return Vector2i(_width, _height); }
-  int get_cells_quantity() { return _width * _height; }
+  Cell get_cell(int index);
+  int get_mines_quantity();
+  Vector2i get_field_resolution();
+  int get_cells_quantity();
 };
 
 } // namespace godot

@@ -42,6 +42,7 @@ flag={
 [internationalization]
 
 locale/translations=PackedStringArray("res://translations.en.translation", "res://translations.ru.translation")
+locale/test="ru"
 
 [rendering]
 

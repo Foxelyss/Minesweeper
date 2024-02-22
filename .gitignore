@@ -7,3 +7,5 @@ project/.import
 **/*.dll
 project/.godot
 **/*.import
+**/*.so
+**/*.wasm
