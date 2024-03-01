@@ -9,3 +9,4 @@ project/.godot
 **/*.import
 **/*.so
 **/*.wasm
+windows/
