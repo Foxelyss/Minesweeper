@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://b81dt7bbbxlb6"]
+[gd_scene load_steps=32 format=3 uid="uid://b81dt7bbbxlb6"]
 
 [ext_resource type="Theme" uid="uid://m313wodg5ka8" path="res://game_theme.tres" id="1_mbmnw"]
 [ext_resource type="Texture2D" uid="uid://dw25t0pskt00m" path="res://assets/pop_animation/pop_Page 1.png" id="3_oryvk"]
@@ -13,125 +13,87 @@
 [ext_resource type="Texture2D" uid="uid://dvxkb4mu26bdv" path="res://assets/pop_animation/pop_Page 10.png" id="12_bubr1"]
 [ext_resource type="Texture2D" uid="uid://dixgaisdghnic" path="res://assets/pop_animation/pop_Page 11.png" id="13_4jyya"]
 [ext_resource type="Texture2D" uid="uid://bqflrsi4vvma8" path="res://assets/pop_animation/pop_Page 12.png" id="14_43t6i"]
+[ext_resource type="Material" uid="uid://bxqghn4ny4r14" path="res://grass.tres" id="14_hktgb"]
+[ext_resource type="Material" uid="uid://dytyk45jg0k2i" path="res://water.tres" id="15_vhhw3"]
+[ext_resource type="Texture2D" uid="uid://b8m2pd0it5oks" path="res://assets/tiles/ground.png" id="16_aulw3"]
 
-[sub_resource type="Animation" id="Animation_sxns2"]
-resource_name = "game_over"
-step = 0.0997407
-
-[sub_resource type="Animation" id="Animation_hpkgp"]
-resource_name = "popin"
-length = 0.4
-tracks/0/type = "value"
+[sub_resource type="Animation" id="Animation_ia1ov"]
+resource_name = "to_game"
+length = 0.5
+tracks/0/type = "position_3d"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("MarginContainer:position")
-tracks/0/interp = 1
+tracks/0/path = NodePath("Camera3D")
+tracks/0/interp = 2
 tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(0, -900), Vector2(0, 0)]
-}
+tracks/0/keys = PackedFloat32Array(0, 1, -1.19829, 2.0899, 3.32674, 0.1, 1, -1.198, -3.796, 3.327, 0.2, 1, -1.19829, -3.79553, 0.306125)
 tracks/1/type = "value"
 tracks/1/imported = false
-tracks/1/enabled = false
-tracks/1/path = NodePath("DraggableSpace:position")
+tracks/1/enabled = true
+tracks/1/path = NodePath("Menu:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1.86607),
 "update": 0,
-"values": [Vector2(-900, 324), Vector2(-900, 324)]
+"values": [Vector2(0, 0), Vector2(0, -1000)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("ColorRect:color")
+tracks/2/path = NodePath("Menu:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.4),
+"times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0.509804, 0.807843, 0.980392, 1), Color(0.121569, 0.533333, 0.72549, 1)]
+"update": 1,
+"values": [true, false]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("GPUParticles2D:amount")
+tracks/3/path = NodePath("MainGame:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 2),
 "update": 1,
-"values": [34, 60]
+"values": [false, true]
 }
-
-[sub_resource type="Animation" id="Animation_uwq2i"]
-resource_name = "retry"
-length = 0.4
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ColorRect:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4),
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("MainGame/DraggableSpace:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.1, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(0.509804, 0.807843, 0.980392, 1), Color(0.121569, 0.533333, 0.72549, 1)]
+"values": [Vector2(0, 0), Vector2(1, 1)]
 }
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("GPUParticles2D:amount")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [34, 60]
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = false
+tracks/5/path = NodePath("MainGame/DraggableSpace")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"reset_size"
+}]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_e06fh"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2tner"]
 _data = {
-"game_over": SubResource("Animation_sxns2"),
-"popin": SubResource("Animation_hpkgp"),
-"retry": SubResource("Animation_uwq2i")
+"to_game": SubResource("Animation_ia1ov")
 }
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_x6fef"]
-particle_flag_disable_z = true
-emission_shape_scale = Vector3(8.14, 1, 1)
-emission_shape = 1
-emission_sphere_radius = 118.58
-velocity_pivot = Vector3(0, -1, 0)
-spread = 25.306
-initial_velocity_min = 73.17
-initial_velocity_max = 276.42
-gravity = Vector3(0, 98, 0)
-turbulence_enabled = true
-turbulence_noise_strength = 3.79
-turbulence_noise_speed = Vector3(0, -2, 0)
-turbulence_influence_min = 0.031
-turbulence_influence_max = 0.123
-
-[sub_resource type="Gradient" id="Gradient_va8lu"]
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_ov5aj"]
-gradient = SubResource("Gradient_va8lu")
-width = 16
-height = 16
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(0.8, 0.2)
-metadata/_snap_enabled = true
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_u0d3t"]
 animations = [{
@@ -185,7 +147,66 @@ animations = [{
 "speed": 90.0
 }]
 
-[node name="Game" type="Control"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8qvwb"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_obk0b"]
+albedo_texture = ExtResource("16_aulw3")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_owhxb"]
+albedo_texture = ExtResource("16_aulw3")
+uv1_scale = Vector3(19, 19, 19)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yt4v8"]
+albedo_texture = ExtResource("16_aulw3")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5uaek"]
+albedo_texture = ExtResource("16_aulw3")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7f14y"]
+albedo_texture = ExtResource("16_aulw3")
+uv1_scale = Vector3(4, 3, 6.845)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_v183o"]
+size = Vector2(22.365, 3.695)
+
+[sub_resource type="Curve3D" id="Curve3D_81g3k"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -11.2002, -0.0327215, 0.451694, -2.08075, -0.120824, 0.970361, 2.08075, 0.120824, -0.970361, 0.568622, 0.278664, -1.06563, 0, 0, 0, 0, 0, 0, 11.4043, 1.34501, -5.4622),
+"tilts": PackedFloat32Array(0, 0.13876, 0.114903)
+}
+point_count = 3
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_j2i6w"]
+sky_top_color = Color(0.356863, 0.65098, 0.92549, 1)
+sky_horizon_color = Color(0.713726, 0.721569, 0.733333, 1)
+ground_bottom_color = Color(0, 0.447265, 0.453549, 1)
+ground_curve = 0.0162451
+
+[sub_resource type="Sky" id="Sky_jgpib"]
+sky_material = SubResource("ProceduralSkyMaterial_j2i6w")
+
+[sub_resource type="Environment" id="Environment_sdnow"]
+background_mode = 2
+sky = SubResource("Sky_jgpib")
+ambient_light_source = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2wlgo"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[node name="Game" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.19829, 2.0899, 3.32674)
+current = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_2tner")
+}
+
+[node name="Menu" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -193,21 +214,95 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_e06fh")
-}
-
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="CenterContainer" type="CenterContainer" parent="Menu"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.121569, 0.533333, 0.72549, 1)
+theme = ExtResource("1_mbmnw")
 
-[node name="DraggableSpace" type="CenterContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu/CenterContainer"]
+layout_mode = 2
+theme = ExtResource("1_mbmnw")
+theme_override_constants/separation = 75
+
+[node name="Label" type="Label" parent="Menu/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_mbmnw")
+theme_override_font_sizes/font_size = 36
+text = "GAMETITLE"
+horizontal_alignment = 1
+
+[node name="Buttons" type="VBoxContainer" parent="Menu/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_mbmnw")
+
+[node name="Button" type="Button" parent="Menu/CenterContainer/VBoxContainer/Buttons"]
+layout_mode = 2
+theme = ExtResource("1_mbmnw")
+text = "EASY"
+
+[node name="Button2" type="Button" parent="Menu/CenterContainer/VBoxContainer/Buttons"]
+layout_mode = 2
+theme = ExtResource("1_mbmnw")
+text = "MEDIUM"
+
+[node name="Button3" type="Button" parent="Menu/CenterContainer/VBoxContainer/Buttons"]
+layout_mode = 2
+theme = ExtResource("1_mbmnw")
+text = "HARD"
+
+[node name="Button4" type="Button" parent="Menu/CenterContainer/VBoxContainer/Buttons"]
+layout_mode = 2
+theme = ExtResource("1_mbmnw")
+text = "QUIT"
+
+[node name="MainMenu2" type="MainMenu" parent="Menu/CenterContainer/VBoxContainer"]
+process_mode = 4
+
+[node name="MarginContainer2" type="MarginContainer" parent="Menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Control" type="Control" parent="Menu/MarginContainer2"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Copyright" type="Label" parent="Menu/MarginContainer2/Control"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -90.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("1_mbmnw")
+text = "COPYRIGHT"
+
+[node name="MainGame" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DraggableSpace" type="CenterContainer" parent="MainGame"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -217,23 +312,13 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_mbmnw")
+use_top_left = true
 
-[node name="GameGrid" type="GridContainer" parent="DraggableSpace"]
+[node name="GameGrid" type="GridContainer" parent="MainGame/DraggableSpace"]
 layout_mode = 2
 theme = ExtResource("1_mbmnw")
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
-position = Vector2(492, -43)
-amount = 60
-process_material = SubResource("ParticleProcessMaterial_x6fef")
-texture = SubResource("GradientTexture2D_ov5aj")
-lifetime = 16.0
-speed_scale = 3.41
-randomness = 0.61
-visibility_rect = Rect2(0, 0, 900, 600)
-trail_lifetime = 6.41
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MainGame"]
 position = Vector2(-333, -333)
 scale = Vector2(0.161209, 0.161209)
 sprite_frames = SubResource("SpriteFrames_u0d3t")
@@ -241,7 +326,7 @@ animation = &"popit"
 frame = 12
 frame_progress = 1.0
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="MainGame"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -255,19 +340,19 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="Control" type="Control" parent="MarginContainer"]
+[node name="Control" type="Control" parent="MainGame/MarginContainer"]
 layout_mode = 2
 mouse_filter = 2
 theme = ExtResource("1_mbmnw")
 
-[node name="MinesCounter" type="Label" parent="MarginContainer/Control"]
+[node name="MinesCounter" type="Label" parent="MainGame/MarginContainer/Control"]
 layout_mode = 1
 offset_right = 120.0
 offset_bottom = 23.0
 theme = ExtResource("1_mbmnw")
 language = "ru"
 
-[node name="TimeCounter" type="Label" parent="MarginContainer/Control"]
+[node name="TimeCounter" type="Label" parent="MainGame/MarginContainer/Control"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -280,7 +365,7 @@ text = "
 "
 language = "ru"
 
-[node name="BackButton" type="Button" parent="MarginContainer/Control"]
+[node name="BackButton" type="Button" parent="MainGame/MarginContainer/Control"]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -291,7 +376,7 @@ grow_vertical = 0
 theme = ExtResource("1_mbmnw")
 text = "BACKTOMENU"
 
-[node name="FlaggingMode" type="CheckButton" parent="MarginContainer/Control"]
+[node name="FlaggingMode" type="CheckButton" parent="MainGame/MarginContainer/Control"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -306,7 +391,7 @@ grow_vertical = 0
 theme = ExtResource("1_mbmnw")
 text = "FLAGGINGMODE"
 
-[node name="RetryButton" type="Button" parent="MarginContainer/Control"]
+[node name="RetryButton" type="Button" parent="MainGame/MarginContainer/Control"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -320,7 +405,7 @@ grow_vertical = 0
 theme = ExtResource("1_mbmnw")
 text = "RETRY"
 
-[node name="GameStatusLabel" type="Label" parent="MarginContainer/Control"]
+[node name="GameStatusLabel" type="Label" parent="MainGame/MarginContainer/Control"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -331,7 +416,7 @@ offset_bottom = 23.0
 grow_horizontal = 2
 theme = ExtResource("1_mbmnw")
 
-[node name="FieldGrid" type="FieldGrid" parent="."]
+[node name="FieldGrid" type="FieldGrid" parent="MainGame"]
 mines_around_label = "../MarginContainer/Control/MinesCounter"
 time_label = "../MarginContainer/Control/TimeCounter"
 retry_button = "../MarginContainer/Control/RetryButton"
@@ -339,3 +424,170 @@ flagging_radio-button = "../MarginContainer/Control/FlaggingMode"
 game_status_label = "../MarginContainer/Control/GameStatusLabel"
 back_to_menu_button = "../MarginContainer/Control/BackButton"
 process_mode = 4
+
+[node name="PopupMenu" type="PopupMenu" parent="MainGame"]
+initial_position = 1
+size = Vector2i(500, 255)
+theme = ExtResource("1_mbmnw")
+
+[node name="ui" type="VBoxContainer" parent="MainGame/PopupMenu"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="MainGame/PopupMenu/ui"]
+layout_mode = 2
+text = "RECORDS"
+horizontal_alignment = 1
+
+[node name="Records" type="VBoxContainer" parent="MainGame/PopupMenu/ui"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MainGame/PopupMenu/ui/Records"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="MainGame/PopupMenu/ui/Records"]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="MainGame/PopupMenu/ui/Records"]
+layout_mode = 2
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 0.982609, -0.185684, 0, 0.185684, 0.982609, -4.66202, 0.792604, -7.45486)
+material_override = SubResource("StandardMaterial3D_8qvwb")
+size = Vector3(31.0868, 1.54251, 19.18)
+material = ExtResource("14_hktgb")
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="CSGCombiner3D"]
+transform = Transform3D(1.03811, 0, 0, 0, 1.03811, 0, 0, 0, 1.03811, 0, -0.731036, -1.23707)
+operation = 2
+polygon = PackedVector2Array(0.462885, 0.0813417, -0.0336916, 0.0772958, -0.524172, 1.13021, 1.05148, 0.971574)
+mode = 2
+path_node = NodePath("../../Path3D")
+path_interval_type = 0
+path_interval = 0.48
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.58
+path_joined = false
+smooth_faces = true
+material = ExtResource("15_vhhw3")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -1.80015, 9.82715)
+material_override = SubResource("StandardMaterial3D_obk0b")
+size = Vector3(19, 19, 19)
+material = SubResource("StandardMaterial3D_owhxb")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D/CSGBox3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.29343, 2.91587, -5.82257)
+operation = 2
+size = Vector3(8, 14, 8)
+material = SubResource("StandardMaterial3D_yt4v8")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.952023, 0, 0.306028, 0, 1, 0, -0.306028, 0, 0.952023, 5.54474, 1.5, -1.19866)
+material_override = SubResource("StandardMaterial3D_5uaek")
+size = Vector3(7, 4, 3)
+material = SubResource("StandardMaterial3D_7f14y")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.852622, 0, 0.522528, 0, 1, 0, -0.522528, 0, 0.852622, 3.72928, 1.5, -6.06764)
+size = Vector3(7.14893, 4, 2.99878)
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.470383, -4.04322, 0.00667095)
+size = Vector3(10.1509, 4.7312, 3.29007)
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.872009, -4.04896, 0.265616)
+operation = 2
+size = Vector3(8.49426, 3.94287, 3.29007)
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.957435, 0, -0.288648, 0, 1, 0, 0.288648, 0, 0.957435, -4.63344, 3.11188, -7.55531)
+size = Vector3(13.4548, 7.22375, 2.99878)
+
+[node name="CSGBox3D9" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.517818, 0, -0.855491, 0, 1, 0, 0.855491, 0, 0.517818, -13.0652, 1.36106, -4.18552)
+size = Vector3(13.4548, 3.7221, 2.99878)
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="CSGCombiner3D"]
+
+[node name="CSGBox3D9" type="CSGBox3D" parent="CSGCombiner3D/CSGCombiner3D"]
+transform = Transform3D(0.893701, 0, 0.448664, 0, 1, 0, -0.448664, 0, 0.893701, 1.83616, 0.858459, -3.03513)
+size = Vector3(0.253906, 2.71692, 0.0919189)
+
+[node name="CSGBox3D16" type="CSGBox3D" parent="CSGCombiner3D/CSGCombiner3D"]
+transform = Transform3D(0.999939, 0, -0.0110651, 0, 1, 0, 0.0110651, 0, 0.999939, 1.86301, 1.81088, -2.37586)
+size = Vector3(0.346924, 0.812073, 1.90401)
+
+[node name="CSGBox3D10" type="CSGBox3D" parent="CSGCombiner3D/CSGCombiner3D"]
+transform = Transform3D(0.893701, 0, 0.448664, 0, 1, 0, -0.448664, 0, 0.893701, 1.83616, 0.858459, -2.8429)
+size = Vector3(0.253906, 2.71692, 0.0919189)
+
+[node name="CSGBox3D11" type="CSGBox3D" parent="CSGCombiner3D/CSGCombiner3D"]
+transform = Transform3D(0.893701, 0, 0.448664, 0, 1, 0, -0.448664, 0, 0.893701, 1.83616, 0.858459, -2.60479)
+size = Vector3(0.253906, 2.71692, 0.0919189)
+
+[node name="CSGBox3D12" type="CSGBox3D" parent="CSGCombiner3D/CSGCombiner3D"]
+transform = Transform3D(0.893701, 0, 0.448664, 0, 1, 0, -0.448664, 0, 0.893701, 1.83616, 0.858459, -2.38451)
+size = Vector3(0.253906, 2.71692, 0.0919189)
+
+[node name="CSGBox3D13" type="CSGBox3D" parent="CSGCombiner3D/CSGCombiner3D"]
+transform = Transform3D(0.893701, 0, 0.448664, 0, 1, 0, -0.448664, 0, 0.893701, 1.83616, 0.858459, -2.16869)
+size = Vector3(0.253906, 2.71692, 0.0919189)
+
+[node name="CSGBox3D14" type="CSGBox3D" parent="CSGCombiner3D/CSGCombiner3D"]
+transform = Transform3D(0.893701, 0, 0.448664, 0, 1, 0, -0.448664, 0, 0.893701, 1.83616, 0.858459, -1.92714)
+size = Vector3(0.253906, 2.71692, 0.0919189)
+
+[node name="CSGBox3D15" type="CSGBox3D" parent="CSGCombiner3D/CSGCombiner3D"]
+transform = Transform3D(0.893701, 0, 0.448664, 0, 1, 0, -0.448664, 0, 0.893701, 1.83616, 0.858459, -1.71557)
+size = Vector3(0.253906, 2.71692, 0.0919189)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGCombiner3D/CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 1.87632, 2.23434, -2.34649)
+operation = 2
+radius = 0.681791
+height = 0.486902
+sides = 17
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 0.977999, -0.208612, 0, 0.208612, 0.977999, 0, 0.468972, -2.01429)
+material_override = ExtResource("15_vhhw3")
+mesh = SubResource("PlaneMesh_v183o")
+
+[node name="Path3D" type="Path3D" parent="."]
+curve = SubResource("Curve3D_81g3k")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_sdnow")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(-0.252638, 0.619081, -0.743581, 0.098205, 0.780949, 0.616826, 0.962564, 0.0828104, -0.258094, 0, 0, 0)
+shadow_enabled = true
+
+[node name="CSGCombiner3D2" type="CSGCombiner3D" parent="."]
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="CSGCombiner3D2"]
+transform = Transform3D(0.869135, 0, 0, 0, 0.869497, 0, 0, 0, 7.02621, -1.15454, -3.66084, -1.21113)
+size = Vector3(7.28292, 2.9303, 0.144653)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="CSGCombiner3D2/CSGBox3D5"]
+transform = Transform3D(1.20053, 0, 0, 0, 1.15213, 0, 0, 0, 0.320551, 0, 0, 0.00373086)
+operation = 1
+size = Vector3(7.28292, 2.9303, 0.11969)
+material = SubResource("StandardMaterial3D_2wlgo")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.79942, -5.69278, -1.1896)
+size = Vector3(3.19107, 1, 1)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D2"]
+transform = Transform3D(1, 0, 0, 0, 0.690062, 0.72375, 0, -0.72375, 0.690062, -2.79942, -5.18121, -0.580923)
+operation = 2
+size = Vector3(3.19107, 1, 1)

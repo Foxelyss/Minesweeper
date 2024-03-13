@@ -3,15 +3,20 @@
 #include "field.h"
 #include "godot_cpp/classes/animated_sprite2d.hpp"
 #include "godot_cpp/classes/animation_player.hpp"
+#include "godot_cpp/classes/file_access.hpp"
 #include "godot_cpp/classes/global_constants.hpp"
 #include "godot_cpp/classes/image.hpp"
 #include "godot_cpp/classes/input_event_mouse_button.hpp"
 #include "godot_cpp/classes/input_event_mouse_motion.hpp"
+#include "godot_cpp/classes/json.hpp"
+#include "godot_cpp/classes/popup_menu.hpp"
 #include "godot_cpp/classes/resource_loader.hpp"
 #include "godot_cpp/classes/texture2d.hpp"
 #include "godot_cpp/classes/texture_button.hpp"
+#include "godot_cpp/classes/v_box_container.hpp"
 #include "godot_cpp/core/memory.hpp"
 #include "godot_cpp/variant/string.hpp"
+#include "godot_cpp/variant/string_name.hpp"
 #include "godot_cpp/variant/utility_functions.hpp"
 #include "godot_cpp/variant/variant.hpp"
 #include "godot_cpp/variant/vector2.hpp"
@@ -74,9 +79,7 @@ void FieldGrid::_ready() {
   _game_field = get_node<Field>("/root/FieldRepresenter");
   _grid = get_node<GridContainer>("../DraggableSpace/GameGrid");
 
-  _ui_tweener = get_node<AnimationPlayer>("../AnimationPlayer");
-  _ui_tweener->play("popin");
-
+  _ui_tweener = get_node<AnimationPlayer>("/root/Game/AnimationPlayer");
   _pop_animator = get_node<AnimatedSprite2D>("../AnimatedSprite2D");
 
   _timer = memnew(Timer);
@@ -89,20 +92,114 @@ void FieldGrid::_ready() {
   for (int i = 1; i <= 24; i++) {
     _cells_textures.push_back(resource_loader->load("res://assets/Cell_Page " + Variant(i).stringify() + ".png"));
   }
-
-  start_game(_game_field->get_field_resolution(), _game_field->get_mines_quantity());
 }
 
-void FieldGrid::start_game(Vector2i resolution, int mines_quantity) {
+void FieldGrid::create_records_file() {
+  auto d = FileAccess::open(RECORDS_FILENAME, FileAccess::ModeFlags::WRITE);
+  d->store_string("[[0,0,0],[0,0,0],[0,0,0]]");
+}
+
+void FieldGrid::show_records() {
+  if (!FileAccess::file_exists(RECORDS_FILENAME)) {
+    create_records_file();
+  }
+  auto d = FileAccess::open(RECORDS_FILENAME, FileAccess::ModeFlags::READ);
+
+  // while (d->get_position() < d->get_length()) {
+  //
+  //}
+  JSON json;
+  Error a = json.parse(d->get_line());
+  Array aa = json.get_data();
+  PopupMenu *menu = get_node<PopupMenu>("../PopupMenu");
+  VBoxContainer *records = menu->get_node<VBoxContainer>("ui/Records");
+  int index = 0;
+
+  switch (_game_field->get_mines_quantity()) {
+  case 26:
+    index = 1;
+    break;
+  case 60:
+    index = 2;
+  }
+
+  auto column = ((Array)aa[index]);
+
+  for (int i = 0; i < 3; i++) {
+    ((Label *)records->get_child(i))->set_text(column[i]);
+  }
+
+  menu->show();
+
+  for (int i = 0; i < aa.size(); i++) {
+    for (int y = 0; y < ((Array)aa[i]).size(); y++) {
+      UtilityFunctions::print(((Array)aa[i])[y]);
+    }
+    UtilityFunctions::print(aa[i].get_type_name(aa[i].get_type()));
+  }
+
+  UtilityFunctions::print(aa[0].stringify(), Variant((int)a).stringify(), "sadadsd");
+}
+
+void FieldGrid::save_record(int time) {
+  if (!FileAccess::file_exists(RECORDS_FILENAME)) {
+    create_records_file();
+  }
+  auto d = FileAccess::open(RECORDS_FILENAME, FileAccess::ModeFlags::READ);
+  // while (d->get_position() < d->get_length()) {
+  //
+  //}
+  JSON json;
+  Error a = json.parse(d->get_line());
+  Array aa = json.get_data();
+  int index = 0;
+
+  switch (_game_field->get_mines_quantity()) {
+  case 26:
+    index = 1;
+    break;
+  case 60:
+    index = 2;
+  }
+  auto column = ((Array)aa[index]);
+
+  for (int y = 0; y < column.size(); y++) {
+    if ((int)column[y] < time) {
+      column[y] = time;
+      break;
+    }
+
+    UtilityFunctions::print(column[y]);
+  }
+  d->close();
+  d = FileAccess::open(RECORDS_FILENAME, FileAccess::ModeFlags::WRITE_READ);
+
+  d->store_string(json.stringify(aa));
+  UtilityFunctions::print(aa[0].stringify(), Variant((int)a).stringify(), "saved!");
+}
+
+void FieldGrid::start_game() {
+  show_records();
+  Vector2i resolution = _game_field->get_field_resolution();
   _grid->set_columns(resolution.x);
+
+  for (int i = 0; i < _grid->get_child_count(); i++) {
+    _grid->get_child(i)->queue_free();
+  }
 
   for (int i = 0; i < _game_field->get_cells_quantity(); i++) {
     TextureButton *button = memnew(TextureButton());
     _grid->add_child(button);
 
     button->connect("gui_input", Callable(this, "on_button_pressed").bind(i));
-  }
 
+    int index = 11;
+    if ((i + i / _game_field->get_field_resolution().x) % 2 == 0) {
+      index = 23;
+    }
+    button->set_texture_normal(_cells_textures[index]);
+  }
+  // call_deferred("retry_game");
   retry_game();
 }
 
@@ -111,8 +208,6 @@ void FieldGrid::retry_game() {
 
   _game_status_label->set_text("");
   _mines_around_label->set_text("");
-
-  _ui_tweener->play("retry");
 
   for (int i = 0; i < _game_field->get_cells_quantity(); i++) {
     TextureButton *target = _grid->get_child(i)->get_node<TextureButton>(".");
@@ -220,12 +315,12 @@ void FieldGrid::update_game_status() {
   if (game_state != PLAYING) {
     _timer->set_paused(true);
     _game_field->reveal_all_hidden();
-    _ui_tweener->play_backwards("retry");
   }
 
   switch (game_state) {
   case WIN:
     _game_status_label->set_text(tr("WIN"));
+    save_record(_time_before_timeout - _timer->get_time_left());
     break;
   case LOST:
     _game_status_label->set_text(tr("LOSE"));
@@ -236,10 +331,7 @@ void FieldGrid::update_game_status() {
   }
 }
 
-void FieldGrid::go_to_menu() {
-  get_tree()->change_scene_to_file("res://menu.tscn");
-  _ui_tweener->play_backwards("popin");
-}
+void FieldGrid::go_to_menu() { get_node<AnimationPlayer>("/root/Game/AnimationPlayer")->play_backwards("to_game"); }
 
 void FieldGrid::_input(InputEvent *event) {
   auto input = Input::get_singleton();

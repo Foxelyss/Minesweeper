@@ -1,4 +1,5 @@
 #include "menu.h"
+#include "field_grid.h"
 #include "godot_cpp/classes/animation_player.hpp"
 #include "godot_cpp/classes/button.hpp"
 #include "godot_cpp/classes/engine.hpp"
@@ -29,7 +30,7 @@ void MainMenu::_ready() {
   }
 
   _game_field = get_node<Field>("/root/FieldRepresenter");
-  get_node<AnimationPlayer>("../../../AnimationPlayer")->play("in");
+  // get_node<AnimationPlayer>("../../../../AnimationPlayer")->play("in");
 }
 
 void MainMenu::handle_button_press(int index) {
@@ -54,8 +55,9 @@ void MainMenu::handle_button_press(int index) {
     break;
   }
 
+  get_node<AnimationPlayer>("/root/Game/AnimationPlayer")->set_current_animation("to_game");
   _game_field->set_properties(resolution, mines_quantity);
-  get_tree()->change_scene_to_file("res://game.tscn");
+  get_node<FieldGrid>("/root/Game/MainGame/FieldGrid")->start_game();
 }
 
 void MainMenu::_process(double delta) {}

@@ -66,7 +66,9 @@ private:
   Array _cells_textures;
 
   int _first_cell = -1;
-  const int _time_before_timeout = 40 * 60;
+  const int _time_before_timeout = 4 * 60;
+
+  const StringName RECORDS_FILENAME = "user://records.json";
 
 public:
   static void _bind_methods();
@@ -79,11 +81,13 @@ public:
   void _input(InputEvent *event);
   void _on_button_pressed(InputEvent *event, int index);
 
-  void start_game(Vector2i resolution, int mines_quantity);
+  void start_game();
   void update_grid();
   void update_game_status();
+  void create_records_file();
   void retry_game();
-
+  void show_records();
+  void save_record(int time);
   void go_to_menu();
 
   String get_mines_around_label();

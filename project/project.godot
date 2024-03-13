@@ -15,7 +15,7 @@ config/name_localized={
 "ru_RU": "Сапёр"
 }
 config/version="v1.b"
-run/main_scene="res://menu.tscn"
+run/main_scene="res://game.tscn"
 config/features=PackedStringArray("4.3")
 boot_splash/bg_color=Color(0.423529, 0.815686, 0.976471, 1)
 boot_splash/image="res://splash.png"
@@ -46,4 +46,5 @@ locale/test="ru"
 
 [rendering]
 
-renderer/rendering_method="gl_compatibility"
+renderer/rendering_method="mobile"
+occlusion_culling/use_occlusion_culling=true
