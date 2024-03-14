@@ -9,8 +9,10 @@
 #include "godot_cpp/classes/input_event_mouse_button.hpp"
 #include "godot_cpp/classes/input_event_mouse_motion.hpp"
 #include "godot_cpp/classes/json.hpp"
+#include "godot_cpp/classes/label.hpp"
 #include "godot_cpp/classes/popup_menu.hpp"
 #include "godot_cpp/classes/resource_loader.hpp"
+#include "godot_cpp/classes/tab_container.hpp"
 #include "godot_cpp/classes/texture2d.hpp"
 #include "godot_cpp/classes/texture_button.hpp"
 #include "godot_cpp/classes/v_box_container.hpp"
@@ -99,6 +101,18 @@ void FieldGrid::create_records_file() {
   d->store_string("[[0,0,0],[0,0,0],[0,0,0]]");
 }
 
+int FieldGrid::get_game_category() {
+  switch (_game_field->get_mines_quantity()) {
+  case 26:
+    return 1;
+    break;
+  case 60:
+    return 2;
+  }
+
+  return 0;
+}
+
 void FieldGrid::show_records() {
   if (!FileAccess::file_exists(RECORDS_FILENAME)) {
     create_records_file();
@@ -111,22 +125,18 @@ void FieldGrid::show_records() {
   JSON json;
   Error a = json.parse(d->get_line());
   Array aa = json.get_data();
-  PopupMenu *menu = get_node<PopupMenu>("../PopupMenu");
-  VBoxContainer *records = menu->get_node<VBoxContainer>("ui/Records");
-  int index = 0;
-
-  switch (_game_field->get_mines_quantity()) {
-  case 26:
-    index = 1;
-    break;
-  case 60:
-    index = 2;
-  }
+  Popup *menu = get_node<Popup>("../PopupMenu");
+  TabContainer *records = menu->get_node<TabContainer>("ui/Records");
+  int index = get_game_category();
 
   auto column = ((Array)aa[index]);
 
-  for (int i = 0; i < 3; i++) {
-    ((Label *)records->get_child(i))->set_text(column[i]);
+  for (int j = 0; j < 3; j++) {
+    Node *group = records->get_child(j);
+
+    for (int i = 0; i < 3; i++) {
+      ((Label *)group->get_child(i))->set_text(((Array)aa[j])[i]);
+    }
   }
 
   menu->show();
@@ -152,15 +162,8 @@ void FieldGrid::save_record(int time) {
   JSON json;
   Error a = json.parse(d->get_line());
   Array aa = json.get_data();
-  int index = 0;
+  int index = get_game_category();
 
-  switch (_game_field->get_mines_quantity()) {
-  case 26:
-    index = 1;
-    break;
-  case 60:
-    index = 2;
-  }
   auto column = ((Array)aa[index]);
 
   for (int y = 0; y < column.size(); y++) {
@@ -176,6 +179,22 @@ void FieldGrid::save_record(int time) {
 
   d->store_string(json.stringify(aa));
   UtilityFunctions::print(aa[0].stringify(), Variant((int)a).stringify(), "saved!");
+}
+
+void FieldGrid::show_best_records() {
+  if (!FileAccess::file_exists(RECORDS_FILENAME)) {
+    create_records_file();
+  }
+  auto d = FileAccess::open(RECORDS_FILENAME, FileAccess::ModeFlags::READ);
+
+  JSON json;
+  Error a = json.parse(d->get_line());
+  Array aa = json.get_data();
+  int index = get_game_category();
+
+  auto column = ((Array)aa[index]);
+
+  get_node<Label>("../MarginContainer/Control/Records")->set_text(column[0]);
 }
 
 void FieldGrid::start_game() {
@@ -258,6 +277,8 @@ void FieldGrid::_on_button_pressed(InputEvent *event, int index) {
         String string = vformat(tr("MINESAROUND"), Variant(_game_field->get_mines_quantity()).stringify());
         _mines_around_label->set_text(string);
 
+        show_best_records();
+
         _first_cell = index;
         _timer->set_paused(false);
         _timer->start();
@@ -321,8 +342,10 @@ void FieldGrid::update_game_status() {
   case WIN:
     _game_status_label->set_text(tr("WIN"));
     save_record(_time_before_timeout - _timer->get_time_left());
+    _ui_tweener->play("win");
     break;
   case LOST:
+    _ui_tweener->play("lose");
     _game_status_label->set_text(tr("LOSE"));
     break;
   default:

@@ -30,6 +30,8 @@ void MainMenu::_ready() {
   }
 
   _game_field = get_node<Field>("/root/FieldRepresenter");
+
+  get_node<AnimationPlayer>("/root/Game/AnimationPlayer")->set_current_animation("pop_in");
   // get_node<AnimationPlayer>("../../../../AnimationPlayer")->play("in");
 }
 
@@ -51,7 +53,13 @@ void MainMenu::handle_button_press(int index) {
     mines_quantity = 60;
     break;
   case 3:
+    get_node<FieldGrid>("/root/Game/MainGame/FieldGrid")->show_records();
+    return;
+    break;
+  case 4:
+    get_node<AnimationPlayer>("/root/Game/AnimationPlayer")->set_current_animation("pop_out");
     get_tree()->quit();
+    return;
     break;
   }
 

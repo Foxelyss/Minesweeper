@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://b81dt7bbbxlb6"]
+[gd_scene load_steps=34 format=3 uid="uid://b81dt7bbbxlb6"]
 
 [ext_resource type="Theme" uid="uid://m313wodg5ka8" path="res://game_theme.tres" id="1_mbmnw"]
 [ext_resource type="Texture2D" uid="uid://dw25t0pskt00m" path="res://assets/pop_animation/pop_Page 1.png" id="3_oryvk"]
@@ -90,8 +90,16 @@ tracks/5/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_lvfpb"]
+resource_name = "gameover"
+
+[sub_resource type="Animation" id="Animation_rd5ih"]
+resource_name = "exit"
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2tner"]
 _data = {
+"exit": SubResource("Animation_rd5ih"),
+"gameover": SubResource("Animation_lvfpb"),
 "to_game": SubResource("Animation_ia1ov")
 }
 
@@ -254,6 +262,10 @@ layout_mode = 2
 theme = ExtResource("1_mbmnw")
 text = "HARD"
 
+[node name="Button5" type="Button" parent="Menu/CenterContainer/VBoxContainer/Buttons"]
+layout_mode = 2
+text = "SHOWRECORDS"
+
 [node name="Button4" type="Button" parent="Menu/CenterContainer/VBoxContainer/Buttons"]
 layout_mode = 2
 theme = ExtResource("1_mbmnw")
@@ -311,6 +323,7 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1e-05, 1e-05)
 theme = ExtResource("1_mbmnw")
 use_top_left = true
 
@@ -416,6 +429,17 @@ offset_bottom = 23.0
 grow_horizontal = 2
 theme = ExtResource("1_mbmnw")
 
+[node name="Records" type="Label" parent="MainGame/MarginContainer/Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -36.5
+offset_right = 36.5
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "RECORDS"
+
 [node name="FieldGrid" type="FieldGrid" parent="MainGame"]
 mines_around_label = "../MarginContainer/Control/MinesCounter"
 time_label = "../MarginContainer/Control/TimeCounter"
@@ -425,7 +449,7 @@ game_status_label = "../MarginContainer/Control/GameStatusLabel"
 back_to_menu_button = "../MarginContainer/Control/BackButton"
 process_mode = 4
 
-[node name="PopupMenu" type="PopupMenu" parent="MainGame"]
+[node name="PopupMenu" type="Popup" parent="MainGame"]
 initial_position = 1
 size = Vector2i(500, 255)
 theme = ExtResource("1_mbmnw")
@@ -439,16 +463,56 @@ layout_mode = 2
 text = "RECORDS"
 horizontal_alignment = 1
 
-[node name="Records" type="VBoxContainer" parent="MainGame/PopupMenu/ui"]
+[node name="Records" type="TabContainer" parent="MainGame/PopupMenu/ui"]
+layout_mode = 2
+tab_alignment = 1
+current_tab = 0
+clip_tabs = false
+
+[node name="Cat1" type="VBoxContainer" parent="MainGame/PopupMenu/ui/Records"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MainGame/PopupMenu/ui/Records"]
+[node name="Label" type="Label" parent="MainGame/PopupMenu/ui/Records/Cat1"]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="MainGame/PopupMenu/ui/Records"]
+[node name="Label2" type="Label" parent="MainGame/PopupMenu/ui/Records/Cat1"]
 layout_mode = 2
 
-[node name="Label3" type="Label" parent="MainGame/PopupMenu/ui/Records"]
+[node name="Label3" type="Label" parent="MainGame/PopupMenu/ui/Records/Cat1"]
+layout_mode = 2
+
+[node name="Cat2" type="VBoxContainer" parent="MainGame/PopupMenu/ui/Records"]
+auto_translate_mode = 1
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MainGame/PopupMenu/ui/Records/Cat2"]
+auto_translate_mode = 1
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="MainGame/PopupMenu/ui/Records/Cat2"]
+auto_translate_mode = 1
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="MainGame/PopupMenu/ui/Records/Cat2"]
+auto_translate_mode = 1
+layout_mode = 2
+
+[node name="Cat3" type="VBoxContainer" parent="MainGame/PopupMenu/ui/Records"]
+auto_translate_mode = 1
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MainGame/PopupMenu/ui/Records/Cat3"]
+auto_translate_mode = 1
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="MainGame/PopupMenu/ui/Records/Cat3"]
+auto_translate_mode = 1
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="MainGame/PopupMenu/ui/Records/Cat3"]
+auto_translate_mode = 1
 layout_mode = 2
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]

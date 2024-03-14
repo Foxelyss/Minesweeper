@@ -103,7 +103,6 @@ void Field::clear() { _field.clear(); }
 
 void Field::start_game(int selected_cell) {
   clear();
-  prepare_field();
   place_mines(selected_cell);
 }
 
@@ -111,6 +110,11 @@ void Field::set_properties(Vector2i resolution, int mines_quantity) {
   _width = resolution.x;
   _height = resolution.y;
   _mines_quantity = mines_quantity;
+
+  if (_field.size() != resolution.x * resolution.y) {
+    clear();
+    prepare_field();
+  }
 }
 
 GameState Field::get_game_state() {

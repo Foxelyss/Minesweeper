@@ -86,9 +86,12 @@ public:
   void update_game_status();
   void create_records_file();
   void retry_game();
+  void go_to_menu();
+
+  int get_game_category();
   void show_records();
   void save_record(int time);
-  void go_to_menu();
+  void show_best_records();
 
   String get_mines_around_label();
   void set_mines_around_label(String path);
