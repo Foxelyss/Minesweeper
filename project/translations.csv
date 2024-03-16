@@ -12,8 +12,9 @@ EASY,Easy difficulty,Лёгкая сложность
 MEDIUM,Medium difficulty,Средняя сложность
 HARD,Hard difficulty,Сложная сложность
 QUIT,Quit to desktop,Выход из игры
-RECORD,Your personal record,Ваш рекорд
+RECORD,Your personal record %s,Ваш рекорд %s
 NORECORD,You have no record in this category,У вас нет персонального рекорда в категории
 COPYRIGHT,© Foxelyss,© Степан Смирнов
 TIMEOUT,Too slow!,Слишком медленно! 
 RECORDS,Your best times in this category,Ваши лучшие времени в данной категории
+SHOWRECORDS,Show your records,Ваши рекорды

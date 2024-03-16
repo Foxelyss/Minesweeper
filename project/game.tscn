@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://b81dt7bbbxlb6"]
+[gd_scene load_steps=29 format=3 uid="uid://b81dt7bbbxlb6"]
 
 [ext_resource type="Theme" uid="uid://m313wodg5ka8" path="res://game_theme.tres" id="1_mbmnw"]
 [ext_resource type="Texture2D" uid="uid://dw25t0pskt00m" path="res://assets/pop_animation/pop_Page 1.png" id="3_oryvk"]
@@ -13,9 +13,20 @@
 [ext_resource type="Texture2D" uid="uid://dvxkb4mu26bdv" path="res://assets/pop_animation/pop_Page 10.png" id="12_bubr1"]
 [ext_resource type="Texture2D" uid="uid://dixgaisdghnic" path="res://assets/pop_animation/pop_Page 11.png" id="13_4jyya"]
 [ext_resource type="Texture2D" uid="uid://bqflrsi4vvma8" path="res://assets/pop_animation/pop_Page 12.png" id="14_43t6i"]
-[ext_resource type="Material" uid="uid://bxqghn4ny4r14" path="res://grass.tres" id="14_hktgb"]
+[ext_resource type="PackedScene" uid="uid://dpdiblptxcf1l" path="res://scene.blend" id="15_tj8s0"]
 [ext_resource type="Material" uid="uid://dytyk45jg0k2i" path="res://water.tres" id="15_vhhw3"]
-[ext_resource type="Texture2D" uid="uid://b8m2pd0it5oks" path="res://assets/tiles/ground.png" id="16_aulw3"]
+
+[sub_resource type="Animation" id="Animation_rd5ih"]
+resource_name = "exit"
+
+[sub_resource type="Animation" id="Animation_4rmch"]
+resource_name = "lose"
+
+[sub_resource type="Animation" id="Animation_fhhpw"]
+resource_name = "pop_in"
+
+[sub_resource type="Animation" id="Animation_q0q6x"]
+resource_name = "pop_out"
 
 [sub_resource type="Animation" id="Animation_ia1ov"]
 resource_name = "to_game"
@@ -91,16 +102,16 @@ tracks/5/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_lvfpb"]
-resource_name = "gameover"
-
-[sub_resource type="Animation" id="Animation_rd5ih"]
-resource_name = "exit"
+resource_name = "win"
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2tner"]
 _data = {
 "exit": SubResource("Animation_rd5ih"),
-"gameover": SubResource("Animation_lvfpb"),
-"to_game": SubResource("Animation_ia1ov")
+"lose": SubResource("Animation_4rmch"),
+"pop_in": SubResource("Animation_fhhpw"),
+"pop_out": SubResource("Animation_q0q6x"),
+"to_game": SubResource("Animation_ia1ov"),
+"win": SubResource("Animation_lvfpb")
 }
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_u0d3t"]
@@ -155,26 +166,6 @@ animations = [{
 "speed": 90.0
 }]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8qvwb"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_obk0b"]
-albedo_texture = ExtResource("16_aulw3")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_owhxb"]
-albedo_texture = ExtResource("16_aulw3")
-uv1_scale = Vector3(19, 19, 19)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yt4v8"]
-albedo_texture = ExtResource("16_aulw3")
-uv1_triplanar = true
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5uaek"]
-albedo_texture = ExtResource("16_aulw3")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7f14y"]
-albedo_texture = ExtResource("16_aulw3")
-uv1_scale = Vector3(4, 3, 6.845)
-
 [sub_resource type="PlaneMesh" id="PlaneMesh_v183o"]
 size = Vector2(22.365, 3.695)
 
@@ -198,10 +189,6 @@ sky_material = SubResource("ProceduralSkyMaterial_j2i6w")
 background_mode = 2
 sky = SubResource("Sky_jgpib")
 ambient_light_source = 3
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2wlgo"]
-shading_mode = 0
-albedo_color = Color(0, 0, 0, 1)
 
 [node name="Game" type="Node3D"]
 
@@ -325,7 +312,6 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1e-05, 1e-05)
 theme = ExtResource("1_mbmnw")
-use_top_left = true
 
 [node name="GameGrid" type="GridContainer" parent="MainGame/DraggableSpace"]
 layout_mode = 2
@@ -363,19 +349,6 @@ layout_mode = 1
 offset_right = 120.0
 offset_bottom = 23.0
 theme = ExtResource("1_mbmnw")
-language = "ru"
-
-[node name="TimeCounter" type="Label" parent="MainGame/MarginContainer/Control"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -70.0
-offset_bottom = 23.0
-grow_horizontal = 0
-theme = ExtResource("1_mbmnw")
-text = "
-"
 language = "ru"
 
 [node name="BackButton" type="Button" parent="MainGame/MarginContainer/Control"]
@@ -429,20 +402,28 @@ offset_bottom = 23.0
 grow_horizontal = 2
 theme = ExtResource("1_mbmnw")
 
-[node name="Records" type="Label" parent="MainGame/MarginContainer/Control"]
+[node name="TimeSegments" type="VBoxContainer" parent="MainGame/MarginContainer/Control"]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -36.5
-offset_right = 36.5
-offset_bottom = 23.0
-grow_horizontal = 2
-text = "RECORDS"
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 50.0
+grow_horizontal = 0
+
+[node name="Records" type="Label" parent="MainGame/MarginContainer/Control/TimeSegments"]
+layout_mode = 2
+
+[node name="TimeCounter" type="Label" parent="MainGame/MarginContainer/Control/TimeSegments"]
+layout_mode = 2
+theme = ExtResource("1_mbmnw")
+text = "
+"
+language = "ru"
 
 [node name="FieldGrid" type="FieldGrid" parent="MainGame"]
 mines_around_label = "../MarginContainer/Control/MinesCounter"
-time_label = "../MarginContainer/Control/TimeCounter"
+time_label = "../MarginContainer/Control/TimeSegments/TimeCounter"
 retry_button = "../MarginContainer/Control/RetryButton"
 flagging_radio-button = "../MarginContainer/Control/FlaggingMode"
 game_status_label = "../MarginContainer/Control/GameStatusLabel"
@@ -469,161 +450,54 @@ tab_alignment = 1
 current_tab = 0
 clip_tabs = false
 
-[node name="Cat1" type="VBoxContainer" parent="MainGame/PopupMenu/ui/Records"]
+[node name="EASY" type="VBoxContainer" parent="MainGame/PopupMenu/ui/Records"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MainGame/PopupMenu/ui/Records/Cat1"]
+[node name="Label" type="Label" parent="MainGame/PopupMenu/ui/Records/EASY"]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="MainGame/PopupMenu/ui/Records/Cat1"]
+[node name="Label2" type="Label" parent="MainGame/PopupMenu/ui/Records/EASY"]
 layout_mode = 2
 
-[node name="Label3" type="Label" parent="MainGame/PopupMenu/ui/Records/Cat1"]
+[node name="Label3" type="Label" parent="MainGame/PopupMenu/ui/Records/EASY"]
 layout_mode = 2
 
-[node name="Cat2" type="VBoxContainer" parent="MainGame/PopupMenu/ui/Records"]
-auto_translate_mode = 1
+[node name="MEDIUM" type="VBoxContainer" parent="MainGame/PopupMenu/ui/Records"]
 visible = false
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MainGame/PopupMenu/ui/Records/Cat2"]
-auto_translate_mode = 1
+[node name="Label" type="Label" parent="MainGame/PopupMenu/ui/Records/MEDIUM"]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="MainGame/PopupMenu/ui/Records/Cat2"]
-auto_translate_mode = 1
+[node name="Label2" type="Label" parent="MainGame/PopupMenu/ui/Records/MEDIUM"]
 layout_mode = 2
 
-[node name="Label3" type="Label" parent="MainGame/PopupMenu/ui/Records/Cat2"]
-auto_translate_mode = 1
+[node name="Label3" type="Label" parent="MainGame/PopupMenu/ui/Records/MEDIUM"]
 layout_mode = 2
 
-[node name="Cat3" type="VBoxContainer" parent="MainGame/PopupMenu/ui/Records"]
-auto_translate_mode = 1
+[node name="HARD" type="VBoxContainer" parent="MainGame/PopupMenu/ui/Records"]
 visible = false
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MainGame/PopupMenu/ui/Records/Cat3"]
-auto_translate_mode = 1
+[node name="Label" type="Label" parent="MainGame/PopupMenu/ui/Records/HARD"]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="MainGame/PopupMenu/ui/Records/Cat3"]
-auto_translate_mode = 1
+[node name="Label2" type="Label" parent="MainGame/PopupMenu/ui/Records/HARD"]
 layout_mode = 2
 
-[node name="Label3" type="Label" parent="MainGame/PopupMenu/ui/Records/Cat3"]
-auto_translate_mode = 1
+[node name="Label3" type="Label" parent="MainGame/PopupMenu/ui/Records/HARD"]
 layout_mode = 2
 
-[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+[node name="Button" type="Button" parent="MainGame/PopupMenu/ui"]
+visible = false
+layout_mode = 2
+text = "BACKTOMENU"
 
-[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 0.982609, -0.185684, 0, 0.185684, 0.982609, -4.66202, 0.792604, -7.45486)
-material_override = SubResource("StandardMaterial3D_8qvwb")
-size = Vector3(31.0868, 1.54251, 19.18)
-material = ExtResource("14_hktgb")
-
-[node name="CSGPolygon3D" type="CSGPolygon3D" parent="CSGCombiner3D"]
-transform = Transform3D(1.03811, 0, 0, 0, 1.03811, 0, 0, 0, 1.03811, 0, -0.731036, -1.23707)
-operation = 2
-polygon = PackedVector2Array(0.462885, 0.0813417, -0.0336916, 0.0772958, -0.524172, 1.13021, 1.05148, 0.971574)
-mode = 2
-path_node = NodePath("../../Path3D")
-path_interval_type = 0
-path_interval = 0.48
-path_simplify_angle = 0.0
-path_rotation = 2
-path_local = false
-path_continuous_u = true
-path_u_distance = 1.58
-path_joined = false
-smooth_faces = true
-material = ExtResource("15_vhhw3")
-
-[node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -1.80015, 9.82715)
-material_override = SubResource("StandardMaterial3D_obk0b")
-size = Vector3(19, 19, 19)
-material = SubResource("StandardMaterial3D_owhxb")
-
-[node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D/CSGBox3D2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.29343, 2.91587, -5.82257)
-operation = 2
-size = Vector3(8, 14, 8)
-material = SubResource("StandardMaterial3D_yt4v8")
-
-[node name="CSGBox3D4" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(0.952023, 0, 0.306028, 0, 1, 0, -0.306028, 0, 0.952023, 5.54474, 1.5, -1.19866)
-material_override = SubResource("StandardMaterial3D_5uaek")
-size = Vector3(7, 4, 3)
-material = SubResource("StandardMaterial3D_7f14y")
-
-[node name="CSGBox3D5" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(0.852622, 0, 0.522528, 0, 1, 0, -0.522528, 0, 0.852622, 3.72928, 1.5, -6.06764)
-size = Vector3(7.14893, 4, 2.99878)
-
-[node name="CSGBox3D8" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.470383, -4.04322, 0.00667095)
-size = Vector3(10.1509, 4.7312, 3.29007)
-
-[node name="CSGBox3D7" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.872009, -4.04896, 0.265616)
-operation = 2
-size = Vector3(8.49426, 3.94287, 3.29007)
-
-[node name="CSGBox3D6" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(0.957435, 0, -0.288648, 0, 1, 0, 0.288648, 0, 0.957435, -4.63344, 3.11188, -7.55531)
-size = Vector3(13.4548, 7.22375, 2.99878)
-
-[node name="CSGBox3D9" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(0.517818, 0, -0.855491, 0, 1, 0, 0.855491, 0, 0.517818, -13.0652, 1.36106, -4.18552)
-size = Vector3(13.4548, 3.7221, 2.99878)
-
-[node name="CSGCombiner3D" type="CSGCombiner3D" parent="CSGCombiner3D"]
-
-[node name="CSGBox3D9" type="CSGBox3D" parent="CSGCombiner3D/CSGCombiner3D"]
-transform = Transform3D(0.893701, 0, 0.448664, 0, 1, 0, -0.448664, 0, 0.893701, 1.83616, 0.858459, -3.03513)
-size = Vector3(0.253906, 2.71692, 0.0919189)
-
-[node name="CSGBox3D16" type="CSGBox3D" parent="CSGCombiner3D/CSGCombiner3D"]
-transform = Transform3D(0.999939, 0, -0.0110651, 0, 1, 0, 0.0110651, 0, 0.999939, 1.86301, 1.81088, -2.37586)
-size = Vector3(0.346924, 0.812073, 1.90401)
-
-[node name="CSGBox3D10" type="CSGBox3D" parent="CSGCombiner3D/CSGCombiner3D"]
-transform = Transform3D(0.893701, 0, 0.448664, 0, 1, 0, -0.448664, 0, 0.893701, 1.83616, 0.858459, -2.8429)
-size = Vector3(0.253906, 2.71692, 0.0919189)
-
-[node name="CSGBox3D11" type="CSGBox3D" parent="CSGCombiner3D/CSGCombiner3D"]
-transform = Transform3D(0.893701, 0, 0.448664, 0, 1, 0, -0.448664, 0, 0.893701, 1.83616, 0.858459, -2.60479)
-size = Vector3(0.253906, 2.71692, 0.0919189)
-
-[node name="CSGBox3D12" type="CSGBox3D" parent="CSGCombiner3D/CSGCombiner3D"]
-transform = Transform3D(0.893701, 0, 0.448664, 0, 1, 0, -0.448664, 0, 0.893701, 1.83616, 0.858459, -2.38451)
-size = Vector3(0.253906, 2.71692, 0.0919189)
-
-[node name="CSGBox3D13" type="CSGBox3D" parent="CSGCombiner3D/CSGCombiner3D"]
-transform = Transform3D(0.893701, 0, 0.448664, 0, 1, 0, -0.448664, 0, 0.893701, 1.83616, 0.858459, -2.16869)
-size = Vector3(0.253906, 2.71692, 0.0919189)
-
-[node name="CSGBox3D14" type="CSGBox3D" parent="CSGCombiner3D/CSGCombiner3D"]
-transform = Transform3D(0.893701, 0, 0.448664, 0, 1, 0, -0.448664, 0, 0.893701, 1.83616, 0.858459, -1.92714)
-size = Vector3(0.253906, 2.71692, 0.0919189)
-
-[node name="CSGBox3D15" type="CSGBox3D" parent="CSGCombiner3D/CSGCombiner3D"]
-transform = Transform3D(0.893701, 0, 0.448664, 0, 1, 0, -0.448664, 0, 0.893701, 1.83616, 0.858459, -1.71557)
-size = Vector3(0.253906, 2.71692, 0.0919189)
-
-[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGCombiner3D/CSGCombiner3D"]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 1.87632, 2.23434, -2.34649)
-operation = 2
-radius = 0.681791
-height = 0.486902
-sides = 17
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CSGCombiner3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.977999, -0.208612, 0, 0.208612, 0.977999, 0, 0.468972, -2.01429)
 material_override = ExtResource("15_vhhw3")
 mesh = SubResource("PlaneMesh_v183o")
+skeleton = NodePath("")
 
 [node name="Path3D" type="Path3D" parent="."]
 curve = SubResource("Curve3D_81g3k")
@@ -635,23 +509,4 @@ environment = SubResource("Environment_sdnow")
 transform = Transform3D(-0.252638, 0.619081, -0.743581, 0.098205, 0.780949, 0.616826, 0.962564, 0.0828104, -0.258094, 0, 0, 0)
 shadow_enabled = true
 
-[node name="CSGCombiner3D2" type="CSGCombiner3D" parent="."]
-
-[node name="CSGBox3D5" type="CSGBox3D" parent="CSGCombiner3D2"]
-transform = Transform3D(0.869135, 0, 0, 0, 0.869497, 0, 0, 0, 7.02621, -1.15454, -3.66084, -1.21113)
-size = Vector3(7.28292, 2.9303, 0.144653)
-
-[node name="CSGBox3D4" type="CSGBox3D" parent="CSGCombiner3D2/CSGBox3D5"]
-transform = Transform3D(1.20053, 0, 0, 0, 1.15213, 0, 0, 0, 0.320551, 0, 0, 0.00373086)
-operation = 1
-size = Vector3(7.28292, 2.9303, 0.11969)
-material = SubResource("StandardMaterial3D_2wlgo")
-
-[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.79942, -5.69278, -1.1896)
-size = Vector3(3.19107, 1, 1)
-
-[node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D2"]
-transform = Transform3D(1, 0, 0, 0, 0.690062, 0.72375, 0, -0.72375, 0.690062, -2.79942, -5.18121, -0.580923)
-operation = 2
-size = Vector3(3.19107, 1, 1)
+[node name="scene" parent="." instance=ExtResource("15_tj8s0")]

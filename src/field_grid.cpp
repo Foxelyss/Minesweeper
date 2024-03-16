@@ -6,6 +6,7 @@
 #include "godot_cpp/classes/file_access.hpp"
 #include "godot_cpp/classes/global_constants.hpp"
 #include "godot_cpp/classes/image.hpp"
+#include "godot_cpp/classes/input.hpp"
 #include "godot_cpp/classes/input_event_mouse_button.hpp"
 #include "godot_cpp/classes/input_event_mouse_motion.hpp"
 #include "godot_cpp/classes/json.hpp"
@@ -135,7 +136,7 @@ void FieldGrid::show_records() {
     Node *group = records->get_child(j);
 
     for (int i = 0; i < 3; i++) {
-      ((Label *)group->get_child(i))->set_text(((Array)aa[j])[i]);
+      ((Label *)group->get_child(i))->set_text(format_time(((Array)aa[j])[i]));
     }
   }
 
@@ -165,15 +166,25 @@ void FieldGrid::save_record(int time) {
   int index = get_game_category();
 
   auto column = ((Array)aa[index]);
-
-  for (int y = 0; y < column.size(); y++) {
-    if ((int)column[y] < time) {
-      column[y] = time;
-      break;
-    }
-
-    UtilityFunctions::print(column[y]);
+  for (int i = 0; i < 3; i++) {
+    column.erase(Variant(0.0));
   }
+  column.append(Variant(time));
+  UtilityFunctions::print(column);
+  column.sort();
+  UtilityFunctions::print(column);
+  column.resize(3);
+
+  // for(int )
+  //
+  //  for (int y = 0; y < column.size(); y++) {
+  //    if ((int)column[y] < time) {
+  //      column[y] = time;
+  //      break;
+  //    }
+  //
+  //    UtilityFunctions::print(column[y]);
+  //  }
   d->close();
   d = FileAccess::open(RECORDS_FILENAME, FileAccess::ModeFlags::WRITE_READ);
 
@@ -181,7 +192,7 @@ void FieldGrid::save_record(int time) {
   UtilityFunctions::print(aa[0].stringify(), Variant((int)a).stringify(), "saved!");
 }
 
-void FieldGrid::show_best_records() {
+void FieldGrid::show_best_record() {
   if (!FileAccess::file_exists(RECORDS_FILENAME)) {
     create_records_file();
   }
@@ -194,11 +205,14 @@ void FieldGrid::show_best_records() {
 
   auto column = ((Array)aa[index]);
 
-  get_node<Label>("../MarginContainer/Control/Records")->set_text(column[0]);
+  if ((int)column[0] == 0) {
+    get_node<Label>("../MarginContainer/Control/TimeSegments/Records")->set_text(tr("NORECORD"));
+  } else {
+    get_node<Label>("../MarginContainer/Control/TimeSegments/Records")->set_text(vformat(tr("RECORD"), format_time((int)column[0])));
+  }
 }
 
 void FieldGrid::start_game() {
-  show_records();
   Vector2i resolution = _game_field->get_field_resolution();
   _grid->set_columns(resolution.x);
 
@@ -225,6 +239,7 @@ void FieldGrid::start_game() {
 void FieldGrid::retry_game() {
   _first_cell = -1;
 
+  show_best_record();
   _game_status_label->set_text("");
   _mines_around_label->set_text("");
 
@@ -241,18 +256,26 @@ void FieldGrid::retry_game() {
   }
 }
 
-void FieldGrid::_process(float delta) {
-  int time = _time_before_timeout - int(_timer->get_time_left());
-  int minutes, seconds;
+String FieldGrid::format_time(int time) {
+  int minutes, seconds, microseconds;
+
+  // microseconds = time % 1000;
+  // time /= 1000;
 
   minutes = time / 60;
   seconds = time % 60;
 
+  return Variant(minutes).stringify().lpad(2, "0") + ":" + Variant(seconds).stringify().lpad(2, "0");
+  //+ "." +       Variant(microseconds).stringify().lpad(3, "0");
+}
+
+void FieldGrid::_process(float delta) {
   String time_left;
+
   if (_timer->get_time_left() == 0) {
     time_left = tr("TIMEOUT");
   } else {
-    time_left = vformat(tr("TIMECOUNTER"), Variant(minutes).stringify() + ":" + Variant(seconds).stringify());
+    time_left = vformat(tr("TIMECOUNTER"), format_time(_time_before_timeout - _timer->get_time_left()));
   }
 
   if (_first_cell == -1) {
@@ -260,10 +283,22 @@ void FieldGrid::_process(float delta) {
   }
 
   _time_label->set_text(time_left);
-};
+
+  auto input = Input::get_singleton();
+  if (input->is_action_pressed("move_mode")) {
+    _grabbing_time += 1;
+  } else {
+    input->set_mouse_mode(Input::MOUSE_MODE_VISIBLE);
+    _grabbing_time = 0;
+  }
+}
 
 void FieldGrid::_on_button_pressed(InputEvent *event, int index) {
   TextureButton *target = _grid->get_child(index)->get_node<TextureButton>(".");
+
+  if (_grabbing_time > _threshold - 3) {
+    return;
+  }
 
   if (event->get_class() == "InputEventMouseButton" && event->is_pressed() && !target->is_disabled()) {
     InputEventMouseButton *mouse_event = (InputEventMouseButton *)event;
@@ -276,8 +311,6 @@ void FieldGrid::_on_button_pressed(InputEvent *event, int index) {
 
         String string = vformat(tr("MINESAROUND"), Variant(_game_field->get_mines_quantity()).stringify());
         _mines_around_label->set_text(string);
-
-        show_best_records();
 
         _first_cell = index;
         _timer->set_paused(false);
@@ -304,7 +337,7 @@ void FieldGrid::update_grid() {
 
   for (int i = 0; i < _game_field->get_cells_quantity(); i++) {
     TextureButton *target = _grid->get_child(i)->get_node<TextureButton>(".");
-    Cell current_cell = _game_field->get_cell(i);
+    Cell_t current_cell = _game_field->get_cell(i);
     int texture_index = 0;
 
     if ((i + i / _game_field->get_field_resolution().x) % 2 == 0) {
@@ -343,6 +376,8 @@ void FieldGrid::update_game_status() {
     _game_status_label->set_text(tr("WIN"));
     save_record(_time_before_timeout - _timer->get_time_left());
     _ui_tweener->play("win");
+
+    show_best_record();
     break;
   case LOST:
     _ui_tweener->play("lose");
@@ -358,17 +393,19 @@ void FieldGrid::go_to_menu() { get_node<AnimationPlayer>("/root/Game/AnimationPl
 
 void FieldGrid::_input(InputEvent *event) {
   auto input = Input::get_singleton();
-  if (event->get_class() == "InputEventMouseMotion" && input->is_action_pressed("move_mode")) {
+  if (event->get_class() == "InputEventMouseMotion") {
+    if (_grabbing_time > _threshold) {
+      input->set_mouse_mode(Input::MOUSE_MODE_CONFINED_HIDDEN);
+      auto mouse_event = (InputEventMouseMotion *)event;
+      auto rotation = _grid->get_position();
+      Vector2 sizp = _grid->get_size();
+      sizp.x /= 2;
+      sizp.y /= 2;
 
-    auto mouse_event = (InputEventMouseMotion *)event;
-    auto rotation = _grid->get_position();
-    Vector2 sizp = _grid->get_size();
-    sizp.x /= 2;
-    sizp.y /= 2;
-
-    rotation.y = Math::clamp<float>(rotation.y + mouse_event->get_relative().y, -sizp.y, sizp.y);
-    rotation.x = Math::clamp<float>(rotation.x + mouse_event->get_relative().x, -sizp.x, sizp.x);
-    _grid->set_position(rotation);
+      rotation.y = Math::clamp<float>(rotation.y + mouse_event->get_relative().y, -sizp.y, sizp.y);
+      rotation.x = Math::clamp<float>(rotation.x + mouse_event->get_relative().x, -sizp.x, sizp.x);
+      _grid->set_position(rotation);
+    }
   }
 }
 

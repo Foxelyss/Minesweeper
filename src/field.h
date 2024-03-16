@@ -8,12 +8,12 @@
 #include <godot_cpp/classes/random_number_generator.hpp>
 #include <queue>
 
-typedef struct {
+typedef struct Cell {
   uint8_t mines_around = 0;
   bool mine = false;
   bool hidden = true;
   bool flagged = false;
-} Cell;
+} Cell_t;
 
 enum GameState { PLAYING, WIN, LOST };
 using namespace std;
@@ -28,7 +28,7 @@ private:
   uint8_t _width, _height;
   uint8_t _mines_quantity;
 
-  vector<Cell> _field;
+  vector<Cell_t> _field;
 
   int get_index_of_cell(int x, int y);
 
@@ -55,7 +55,7 @@ public:
 
   GameState get_game_state();
 
-  Cell get_cell(int index);
+  Cell_t get_cell(int index);
   int get_mines_quantity();
   Vector2i get_field_resolution();
   int get_cells_quantity();

@@ -66,7 +66,10 @@ private:
   Array _cells_textures;
 
   int _first_cell = -1;
+  int _grabbing_time = 0;
+
   const int _time_before_timeout = 4 * 60;
+  const int _threshold = 10;
 
   const StringName RECORDS_FILENAME = "user://records.json";
 
@@ -89,9 +92,10 @@ public:
   void go_to_menu();
 
   int get_game_category();
+  String format_time(int time);
   void show_records();
   void save_record(int time);
-  void show_best_records();
+  void show_best_record();
 
   String get_mines_around_label();
   void set_mines_around_label(String path);

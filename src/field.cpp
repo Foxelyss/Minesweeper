@@ -35,6 +35,7 @@ void Field::reveal(int cell_index) {
     int y = coordinates.y;
 
     _field[index].hidden = false;
+    _field[index].flagged = false;
 
     if (_field[index].mines_around > 0)
       continue;
@@ -95,11 +96,15 @@ void Field::place_mines(int selected_cell = -1) {
 }
 void Field::prepare_field() {
   for (int i = 0; i < _width * _height; i++) {
-    _field.push_back(Cell());
+    _field.push_back(Cell_t());
   }
 }
 
-void Field::clear() { _field.clear(); }
+void Field::clear() {
+  for (int i = 0; i < _width * _height; i++) {
+    _field[i] = Cell_t();
+  }
+}
 
 void Field::start_game(int selected_cell) {
   clear();
@@ -112,7 +117,7 @@ void Field::set_properties(Vector2i resolution, int mines_quantity) {
   _mines_quantity = mines_quantity;
 
   if (_field.size() != resolution.x * resolution.y) {
-    clear();
+    _field.clear();
     prepare_field();
   }
 }
@@ -143,7 +148,7 @@ GameState Field::get_game_state() {
   return PLAYING;
 }
 
-Cell Field::get_cell(int index) { return _field[index]; }
+Cell_t Field::get_cell(int index) { return _field[index]; }
 int Field::get_mines_quantity() { return _mines_quantity; }
 Vector2i Field::get_field_resolution() { return Vector2i(_width, _height); }
 int Field::get_cells_quantity() { return _width * _height; }
