@@ -10,7 +10,7 @@ LOSE,You lose.,Вы проиграли!
 HELP,Help,Помощь
 EASY,Easy difficulty,Лёгкая сложность
 MEDIUM,Medium difficulty,Средняя сложность
-HARD,Hard difficulty,Сложная сложность
+HARD,Hard difficulty,Трудная сложность
 QUIT,Quit to desktop,Выход из игры
 RECORD,Your personal record %s,Ваш рекорд %s
 NORECORD,You have no record in this category,У вас нет персонального рекорда в категории

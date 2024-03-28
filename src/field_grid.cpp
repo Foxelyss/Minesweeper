@@ -69,6 +69,7 @@ void FieldGrid::_ready() {
     set_process_mode(Node::ProcessMode::PROCESS_MODE_INHERIT);
   }
 
+  _menu = get_node<Control>("..");
   _time_label = get_node<Label>(NodePath(_time_label_path));
   _mines_around_label = get_node<Label>(NodePath(_mines_around_label_path));
   _game_status_label = get_node<Label>(NodePath(_game_status_label_path));
@@ -104,10 +105,10 @@ void FieldGrid::create_records_file() {
 
 int FieldGrid::get_game_category() {
   switch (_game_field->get_mines_quantity()) {
-  case 26:
+  case 56:
     return 1;
     break;
-  case 60:
+  case 100:
     return 2;
   }
 
@@ -120,76 +121,49 @@ void FieldGrid::show_records() {
   }
   auto d = FileAccess::open(RECORDS_FILENAME, FileAccess::ModeFlags::READ);
 
-  // while (d->get_position() < d->get_length()) {
-  //
-  //}
   JSON json;
-  Error a = json.parse(d->get_line());
-  Array aa = json.get_data();
+  Error error = json.parse(d->get_line());
+  Array statistics = json.get_data();
   Popup *menu = get_node<Popup>("../PopupMenu");
   TabContainer *records = menu->get_node<TabContainer>("ui/Records");
   int index = get_game_category();
 
-  auto column = ((Array)aa[index]);
+  auto column = ((Array)statistics[index]);
 
   for (int j = 0; j < 3; j++) {
     Node *group = records->get_child(j);
 
     for (int i = 0; i < 3; i++) {
-      ((Label *)group->get_child(i))->set_text(format_time(((Array)aa[j])[i]));
+      ((Label *)group->get_child(i))->set_text(format_time(((Array)statistics[j])[i]));
     }
   }
 
   menu->show();
-
-  for (int i = 0; i < aa.size(); i++) {
-    for (int y = 0; y < ((Array)aa[i]).size(); y++) {
-      UtilityFunctions::print(((Array)aa[i])[y]);
-    }
-    UtilityFunctions::print(aa[i].get_type_name(aa[i].get_type()));
-  }
-
-  UtilityFunctions::print(aa[0].stringify(), Variant((int)a).stringify(), "sadadsd");
 }
 
 void FieldGrid::save_record(int time) {
   if (!FileAccess::file_exists(RECORDS_FILENAME)) {
     create_records_file();
   }
-  auto d = FileAccess::open(RECORDS_FILENAME, FileAccess::ModeFlags::READ);
-  // while (d->get_position() < d->get_length()) {
-  //
-  //}
+  auto file = FileAccess::open(RECORDS_FILENAME, FileAccess::ModeFlags::READ);
+
   JSON json;
-  Error a = json.parse(d->get_line());
-  Array aa = json.get_data();
+  Error error = json.parse(file->get_line());
+  Array statistic = json.get_data();
   int index = get_game_category();
 
-  auto column = ((Array)aa[index]);
+  auto column = ((Array)statistic[index]);
   for (int i = 0; i < 3; i++) {
     column.erase(Variant(0.0));
   }
   column.append(Variant(time));
-  UtilityFunctions::print(column);
   column.sort();
-  UtilityFunctions::print(column);
   column.resize(3);
 
-  // for(int )
-  //
-  //  for (int y = 0; y < column.size(); y++) {
-  //    if ((int)column[y] < time) {
-  //      column[y] = time;
-  //      break;
-  //    }
-  //
-  //    UtilityFunctions::print(column[y]);
-  //  }
-  d->close();
-  d = FileAccess::open(RECORDS_FILENAME, FileAccess::ModeFlags::WRITE_READ);
+  file->close();
+  file = FileAccess::open(RECORDS_FILENAME, FileAccess::ModeFlags::WRITE_READ);
 
-  d->store_string(json.stringify(aa));
-  UtilityFunctions::print(aa[0].stringify(), Variant((int)a).stringify(), "saved!");
+  file->store_string(json.stringify(statistic));
 }
 
 void FieldGrid::show_best_record() {
@@ -232,7 +206,6 @@ void FieldGrid::start_game() {
     }
     button->set_texture_normal(_cells_textures[index]);
   }
-  // call_deferred("retry_game");
   retry_game();
 }
 
@@ -259,14 +232,10 @@ void FieldGrid::retry_game() {
 String FieldGrid::format_time(int time) {
   int minutes, seconds, microseconds;
 
-  // microseconds = time % 1000;
-  // time /= 1000;
-
   minutes = time / 60;
   seconds = time % 60;
 
   return Variant(minutes).stringify().lpad(2, "0") + ":" + Variant(seconds).stringify().lpad(2, "0");
-  //+ "." +       Variant(microseconds).stringify().lpad(3, "0");
 }
 
 void FieldGrid::_process(float delta) {
@@ -391,10 +360,16 @@ void FieldGrid::update_game_status() {
 
 void FieldGrid::go_to_menu() { get_node<AnimationPlayer>("/root/Game/AnimationPlayer")->play_backwards("to_game"); }
 
+bool FieldGrid::is_grid_fully_on_screen() {
+  Vector2 grid = _grid->get_size();
+  Vector2 menu = _menu->get_size();
+  return grid.x / menu.x < 0.8 && grid.y / menu.y < 0.8;
+}
+
 void FieldGrid::_input(InputEvent *event) {
   auto input = Input::get_singleton();
   if (event->get_class() == "InputEventMouseMotion") {
-    if (_grabbing_time > _threshold) {
+    if (_grabbing_time > _threshold && !is_grid_fully_on_screen()) {
       input->set_mouse_mode(Input::MOUSE_MODE_CONFINED_HIDDEN);
       auto mouse_event = (InputEventMouseMotion *)event;
       auto rotation = _grid->get_position();

@@ -31,6 +31,7 @@ void MainMenu::_ready() {
 
   _game_field = get_node<Field>("/root/FieldRepresenter");
 
+  get_node<AnimationPlayer>("/root/Game/AnimationPlayer2")->set_current_animation("flow");
   get_node<AnimationPlayer>("/root/Game/AnimationPlayer")->set_current_animation("pop_in");
   // get_node<AnimationPlayer>("../../../../AnimationPlayer")->play("in");
 }
@@ -46,11 +47,11 @@ void MainMenu::handle_button_press(int index) {
     break;
   case 1:
     resolution = Vector2i(30, 16);
-    mines_quantity = 26;
+    mines_quantity = 56;
     break;
   case 2:
     resolution = Vector2i(80, 50);
-    mines_quantity = 60;
+    mines_quantity = 100;
     break;
   case 3:
     get_node<FieldGrid>("/root/Game/MainGame/FieldGrid")->show_records();

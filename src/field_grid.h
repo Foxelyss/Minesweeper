@@ -40,6 +40,7 @@ class FieldGrid : public Node {
 private:
   Field *_game_field;
 
+  Control *_menu;
   GridContainer *_grid;
 
   Label *_mines_around_label;
@@ -81,6 +82,7 @@ public:
 
   void _ready() override;
   void _process(float delta);
+  bool is_grid_fully_on_screen();
   void _input(InputEvent *event);
   void _on_button_pressed(InputEvent *event, int index);
 
