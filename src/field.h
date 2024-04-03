@@ -38,8 +38,6 @@ private:
 
   void prepare_field();
 
-  void clear();
-
 public:
   static void _bind_methods();
 
@@ -50,6 +48,8 @@ public:
   void set_properties(Vector2i resolution, int mines_quantity);
   void reveal(int cell_index);
   void reveal_all_hidden();
+
+  void clear();
 
   void toggle_flag(int index);
 

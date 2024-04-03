@@ -62,6 +62,7 @@ private:
   Timer *_timer;
 
   AnimationPlayer *_ui_tweener;
+  AnimationPlayer *_sfx;
   AnimatedSprite2D *_pop_animator;
 
   Array _cells_textures;

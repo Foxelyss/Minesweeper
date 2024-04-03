@@ -57,8 +57,7 @@ void FieldGrid::_bind_methods() {
   ClassDB::add_property("FieldGrid", PropertyInfo(Variant::NODE_PATH, "back_to_menu_button"), "set_back_to_menu_button", "get_back_to_menu_button");
 };
 
-FieldGrid::FieldGrid(){}; // our initializer called by Godot
-
+FieldGrid::FieldGrid(){};
 FieldGrid::~FieldGrid(){};
 
 void FieldGrid::_ready() {
@@ -85,6 +84,7 @@ void FieldGrid::_ready() {
 
   _ui_tweener = get_node<AnimationPlayer>("/root/Game/AnimationPlayer");
   _pop_animator = get_node<AnimatedSprite2D>("../AnimatedSprite2D");
+  _sfx = get_node<AnimationPlayer>("/root/Game/SFX");
 
   _timer = memnew(Timer);
   add_child(_timer);
@@ -108,7 +108,7 @@ int FieldGrid::get_game_category() {
   case 56:
     return 1;
     break;
-  case 100:
+  case 132:
     return 2;
   }
 
@@ -119,22 +119,22 @@ void FieldGrid::show_records() {
   if (!FileAccess::file_exists(RECORDS_FILENAME)) {
     create_records_file();
   }
-  auto d = FileAccess::open(RECORDS_FILENAME, FileAccess::ModeFlags::READ);
+  auto file = FileAccess::open(RECORDS_FILENAME, FileAccess::ModeFlags::READ);
 
   JSON json;
-  Error error = json.parse(d->get_line());
-  Array statistics = json.get_data();
+  Error error = json.parse(file->get_line());
+  Array records_table = json.get_data();
   Popup *menu = get_node<Popup>("../PopupMenu");
-  TabContainer *records = menu->get_node<TabContainer>("ui/Records");
-  int index = get_game_category();
+  TabContainer *records_view = menu->get_node<TabContainer>("ui/Records");
+  int category = get_game_category();
 
-  auto column = ((Array)statistics[index]);
+  auto column = ((Array)records_table[category]);
 
   for (int j = 0; j < 3; j++) {
-    Node *group = records->get_child(j);
+    Node *group = records_view->get_child(j);
 
     for (int i = 0; i < 3; i++) {
-      ((Label *)group->get_child(i))->set_text(format_time(((Array)statistics[j])[i]));
+      ((Label *)group->get_child(i))->set_text(format_time(((Array)records_table[j])[i]));
     }
   }
 
@@ -150,9 +150,9 @@ void FieldGrid::save_record(int time) {
   JSON json;
   Error error = json.parse(file->get_line());
   Array statistic = json.get_data();
-  int index = get_game_category();
+  int category = get_game_category();
 
-  auto column = ((Array)statistic[index]);
+  auto column = ((Array)statistic[category]);
   for (int i = 0; i < 3; i++) {
     column.erase(Variant(0.0));
   }
@@ -170,19 +170,19 @@ void FieldGrid::show_best_record() {
   if (!FileAccess::file_exists(RECORDS_FILENAME)) {
     create_records_file();
   }
-  auto d = FileAccess::open(RECORDS_FILENAME, FileAccess::ModeFlags::READ);
+  auto file = FileAccess::open(RECORDS_FILENAME, FileAccess::ModeFlags::READ);
 
   JSON json;
-  Error a = json.parse(d->get_line());
-  Array aa = json.get_data();
+  Error err = json.parse(file->get_line());
+  Array records_table = json.get_data();
   int index = get_game_category();
 
-  auto column = ((Array)aa[index]);
+  auto records_for_category = ((Array)records_table[index]);
 
-  if ((int)column[0] == 0) {
+  if ((int)records_for_category[0] == 0) {
     get_node<Label>("../MarginContainer/Control/TimeSegments/Records")->set_text(tr("NORECORD"));
   } else {
-    get_node<Label>("../MarginContainer/Control/TimeSegments/Records")->set_text(vformat(tr("RECORD"), format_time((int)column[0])));
+    get_node<Label>("../MarginContainer/Control/TimeSegments/Records")->set_text(vformat(tr("RECORD"), format_time((int)records_for_category[0])));
   }
 }
 
@@ -206,11 +206,15 @@ void FieldGrid::start_game() {
     }
     button->set_texture_normal(_cells_textures[index]);
   }
+
   retry_game();
+
+  _sfx->play("start");
 }
 
 void FieldGrid::retry_game() {
   _first_cell = -1;
+  _game_field->clear();
 
   show_best_record();
   _game_status_label->set_text("");
@@ -290,6 +294,7 @@ void FieldGrid::_on_button_pressed(InputEvent *event, int index) {
         _pop_animator->set_position(target->get_global_position() + target->get_size() / 2);
 
         _pop_animator->play("popit");
+        _sfx->play("pop");
         _game_field->reveal(index);
       }
     }
@@ -336,6 +341,7 @@ void FieldGrid::update_grid() {
 void FieldGrid::update_game_status() {
   GameState game_state = _game_field->get_game_state();
   if (game_state != PLAYING) {
+    _ui_tweener->play("gameover");
     _timer->set_paused(true);
     _game_field->reveal_all_hidden();
   }
@@ -358,7 +364,10 @@ void FieldGrid::update_game_status() {
   }
 }
 
-void FieldGrid::go_to_menu() { get_node<AnimationPlayer>("/root/Game/AnimationPlayer")->play_backwards("to_game"); }
+void FieldGrid::go_to_menu() {
+  _sfx->play("exit");
+  _ui_tweener->play_backwards("to_game");
+}
 
 bool FieldGrid::is_grid_fully_on_screen() {
   Vector2 grid = _grid->get_size();
