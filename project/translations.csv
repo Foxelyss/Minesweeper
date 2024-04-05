@@ -3,7 +3,7 @@ MINESAROUND,Mines in field are %s,Мин вокруг: %s
 BACKTOMENU,Back to menu,Выход в меню
 RETRY,Retry,Попробовать снова
 GAMETITLE,Minesweeper,Сапёр
-FLAGGINGMODE,Cell flagging mode,Режим ставки флажка на клетку
+FLAGGINGMODE,Cell flagging mode,Ставка флажка на клетку
 TIMECOUNTER,Time solving: ,Затраченное время: %s
 WIN,You win.,Вы выиграли!
 LOSE,You lose.,Вы проиграли!
@@ -13,8 +13,8 @@ MEDIUM,Medium difficulty,Средняя сложность
 HARD,Hard difficulty,Трудная сложность
 QUIT,Quit to desktop,Выход из игры
 RECORD,Your personal record %s,Ваш рекорд %s
-NORECORD,You have no record in this category,У вас нет персонального рекорда в категории
+NORECORD,You have no record,У вас нет рекорда в категории
 COPYRIGHT,© Foxelyss,© Степан Смирнов
 TIMEOUT,Too slow!,Слишком медленно! 
-RECORDS,Your best times in this category,Ваши лучшие времени в данной категории
+RECORDS,Your records,Рекорды категорий
 SHOWRECORDS,Show your records,Ваши рекорды

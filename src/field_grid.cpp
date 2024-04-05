@@ -7,8 +7,10 @@
 #include "godot_cpp/classes/global_constants.hpp"
 #include "godot_cpp/classes/image.hpp"
 #include "godot_cpp/classes/input.hpp"
+#include "godot_cpp/classes/input_event_magnify_gesture.hpp"
 #include "godot_cpp/classes/input_event_mouse_button.hpp"
 #include "godot_cpp/classes/input_event_mouse_motion.hpp"
+#include "godot_cpp/classes/input_event_pan_gesture.hpp"
 #include "godot_cpp/classes/json.hpp"
 #include "godot_cpp/classes/label.hpp"
 #include "godot_cpp/classes/popup_menu.hpp"
@@ -99,8 +101,8 @@ void FieldGrid::_ready() {
 }
 
 void FieldGrid::create_records_file() {
-  auto d = FileAccess::open(RECORDS_FILENAME, FileAccess::ModeFlags::WRITE);
-  d->store_string("[[0,0,0],[0,0,0],[0,0,0]]");
+  auto file = FileAccess::open(RECORDS_FILENAME, FileAccess::ModeFlags::WRITE);
+  file->store_string("[[0,0,0],[0,0,0],[0,0,0]]");
 }
 
 int FieldGrid::get_game_category() {
@@ -108,7 +110,7 @@ int FieldGrid::get_game_category() {
   case 56:
     return 1;
     break;
-  case 132:
+  case 300:
     return 2;
   }
 
@@ -149,10 +151,10 @@ void FieldGrid::save_record(int time) {
 
   JSON json;
   Error error = json.parse(file->get_line());
-  Array statistic = json.get_data();
+  Array records = json.get_data();
   int category = get_game_category();
 
-  auto column = ((Array)statistic[category]);
+  auto column = ((Array)records[category]);
   for (int i = 0; i < 3; i++) {
     column.erase(Variant(0.0));
   }
@@ -163,7 +165,7 @@ void FieldGrid::save_record(int time) {
   file->close();
   file = FileAccess::open(RECORDS_FILENAME, FileAccess::ModeFlags::WRITE_READ);
 
-  file->store_string(json.stringify(statistic));
+  file->store_string(json.stringify(records));
 }
 
 void FieldGrid::show_best_record() {
@@ -206,7 +208,7 @@ void FieldGrid::start_game() {
     }
     button->set_texture_normal(_cells_textures[index]);
   }
-
+  _grid->set_pivot_offset(_grid->get_size() / 2);
   retry_game();
 
   _sfx->play("start");
@@ -234,7 +236,7 @@ void FieldGrid::retry_game() {
 }
 
 String FieldGrid::format_time(int time) {
-  int minutes, seconds, microseconds;
+  int minutes, seconds;
 
   minutes = time / 60;
   seconds = time % 60;
@@ -372,24 +374,43 @@ void FieldGrid::go_to_menu() {
 bool FieldGrid::is_grid_fully_on_screen() {
   Vector2 grid = _grid->get_size();
   Vector2 menu = _menu->get_size();
-  return grid.x / menu.x < 0.8 && grid.y / menu.y < 0.8;
+  return grid.x / menu.x < 0.7 && grid.y / menu.y < 0.7;
 }
 
 void FieldGrid::_input(InputEvent *event) {
   auto input = Input::get_singleton();
-  if (event->get_class() == "InputEventMouseMotion") {
+  if (event->get_class() == "InputEventMouseMotion" || event->get_class() == "InputEventPanGesture") {
     if (_grabbing_time > _threshold && !is_grid_fully_on_screen()) {
       input->set_mouse_mode(Input::MOUSE_MODE_CONFINED_HIDDEN);
       auto mouse_event = (InputEventMouseMotion *)event;
+      auto grid_position = _grid->get_position();
+      Vector2 size = _grid->get_size();
+      size.x /= 2;
+      size.y /= 2;
+
+      grid_position.y = Math::clamp<float>(grid_position.y + mouse_event->get_relative().y, -size.y, size.y);
+      grid_position.x = Math::clamp<float>(grid_position.x + mouse_event->get_relative().x, -size.x, size.x);
+      _grid->set_position(grid_position);
+    }
+
+    if (event->get_class() == "InputEventPanGesture") {
+      InputEventPanGesture *inputEventPanGesture = (InputEventPanGesture *)event;
       auto rotation = _grid->get_position();
       Vector2 sizp = _grid->get_size();
       sizp.x /= 2;
       sizp.y /= 2;
 
-      rotation.y = Math::clamp<float>(rotation.y + mouse_event->get_relative().y, -sizp.y, sizp.y);
-      rotation.x = Math::clamp<float>(rotation.x + mouse_event->get_relative().x, -sizp.x, sizp.x);
+      rotation.y = Math::clamp<float>(rotation.y + -inputEventPanGesture->get_delta().y, -sizp.y, sizp.y);
+      rotation.x = Math::clamp<float>(rotation.x + -inputEventPanGesture->get_delta().x, -sizp.x, sizp.x);
       _grid->set_position(rotation);
     }
+  }
+
+  if (event->get_class() == "InputEventMagnifyGesture") {
+    InputEventMagnifyGesture *inputEventMagnifyGesture = (InputEventMagnifyGesture *)event;
+    Vector2 scale = Vector2(inputEventMagnifyGesture->get_factor() * _grid->get_scale()).clamp(Vector2(0.4, 0.4), Vector2(1.2, 1.2));
+
+    _grid->set_scale(scale);
   }
 }
 

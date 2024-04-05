@@ -71,7 +71,7 @@ private:
   int _grabbing_time = 0;
 
   const int _time_before_timeout = 4 * 60;
-  const int _threshold = 10;
+  const int _threshold = 8;
 
   const StringName RECORDS_FILENAME = "user://records.json";
 

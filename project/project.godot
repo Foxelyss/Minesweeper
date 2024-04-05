@@ -14,7 +14,7 @@ config/name="Minesweeper"
 config/name_localized={
 "ru_RU": "Сапёр"
 }
-config/version="v1.b"
+config/version="4.1.4"
 run/main_scene="res://game.tscn"
 config/features=PackedStringArray("4.2")
 boot_splash/bg_color=Color(0, 0, 0, 1)
@@ -25,6 +25,14 @@ config/icon="res://icon.png"
 [autoload]
 
 FieldRepresenter="*res://singleton/field_representer.gd"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+window/stretch/scale=1.75
 
 [input]
 
@@ -39,6 +47,10 @@ flag={
 ]
 }
 
+[input_devices]
+
+pointing/android/enable_pan_and_scale_gestures=true
+
 [internationalization]
 
 locale/translations=PackedStringArray("res://translations.en.translation", "res://translations.ru.translation")
@@ -46,5 +58,6 @@ locale/test="ru"
 
 [rendering]
 
-renderer/rendering_method="gl_compatibility"
+renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true
 occlusion_culling/use_occlusion_culling=true

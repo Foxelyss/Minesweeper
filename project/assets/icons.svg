@@ -27,11 +27,11 @@
      inkscape:pagecheckerboard="1"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
-     inkscape:zoom="0.10327149"
-     inkscape:cx="6720.1512"
-     inkscape:cy="-784.34042"
+     inkscape:zoom="0.14604794"
+     inkscape:cx="7257.8907"
+     inkscape:cy="1122.9189"
      inkscape:window-width="1920"
-     inkscape:window-height="1024"
+     inkscape:window-height="1050"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="0"
@@ -252,14 +252,8 @@
        x="0"
        y="0"
        xlink:href="#rect29"
-       id="use18"
-       transform="translate(520.47284)" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#rect29"
        id="use51"
-       transform="translate(4696.4722)" />
+       transform="translate(4175.9994,-2.4450054)" />
     <use
        x="0"
        y="0"
@@ -307,6 +301,15 @@
          cy="296.22653"
          r="193.04523" />
     </g>
+    <rect
+       style="fill:#84a6ed;fill-opacity:1;stroke:none;stroke-width:18;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="rect29"
+       width="512"
+       height="512"
+       x="554.36407"
+       y="2.4450054"
+       rx="81.426994"
+       ry="81.426994" />
     <text
        xml:space="preserve"
        style="font-size:489px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:117.884;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
@@ -323,7 +326,7 @@
        y="0"
        xlink:href="#rect29"
        id="use19"
-       transform="translate(1042.4728)" />
+       transform="translate(521.99996,-2.4450054)" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:489px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:117.884;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
@@ -377,7 +380,7 @@
        y="0"
        xlink:href="#rect29"
        id="use24"
-       transform="translate(3130.4728)" />
+       transform="translate(2610,-2.4450054)" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:489px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:117.884;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
@@ -393,7 +396,7 @@
        y="0"
        xlink:href="#rect29"
        id="use25"
-       transform="translate(3652.4728)" />
+       transform="translate(3132,-2.4450054)" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:489px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:117.884;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
@@ -409,7 +412,7 @@
        y="0"
        xlink:href="#rect29"
        id="use23"
-       transform="translate(2608.4728)" />
+       transform="translate(2088,-2.4450054)" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:489px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:117.884;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
@@ -425,7 +428,7 @@
        y="0"
        xlink:href="#rect29"
        id="use26"
-       transform="translate(4172.5165)" />
+       transform="translate(3652.0437,-2.4450054)" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:489px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:117.884;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
@@ -437,35 +440,23 @@
          x="4325.7324"
          y="430.573">8</tspan></text>
     <rect
-       style="fill:#84a6ed;fill-opacity:1;stroke:none;stroke-width:18;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-       id="rect29"
-       width="512"
+       style="fill:#91d8ee;fill-opacity:1;stroke:none;stroke-width:18;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="rect30"
+       width="511.99973"
        height="512"
-       x="33.891254"
+       x="6818.3628"
        y="0"
        rx="81.426994"
        ry="81.426994" />
     <rect
        style="fill:#91d8ee;fill-opacity:1;stroke:none;stroke-width:18;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-       id="rect30"
+       id="use42"
        width="511.99973"
        height="512"
-       x="6296.3647"
+       x="7340.3633"
        y="0"
        rx="81.426994"
        ry="81.426994" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#rect30"
-       id="use41"
-       transform="translate(522.0005)" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#use41"
-       id="use42"
-       transform="translate(521.9982)" />
     <use
        x="0"
        y="0"
@@ -592,5 +583,20 @@
        y="0"
        rx="76.536995"
        ry="76.536995" />
+    <rect
+       style="fill:#cf98fb;fill-opacity:1;stroke:none;stroke-width:18;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3"
+       width="512"
+       height="512"
+       x="33.891254"
+       y="0"
+       rx="81.426994"
+       ry="81.426994" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#rect3"
+       id="use3"
+       transform="translate(6262.4708)" />
   </g>
 </svg>

@@ -498,10 +498,10 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("1_mbmnw")
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
 
 [node name="Control" type="Control" parent="MainGame/MarginContainer"]
 layout_mode = 2
@@ -597,7 +597,7 @@ process_mode = 4
 [node name="PopupMenu" type="Popup" parent="MainGame"]
 transparent_bg = true
 initial_position = 1
-size = Vector2i(500, 160)
+size = Vector2i(640, 160)
 transparent = true
 theme = ExtResource("1_mbmnw")
 
