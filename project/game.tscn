@@ -19,10 +19,10 @@
 [ext_resource type="Texture2D" uid="uid://bqflrsi4vvma8" path="res://assets/pop_animation/pop_Page 12.png" id="14_43t6i"]
 [ext_resource type="Texture2D" uid="uid://xhpj7dvfuppj" path="res://assets/tiles/background.png" id="14_aun53"]
 [ext_resource type="Shader" path="res://assets/tiles/moving_background.gdshader" id="14_qsn47"]
-[ext_resource type="PackedScene" uid="uid://ccip41jv1dc30" path="res://scene.glb" id="15_35jcy"]
 [ext_resource type="FontFile" uid="uid://dnq2swu0pj566" path="res://IBM_Plex_Sans/IBMPlexSans-Medium.ttf" id="18_43cos"]
 [ext_resource type="AudioStream" uid="uid://clk750xmbl0vf" path="res://sfx/pop.wav" id="18_o2ar3"]
 [ext_resource type="AudioStream" uid="uid://bhsnhk0wuvbny" path="res://sfx/music.mp3" id="20_e02jb"]
+[ext_resource type="PackedScene" uid="uid://dw2tibiv2wmy6" path="res://scene.blend" id="23_8ofhm"]
 
 [sub_resource type="Animation" id="Animation_rd5ih"]
 resource_name = "exit"
@@ -237,31 +237,31 @@ step = 1.0
 tracks/0/type = "position_3d"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("scene/Cube_001")
+tracks/0/path = NodePath("scene/Cube_004")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1.31, 1, 0, 2.265, 0, 2.67, 1, 0, -1.656, 0)
+tracks/0/keys = PackedFloat32Array(0, 1, 1.8015, 0, 0, 1, 1, 1.802, -2.255, 0, 3, 1, 1.802, 1.676, 0)
 tracks/1/type = "position_3d"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("scene/Cube_002")
+tracks/1/path = NodePath("scene/Cube_003")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
-tracks/1/keys = PackedFloat32Array(0, 1, 2.36823, 0, 0, 1.24, 1, 2.368, -2.03, 0, 2.55, 1, 2.368, 2.123, 0)
+tracks/1/keys = PackedFloat32Array(0, 1, -1.57041, 0, 0, 1.21, 1, -1.57, 1.785, 0, 2.63, 1, -1.57, -2.044, 0)
 tracks/2/type = "position_3d"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("scene/Cube_003")
+tracks/2/path = NodePath("scene/Cube_002")
 tracks/2/interp = 2
 tracks/2/loop_wrap = true
-tracks/2/keys = PackedFloat32Array(0, 1, -1.57041, 0, 0, 1.21, 1, -1.57, 1.785, 0, 2.63, 1, -1.57, -2.044, 0)
+tracks/2/keys = PackedFloat32Array(0, 1, 2.36823, 0, 0, 1.24, 1, 2.368, -2.03, 0, 2.55, 1, 2.368, 2.123, 0)
 tracks/3/type = "position_3d"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("scene/Cube_004")
+tracks/3/path = NodePath("scene/Cube_001")
 tracks/3/interp = 2
 tracks/3/loop_wrap = true
-tracks/3/keys = PackedFloat32Array(0, 1, 1.8015, 0, 0, 1, 1, 1.802, -2.255, 0, 3, 1, 1.802, 1.676, 0)
+tracks/3/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1.31, 1, 0, 2.265, 0, 2.67, 1, 0, -1.656, 0)
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_175g2"]
 _data = {
@@ -476,6 +476,7 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1e-05, 1e-05)
 theme = ExtResource("1_mbmnw")
+use_top_left = true
 
 [node name="GameGrid" type="GridContainer" parent="MainGame/DraggableSpace"]
 layout_mode = 2
@@ -694,15 +695,6 @@ skeleton = NodePath("../WorldEnvironment")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_sdnow")
 
-[node name="scene" parent="." instance=ExtResource("15_35jcy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.51063, -2.65173, -1.45796)
-
-[node name="Cube_003" parent="scene" index="2"]
-transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, -1.57041, 0, 0)
-
-[node name="Cube_004" parent="scene" index="3"]
-transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 1.8015, 0, 0)
-
 [node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_175g2")
@@ -722,5 +714,7 @@ stream = ExtResource("20_e02jb")
 libraries = {
 "": SubResource("AnimationLibrary_8frhu")
 }
+
+[node name="scene" parent="." instance=ExtResource("23_8ofhm")]
 
 [editable path="scene"]

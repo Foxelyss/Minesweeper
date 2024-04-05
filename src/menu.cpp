@@ -43,15 +43,15 @@ void MainMenu::handle_button_press(int index) {
   switch (index) {
   case 0:
     resolution = Vector2i(8, 8);
-    mines_quantity = 6;
+    mines_quantity = 10;
     break;
   case 1:
-    resolution = Vector2i(30, 16);
-    mines_quantity = 56;
+    resolution = Vector2i(16, 16);
+    mines_quantity = 40;
     break;
   case 2:
-    resolution = Vector2i(80, 50);
-    mines_quantity = 300;
+    resolution = Vector2i(16, 30);
+    mines_quantity = 99;
     break;
   case 3:
     get_node<FieldGrid>("/root/Game/MainGame/FieldGrid")->show_records();

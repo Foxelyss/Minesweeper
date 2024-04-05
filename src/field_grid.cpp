@@ -107,10 +107,10 @@ void FieldGrid::create_records_file() {
 
 int FieldGrid::get_game_category() {
   switch (_game_field->get_mines_quantity()) {
-  case 56:
+  case 40:
     return 1;
     break;
-  case 300:
+  case 99:
     return 2;
   }
 
@@ -208,7 +208,7 @@ void FieldGrid::start_game() {
     }
     button->set_texture_normal(_cells_textures[index]);
   }
-  _grid->set_pivot_offset(_grid->get_size() / 2);
+  //_grid->set_pivot_offset(_grid->get_size() / 2);
   retry_game();
 
   _sfx->play("start");
@@ -388,8 +388,8 @@ void FieldGrid::_input(InputEvent *event) {
       size.x /= 2;
       size.y /= 2;
 
-      grid_position.y = Math::clamp<float>(grid_position.y + mouse_event->get_relative().y, -size.y, size.y);
-      grid_position.x = Math::clamp<float>(grid_position.x + mouse_event->get_relative().x, -size.x, size.x);
+      grid_position.y = Math::clamp<float>(grid_position.y + mouse_event->get_relative().y, size.y, size.y * 2);
+      grid_position.x = Math::clamp<float>(grid_position.x + mouse_event->get_relative().x, size.x, size.x * 2);
       _grid->set_position(grid_position);
     }
 
