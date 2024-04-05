@@ -716,5 +716,6 @@ libraries = {
 }
 
 [node name="scene" parent="." instance=ExtResource("23_8ofhm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.40887, -1.00941)
 
 [editable path="scene"]

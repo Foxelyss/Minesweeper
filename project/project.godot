@@ -14,7 +14,7 @@ config/name="Minesweeper"
 config/name_localized={
 "ru_RU": "Сапёр"
 }
-config/version="4.1.4"
+config/version="4.2.8"
 run/main_scene="res://game.tscn"
 config/features=PackedStringArray("4.2")
 boot_splash/bg_color=Color(0, 0, 0, 1)
@@ -58,6 +58,6 @@ locale/test="ru"
 
 [rendering]
 
-renderer/rendering_method="mobile"
+renderer/rendering_method="gl_compatibility"
 textures/vram_compression/import_etc2_astc=true
 occlusion_culling/use_occlusion_culling=true

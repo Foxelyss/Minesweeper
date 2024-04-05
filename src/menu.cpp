@@ -50,7 +50,7 @@ void MainMenu::handle_button_press(int index) {
     mines_quantity = 40;
     break;
   case 2:
-    resolution = Vector2i(16, 30);
+    resolution = Vector2i(30, 16);
     mines_quantity = 99;
     break;
   case 3:

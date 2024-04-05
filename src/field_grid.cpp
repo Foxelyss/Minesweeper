@@ -385,11 +385,9 @@ void FieldGrid::_input(InputEvent *event) {
       auto mouse_event = (InputEventMouseMotion *)event;
       auto grid_position = _grid->get_position();
       Vector2 size = _grid->get_size();
-      size.x /= 2;
-      size.y /= 2;
 
-      grid_position.y = Math::clamp<float>(grid_position.y + mouse_event->get_relative().y, size.y, size.y * 2);
-      grid_position.x = Math::clamp<float>(grid_position.x + mouse_event->get_relative().x, size.x, size.x * 2);
+      grid_position.y = Math::clamp<float>(grid_position.y + mouse_event->get_relative().y, -size.y, 0);
+      grid_position.x = Math::clamp<float>(grid_position.x + mouse_event->get_relative().x, -size.x, 0);
       _grid->set_position(grid_position);
     }
 
@@ -397,11 +395,9 @@ void FieldGrid::_input(InputEvent *event) {
       InputEventPanGesture *inputEventPanGesture = (InputEventPanGesture *)event;
       auto rotation = _grid->get_position();
       Vector2 sizp = _grid->get_size();
-      sizp.x /= 2;
-      sizp.y /= 2;
 
-      rotation.y = Math::clamp<float>(rotation.y + -inputEventPanGesture->get_delta().y, -sizp.y, sizp.y);
-      rotation.x = Math::clamp<float>(rotation.x + -inputEventPanGesture->get_delta().x, -sizp.x, sizp.x);
+      rotation.y = Math::clamp<float>(rotation.y + -inputEventPanGesture->get_delta().y, -sizp.y, 0);
+      rotation.x = Math::clamp<float>(rotation.x + -inputEventPanGesture->get_delta().x, -sizp.x, 0);
       _grid->set_position(rotation);
     }
   }
