@@ -5,6 +5,8 @@ project/.import
 **/*.o
 **/*.lib
 **/*.dll
+**/*.bin
+**/*.keystore
 project/.godot
 **/*.import
 **/*.so

@@ -20,7 +20,7 @@ config/features=PackedStringArray("4.2")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/image="res://splash.png"
 boot_splash/fullsize=false
-config/icon="res://icon.png"
+config/icon="res://icon.svg"
 
 [autoload]
 
@@ -58,6 +58,6 @@ locale/test="ru"
 
 [rendering]
 
-renderer/rendering_method="gl_compatibility"
+renderer/rendering_method="mobile"
 textures/vram_compression/import_etc2_astc=true
 occlusion_culling/use_occlusion_culling=true
