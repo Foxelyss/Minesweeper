@@ -1,12 +1,10 @@
-[gd_scene load_steps=44 format=3 uid="uid://b81dt7bbbxlb6"]
+[gd_scene load_steps=45 format=3 uid="uid://b81dt7bbbxlb6"]
 
 [ext_resource type="Theme" uid="uid://m313wodg5ka8" path="res://game_theme.tres" id="1_mbmnw"]
-[ext_resource type="Animation" uid="uid://b7wkkjfif6eef" path="res://lose.res" id="1_sbrbx"]
+[ext_resource type="AudioStream" uid="uid://lwe2mhaeu5q6" path="res://sfx/lose.wav" id="2_fv6d6"]
 [ext_resource type="Texture2D" uid="uid://dw25t0pskt00m" path="res://assets/pop_animation/pop_Page 1.png" id="3_oryvk"]
-[ext_resource type="Animation" uid="uid://ck3fpf6tgu0tf" path="res://gameover.res" id="3_y7dqw"]
 [ext_resource type="Texture2D" uid="uid://d3kd7l2gtej16" path="res://assets/pop_animation/pop_Page 2.png" id="4_5twn2"]
 [ext_resource type="AudioStream" uid="uid://8d3s7u5jsbre" path="res://sfx/win.wav" id="4_fs11t"]
-[ext_resource type="Animation" uid="uid://cyuf3dnsn7uck" path="res://pop.res" id="4_rjnxs"]
 [ext_resource type="Texture2D" uid="uid://hva6glrfh8oa" path="res://assets/pop_animation/pop_Page 3.png" id="5_pvnlq"]
 [ext_resource type="Texture2D" uid="uid://d1tjt2w3mhggl" path="res://assets/pop_animation/pop_Page 4.png" id="6_7mm7i"]
 [ext_resource type="Texture2D" uid="uid://brxf01bpnge1b" path="res://assets/pop_animation/pop_Page 5.png" id="7_paa88"]
@@ -156,12 +154,58 @@ tracks/0/keys = {
 }
 tracks/0/use_blend = true
 
+[sub_resource type="Animation" id="Animation_e6kvh"]
+resource_name = "gameover"
+length = 0.279
+tracks/0/type = "audio"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SFXPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": [],
+"times": PackedFloat32Array()
+}
+tracks/0/use_blend = true
+
+[sub_resource type="Animation" id="Animation_5118c"]
+resource_name = "lose"
+length = 0.279
+step = 0.01
+tracks/0/type = "audio"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SFXPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("2_fv6d6")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/0/use_blend = true
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MainGame/MarginContainer:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-2, 2), Vector2(6, -6), Vector2(0, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2tner"]
 _data = {
 "exit": SubResource("Animation_rd5ih"),
-"gameover": ExtResource("3_y7dqw"),
-"lose": ExtResource("1_sbrbx"),
-"pop": ExtResource("4_rjnxs"),
+"gameover": SubResource("Animation_e6kvh"),
+"lose": SubResource("Animation_5118c"),
 "pop_in": SubResource("Animation_fhhpw"),
 "pop_out": SubResource("Animation_q0q6x"),
 "start": SubResource("Animation_1cya3"),
@@ -366,9 +410,29 @@ tracks/1/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_rl2ac"]
+resource_name = "lose"
+length = 0.1
+tracks/0/type = "audio"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SFXPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("18_o2ar3")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/0/use_blend = true
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8frhu"]
 _data = {
 "exit": SubResource("Animation_636ax"),
+"lose": SubResource("Animation_rl2ac"),
 "pop": SubResource("Animation_6v36d"),
 "start": SubResource("Animation_w67h7")
 }
@@ -736,5 +800,11 @@ libraries = {
 
 [node name="scene" parent="." instance=ExtResource("23_8ofhm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.40887, -1.00941)
+
+[node name="Cube_003" parent="scene" index="2"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, -1.57041, 0, 0)
+
+[node name="Cube_004" parent="scene" index="3"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 1.8015, 0, 0)
 
 [editable path="scene"]
