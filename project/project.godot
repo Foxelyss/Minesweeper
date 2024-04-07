@@ -14,13 +14,13 @@ config/name="Minesweeper"
 config/name_localized={
 "ru_RU": "Сапёр"
 }
-config/version="4.2.8"
+config/version="4.2.9"
 run/main_scene="res://game.tscn"
 config/features=PackedStringArray("4.2")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/image="res://splash.png"
 boot_splash/fullsize=false
-config/icon="res://icon.svg"
+config/icon="res://icon.png"
 
 [autoload]
 
@@ -30,9 +30,10 @@ FieldRepresenter="*res://singleton/field_representer.gd"
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
-window/stretch/mode="canvas_items"
-window/stretch/aspect="expand"
-window/stretch/scale=1.75
+window/stretch/mode.big_scale="canvas_items"
+window/stretch/aspect.big_scale="expand"
+window/stretch/scale.big_scale=1.75
+window/stretch/scale_mode.big_scale="fractional"
 
 [input]
 

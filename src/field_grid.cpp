@@ -332,7 +332,8 @@ void FieldGrid::update_grid() {
 
     target->set_texture_normal(_cells_textures[texture_index]);
 
-    if (!current_cell.hidden && !current_cell.flagged) {
+    GameState game_state = _game_field->get_game_state();
+    if (!current_cell.hidden && !current_cell.flagged || game_state != PLAYING) {
       target->set_disabled(true);
     } else {
       target->set_disabled(false);
@@ -342,8 +343,8 @@ void FieldGrid::update_grid() {
 
 void FieldGrid::update_game_status() {
   GameState game_state = _game_field->get_game_state();
+
   if (game_state != PLAYING) {
-    _ui_tweener->play("gameover");
     _timer->set_paused(true);
     _game_field->reveal_all_hidden();
   }
@@ -379,7 +380,7 @@ bool FieldGrid::is_grid_fully_on_screen() {
 
 void FieldGrid::_input(InputEvent *event) {
   auto input = Input::get_singleton();
-  if (event->get_class() == "InputEventMouseMotion" || event->get_class() == "InputEventPanGesture") {
+  if (event->get_class() == "InputEventMouseMotion") {
     if (_grabbing_time > _threshold && !is_grid_fully_on_screen()) {
       input->set_mouse_mode(Input::MOUSE_MODE_CONFINED_HIDDEN);
       auto mouse_event = (InputEventMouseMotion *)event;
@@ -390,16 +391,14 @@ void FieldGrid::_input(InputEvent *event) {
       grid_position.x = Math::clamp<float>(grid_position.x + mouse_event->get_relative().x, -size.x, 0);
       _grid->set_position(grid_position);
     }
+  } else if (event->get_class() == "InputEventPanGesture") {
+    InputEventPanGesture *inputEventPanGesture = (InputEventPanGesture *)event;
+    auto rotation = _grid->get_position();
+    Vector2 sizp = _grid->get_size();
 
-    if (event->get_class() == "InputEventPanGesture") {
-      InputEventPanGesture *inputEventPanGesture = (InputEventPanGesture *)event;
-      auto rotation = _grid->get_position();
-      Vector2 sizp = _grid->get_size();
-
-      rotation.y = Math::clamp<float>(rotation.y + -inputEventPanGesture->get_delta().y, -sizp.y, 0);
-      rotation.x = Math::clamp<float>(rotation.x + -inputEventPanGesture->get_delta().x, -sizp.x, 0);
-      _grid->set_position(rotation);
-    }
+    rotation.y = Math::clamp<float>(rotation.y + -inputEventPanGesture->get_delta().y, -sizp.y, 0);
+    rotation.x = Math::clamp<float>(rotation.x + -inputEventPanGesture->get_delta().x, -sizp.x, 0);
+    _grid->set_position(rotation);
   }
 
   if (event->get_class() == "InputEventMagnifyGesture") {

@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://b81dt7bbbxlb6"]
+[gd_scene load_steps=44 format=3 uid="uid://b81dt7bbbxlb6"]
 
 [ext_resource type="Theme" uid="uid://m313wodg5ka8" path="res://game_theme.tres" id="1_mbmnw"]
 [ext_resource type="AudioStream" uid="uid://lwe2mhaeu5q6" path="res://sfx/lose.wav" id="2_fv6d6"]
@@ -24,6 +24,38 @@
 
 [sub_resource type="Animation" id="Animation_rd5ih"]
 resource_name = "exit"
+
+[sub_resource type="Animation" id="Animation_5118c"]
+resource_name = "lose"
+length = 0.279
+step = 0.01
+tracks/0/type = "audio"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SFXPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("2_fv6d6")
+}],
+"times": PackedFloat32Array(0.08)
+}
+tracks/0/use_blend = true
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MainGame/MarginContainer:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-2, 2), Vector2(6, -6), Vector2(0, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_fhhpw"]
 resource_name = "pop_in"
@@ -154,57 +186,9 @@ tracks/0/keys = {
 }
 tracks/0/use_blend = true
 
-[sub_resource type="Animation" id="Animation_e6kvh"]
-resource_name = "gameover"
-length = 0.279
-tracks/0/type = "audio"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("SFXPlayer")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"clips": [],
-"times": PackedFloat32Array()
-}
-tracks/0/use_blend = true
-
-[sub_resource type="Animation" id="Animation_5118c"]
-resource_name = "lose"
-length = 0.279
-step = 0.01
-tracks/0/type = "audio"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("SFXPlayer")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"clips": [{
-"end_offset": 0.0,
-"start_offset": 0.0,
-"stream": ExtResource("2_fv6d6")
-}],
-"times": PackedFloat32Array(0)
-}
-tracks/0/use_blend = true
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("MainGame/MarginContainer:position")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.15),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(-2, 2), Vector2(6, -6), Vector2(0, 0)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2tner"]
 _data = {
 "exit": SubResource("Animation_rd5ih"),
-"gameover": SubResource("Animation_e6kvh"),
 "lose": SubResource("Animation_5118c"),
 "pop_in": SubResource("Animation_fhhpw"),
 "pop_out": SubResource("Animation_q0q6x"),
@@ -362,6 +346,25 @@ tracks/1/keys = {
 "values": [0.0, -24.405, -34.64]
 }
 
+[sub_resource type="Animation" id="Animation_rl2ac"]
+resource_name = "lose"
+length = 0.1
+tracks/0/type = "audio"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SFXPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("18_o2ar3")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/0/use_blend = true
+
 [sub_resource type="Animation" id="Animation_6v36d"]
 resource_name = "pop"
 length = 0.1
@@ -409,25 +412,6 @@ tracks/1/keys = {
 "method": &"play"
 }]
 }
-
-[sub_resource type="Animation" id="Animation_rl2ac"]
-resource_name = "lose"
-length = 0.1
-tracks/0/type = "audio"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("SFXPlayer")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"clips": [{
-"end_offset": 0.0,
-"start_offset": 0.0,
-"stream": ExtResource("18_o2ar3")
-}],
-"times": PackedFloat32Array(0)
-}
-tracks/0/use_blend = true
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8frhu"]
 _data = {
