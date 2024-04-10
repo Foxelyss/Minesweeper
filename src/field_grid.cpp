@@ -332,12 +332,7 @@ void FieldGrid::update_grid() {
 
     target->set_texture_normal(_cells_textures[texture_index]);
 
-    GameState game_state = _game_field->get_game_state();
-    if (!current_cell.hidden && !current_cell.flagged || game_state != PLAYING) {
-      target->set_disabled(true);
-    } else {
-      target->set_disabled(false);
-    }
+    target->set_disabled(!current_cell.hidden);
   }
 }
 
