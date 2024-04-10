@@ -68,10 +68,8 @@ private:
   Array _cells_textures;
 
   int _first_cell = -1;
-  int _grabbing_time = 0;
 
   const int _time_before_timeout = 4 * 60;
-  const int _threshold = 16;
 
   const StringName RECORDS_FILENAME = "user://records.json";
 
@@ -84,7 +82,7 @@ public:
   void _ready() override;
   void _process(float delta);
   bool is_grid_fully_on_screen();
-  void _input(InputEvent *event);
+  void _input(Ref<InputEvent> event);
   void _on_button_pressed(InputEvent *event, int index);
 
   void start_game();

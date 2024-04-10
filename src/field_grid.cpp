@@ -271,7 +271,7 @@ void FieldGrid::_process(float delta) {
 void FieldGrid::_on_button_pressed(InputEvent *event, int index) {
   TextureButton *target = _grid->get_child(index)->get_node<TextureButton>(".");
 
-  if (_grabbing_time > _threshold - 3 || Input::get_singleton()->get_mouse_mode() == Input::MOUSE_MODE_CONFINED_HIDDEN) {
+  if (Input::get_singleton()->get_mouse_mode() == Input::MOUSE_MODE_CONFINED_HIDDEN) {
     return;
   }
 
@@ -374,30 +374,28 @@ bool FieldGrid::is_grid_fully_on_screen() {
   return grid.x / menu.x < 0.7 && grid.y / menu.y < 0.7;
 }
 
-void FieldGrid::_input(InputEvent *event) {
+void FieldGrid::_input(Ref<InputEvent> event) {
   auto input = Input::get_singleton();
 
-  if (event->get_class() == "InputEventMouseMotion") {
-    auto mouse_event = (InputEventMouseMotion *)event;
+  Ref<InputEventMouseMotion> mouse_event = event;
+  Ref<InputEventPanGesture> inputEventPanGesture = event;
+  Ref<InputEventMagnifyGesture> inputEventMagnifyGesture = event;
 
-    if (mouse_event->get_relative().length() > 2 && input->is_action_pressed("move_mode") && !is_grid_fully_on_screen()) {
-      input->set_mouse_mode(Input::MOUSE_MODE_CONFINED_HIDDEN);
+  if (mouse_event.is_valid() && mouse_event->get_relative().length() > 2 && input->is_action_pressed("move_mode") && !is_grid_fully_on_screen()) {
+    input->set_mouse_mode(Input::MOUSE_MODE_CONFINED_HIDDEN);
 
-      _grabbing_time = 20;
+    move_grid(mouse_event->get_relative().x, mouse_event->get_relative().y);
 
-      move_grid(mouse_event->get_relative().x, mouse_event->get_relative().y);
-    } else {
-      _grabbing_time -= 1;
-    }
-  } else if (event->get_class() == "InputEventPanGesture") {
-    InputEventPanGesture *inputEventPanGesture = (InputEventPanGesture *)event;
+  } else if (inputEventPanGesture.is_valid()) {
+    input->set_mouse_mode(Input::MOUSE_MODE_CONFINED_HIDDEN);
 
     move_grid(-inputEventPanGesture->get_delta().x, -inputEventPanGesture->get_delta().y);
   }
 
-  if (event->get_class() == "InputEventMagnifyGesture") {
-    InputEventMagnifyGesture *inputEventMagnifyGesture = (InputEventMagnifyGesture *)event;
+  if (inputEventMagnifyGesture.is_valid()) {
     Vector2 scale = Vector2(inputEventMagnifyGesture->get_factor() * _grid->get_scale()).clamp(Vector2(0.4, 0.4), Vector2(1.2, 1.2));
+
+    input->set_mouse_mode(Input::MOUSE_MODE_CONFINED_HIDDEN);
 
     _grid->set_scale(scale);
     _grid->set_position(_grid->get_position() * inputEventMagnifyGesture->get_factor());
