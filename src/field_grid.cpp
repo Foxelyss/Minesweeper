@@ -155,9 +155,11 @@ void FieldGrid::save_record(int time) {
   int category = get_game_category();
 
   auto column = ((Array)records[category]);
-  for (int i = 0; i < 3; i++) {
+
+  while (column.has(Variant(0.0))) {
     column.erase(Variant(0.0));
   }
+
   column.append(Variant(time));
   column.sort();
   column.resize(3);
@@ -260,18 +262,16 @@ void FieldGrid::_process(float delta) {
   _time_label->set_text(time_left);
 
   auto input = Input::get_singleton();
-  if (input->is_action_pressed("move_mode")) {
-    // _grabbing_time += 1;
-  } else {
+
+  if (!input->is_action_pressed("move_mode")) {
     input->set_mouse_mode(Input::MOUSE_MODE_VISIBLE);
-    //_grabbing_time = 0;
   }
 }
 
 void FieldGrid::_on_button_pressed(InputEvent *event, int index) {
   TextureButton *target = _grid->get_child(index)->get_node<TextureButton>(".");
 
-  if (_grabbing_time > _threshold - 3) {
+  if (_grabbing_time > _threshold - 3 || Input::get_singleton()->get_mouse_mode() == Input::MOUSE_MODE_CONFINED_HIDDEN) {
     return;
   }
 
