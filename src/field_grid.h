@@ -71,7 +71,7 @@ private:
   int _grabbing_time = 0;
 
   const int _time_before_timeout = 4 * 60;
-  const int _threshold = 8;
+  const int _threshold = 16;
 
   const StringName RECORDS_FILENAME = "user://records.json";
 
@@ -93,6 +93,8 @@ public:
   void create_records_file();
   void retry_game();
   void go_to_menu();
+
+  void move_grid(float x, float y);
 
   int get_game_category();
   String format_time(int time);

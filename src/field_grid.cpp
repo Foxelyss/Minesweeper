@@ -208,7 +208,7 @@ void FieldGrid::start_game() {
     }
     button->set_texture_normal(_cells_textures[index]);
   }
-  //_grid->set_pivot_offset(_grid->get_size() / 2);
+
   retry_game();
 
   _sfx->play("start");
@@ -261,10 +261,10 @@ void FieldGrid::_process(float delta) {
 
   auto input = Input::get_singleton();
   if (input->is_action_pressed("move_mode")) {
-    _grabbing_time += 1;
+    // _grabbing_time += 1;
   } else {
     input->set_mouse_mode(Input::MOUSE_MODE_VISIBLE);
-    _grabbing_time = 0;
+    //_grabbing_time = 0;
   }
 }
 
@@ -275,7 +275,8 @@ void FieldGrid::_on_button_pressed(InputEvent *event, int index) {
     return;
   }
 
-  if (event->get_class() == "InputEventMouseButton" && event->is_pressed() && !target->is_disabled()) {
+  if (event->get_class() == "InputEventMouseButton" && ((InputEventMouseButton *)event)->is_released() && !event->is_echo() &&
+      !target->is_disabled()) {
     InputEventMouseButton *mouse_event = (InputEventMouseButton *)event;
 
     if (mouse_event->get_button_index() == MOUSE_BUTTON_RIGHT || _flagging_radio_button->is_pressed()) {
@@ -375,25 +376,23 @@ bool FieldGrid::is_grid_fully_on_screen() {
 
 void FieldGrid::_input(InputEvent *event) {
   auto input = Input::get_singleton();
-  if (event->get_class() == "InputEventMouseMotion") {
-    if (_grabbing_time > _threshold && !is_grid_fully_on_screen()) {
-      input->set_mouse_mode(Input::MOUSE_MODE_CONFINED_HIDDEN);
-      auto mouse_event = (InputEventMouseMotion *)event;
-      auto grid_position = _grid->get_position();
-      Vector2 size = _grid->get_size();
 
-      grid_position.y = Math::clamp<float>(grid_position.y + mouse_event->get_relative().y, -size.y, 0);
-      grid_position.x = Math::clamp<float>(grid_position.x + mouse_event->get_relative().x, -size.x, 0);
-      _grid->set_position(grid_position);
+  if (event->get_class() == "InputEventMouseMotion") {
+    auto mouse_event = (InputEventMouseMotion *)event;
+
+    if (mouse_event->get_relative().length() > 2 && input->is_action_pressed("move_mode") && !is_grid_fully_on_screen()) {
+      input->set_mouse_mode(Input::MOUSE_MODE_CONFINED_HIDDEN);
+
+      _grabbing_time = 20;
+
+      move_grid(mouse_event->get_relative().x, mouse_event->get_relative().y);
+    } else {
+      _grabbing_time -= 1;
     }
   } else if (event->get_class() == "InputEventPanGesture") {
     InputEventPanGesture *inputEventPanGesture = (InputEventPanGesture *)event;
-    auto rotation = _grid->get_position();
-    Vector2 sizp = _grid->get_size();
 
-    rotation.y = Math::clamp<float>(rotation.y + -inputEventPanGesture->get_delta().y, -sizp.y, 0);
-    rotation.x = Math::clamp<float>(rotation.x + -inputEventPanGesture->get_delta().x, -sizp.x, 0);
-    _grid->set_position(rotation);
+    move_grid(-inputEventPanGesture->get_delta().x, -inputEventPanGesture->get_delta().y);
   }
 
   if (event->get_class() == "InputEventMagnifyGesture") {
@@ -401,7 +400,17 @@ void FieldGrid::_input(InputEvent *event) {
     Vector2 scale = Vector2(inputEventMagnifyGesture->get_factor() * _grid->get_scale()).clamp(Vector2(0.4, 0.4), Vector2(1.2, 1.2));
 
     _grid->set_scale(scale);
+    _grid->set_position(_grid->get_position() * inputEventMagnifyGesture->get_factor());
   }
+}
+
+void FieldGrid::move_grid(float x, float y) {
+  auto grid_position = _grid->get_position();
+  Vector2 size = _grid->get_size();
+
+  grid_position.y = Math::clamp<float>(grid_position.y + y, -size.y, 0);
+  grid_position.x = Math::clamp<float>(grid_position.x + x, -size.x, 0);
+  _grid->set_position(grid_position);
 }
 
 String FieldGrid::get_mines_around_label() { return _mines_around_label_path; };
