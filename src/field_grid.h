@@ -69,6 +69,8 @@ private:
 
   int _first_cell = -1;
 
+  bool _dragging = false;
+
   const int _time_before_timeout = 4 * 60;
 
   const StringName RECORDS_FILENAME = "user://records.json";

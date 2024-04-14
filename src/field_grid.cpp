@@ -130,8 +130,6 @@ void FieldGrid::show_records() {
   TabContainer *records_view = menu->get_node<TabContainer>("ui/Records");
   int category = get_game_category();
 
-  auto column = ((Array)records_table[category]);
-
   for (int j = 0; j < 3; j++) {
     Node *group = records_view->get_child(j);
 
@@ -264,6 +262,7 @@ void FieldGrid::_process(float delta) {
   auto input = Input::get_singleton();
 
   if (!input->is_action_pressed("move_mode")) {
+    _dragging = false;
     input->set_mouse_mode(Input::MOUSE_MODE_VISIBLE);
   }
 }
@@ -271,7 +270,7 @@ void FieldGrid::_process(float delta) {
 void FieldGrid::_on_button_pressed(InputEvent *event, int index) {
   TextureButton *target = _grid->get_child(index)->get_node<TextureButton>(".");
 
-  if (Input::get_singleton()->get_mouse_mode() == Input::MOUSE_MODE_CONFINED_HIDDEN) {
+  if (_dragging) {
     return;
   }
 
@@ -382,12 +381,12 @@ void FieldGrid::_input(Ref<InputEvent> event) {
   Ref<InputEventMagnifyGesture> inputEventMagnifyGesture = event;
 
   if (mouse_event.is_valid() && mouse_event->get_relative().length() > 2 && input->is_action_pressed("move_mode") && !is_grid_fully_on_screen()) {
-    input->set_mouse_mode(Input::MOUSE_MODE_CONFINED_HIDDEN);
+    _dragging = true;
 
     move_grid(mouse_event->get_relative().x, mouse_event->get_relative().y);
 
   } else if (inputEventPanGesture.is_valid()) {
-    input->set_mouse_mode(Input::MOUSE_MODE_CONFINED_HIDDEN);
+    _dragging = true;
 
     move_grid(-inputEventPanGesture->get_delta().x, -inputEventPanGesture->get_delta().y);
   }
@@ -395,10 +394,14 @@ void FieldGrid::_input(Ref<InputEvent> event) {
   if (inputEventMagnifyGesture.is_valid()) {
     Vector2 scale = Vector2(inputEventMagnifyGesture->get_factor() * _grid->get_scale()).clamp(Vector2(0.4, 0.4), Vector2(1.2, 1.2));
 
-    input->set_mouse_mode(Input::MOUSE_MODE_CONFINED_HIDDEN);
+    _dragging = true;
 
     _grid->set_scale(scale);
     _grid->set_position(_grid->get_position() * inputEventMagnifyGesture->get_factor());
+  }
+
+  if (_dragging) {
+    input->set_mouse_mode(Input::MOUSE_MODE_CONFINED_HIDDEN);
   }
 }
 
