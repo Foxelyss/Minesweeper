@@ -20,6 +20,7 @@
 #include "godot_cpp/classes/texture_button.hpp"
 #include "godot_cpp/classes/v_box_container.hpp"
 #include "godot_cpp/core/memory.hpp"
+#include "godot_cpp/variant/array.hpp"
 #include "godot_cpp/variant/string.hpp"
 #include "godot_cpp/variant/string_name.hpp"
 #include "godot_cpp/variant/utility_functions.hpp"
@@ -132,9 +133,10 @@ void FieldGrid::show_records() {
 
   for (int j = 0; j < 3; j++) {
     Node *group = records_view->get_child(j);
+    Array column = ((Array)records_table[j]);
 
     for (int i = 0; i < 3; i++) {
-      ((Label *)group->get_child(i))->set_text(format_time(((Array)records_table[j])[i]));
+      group->get_child(i)->get_node<Label>(".")->set_text(format_time(column[i]));
     }
   }
 
