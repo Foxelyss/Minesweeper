@@ -51,13 +51,13 @@ private:
   Button *_flagging_radio_button;
   Button *_back_to_menu_button;
 
-  StringName _mines_around_label_path;
-  StringName _time_label_path;
-  StringName _game_status_label_path;
+  NodePath _mines_around_label_path;
+  NodePath _time_label_path;
+  NodePath _game_status_label_path;
 
-  StringName _retry_button_path;
-  StringName _flagging_radio_button_path;
-  StringName _back_to_menu_button_path;
+  NodePath _retry_button_path;
+  NodePath _flagging_radio_button_path;
+  NodePath _back_to_menu_button_path;
 
   Timer *_timer;
 
@@ -102,23 +102,23 @@ public:
   void save_record(int time);
   void show_best_record();
 
-  String get_mines_around_label();
-  void set_mines_around_label(String path);
+  NodePath get_mines_around_label();
+  void set_mines_around_label(NodePath path);
 
-  String get_time_label();
-  void set_time_label(String path);
+  NodePath get_time_label();
+  void set_time_label(NodePath path);
 
-  String get_retry_button();
-  void set_retry_button(String path);
+  NodePath get_retry_button();
+  void set_retry_button(NodePath path);
 
-  String get_flagging_radio_button();
-  void set_flagging_radio_button(String path);
+  NodePath get_flagging_radio_button();
+  void set_flagging_radio_button(NodePath path);
 
-  String get_game_status_label();
-  void set_game_status_label(String path);
+  NodePath get_game_status_label();
+  void set_game_status_label(NodePath path);
 
-  String get_back_to_menu_button();
-  void set_back_to_menu_button(String path);
+  NodePath get_back_to_menu_button();
+  void set_back_to_menu_button(NodePath path);
 };
 
 } // namespace godot

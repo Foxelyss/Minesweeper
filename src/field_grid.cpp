@@ -416,20 +416,20 @@ void FieldGrid::move_grid(float x, float y) {
   _grid->set_position(grid_position);
 }
 
-String FieldGrid::get_mines_around_label() { return _mines_around_label_path; };
-void FieldGrid::set_mines_around_label(String path) { _mines_around_label_path = path; };
+NodePath FieldGrid::get_mines_around_label() { return _mines_around_label_path; };
+void FieldGrid::set_mines_around_label(NodePath path) { _mines_around_label_path = path; };
 
-String FieldGrid::get_time_label() { return _time_label_path; };
-void FieldGrid::set_time_label(String path) { _time_label_path = path; };
+NodePath FieldGrid::get_time_label() { return _time_label_path; };
+void FieldGrid::set_time_label(NodePath path) { _time_label_path = path; };
 
-String FieldGrid::get_retry_button() { return _retry_button_path; };
-void FieldGrid::set_retry_button(String path) { _retry_button_path = path; };
+NodePath FieldGrid::get_retry_button() { return _retry_button_path; };
+void FieldGrid::set_retry_button(NodePath path) { _retry_button_path = path; };
 
-String FieldGrid::get_flagging_radio_button() { return _flagging_radio_button_path; };
-void FieldGrid::set_flagging_radio_button(String path) { _flagging_radio_button_path = path; };
+NodePath FieldGrid::get_flagging_radio_button() { return _flagging_radio_button_path; };
+void FieldGrid::set_flagging_radio_button(NodePath path) { _flagging_radio_button_path = path; };
 
-String FieldGrid::get_game_status_label() { return _game_status_label_path; };
-void FieldGrid::set_game_status_label(String path) { _game_status_label_path = path; };
+NodePath FieldGrid::get_game_status_label() { return _game_status_label_path; };
+void FieldGrid::set_game_status_label(NodePath path) { _game_status_label_path = path; };
 
-String FieldGrid::get_back_to_menu_button() { return _back_to_menu_button_path; };
-void FieldGrid::set_back_to_menu_button(String path) { _back_to_menu_button_path = path; };
+NodePath FieldGrid::get_back_to_menu_button() { return _back_to_menu_button_path; };
+void FieldGrid::set_back_to_menu_button(NodePath path) { _back_to_menu_button_path = path; };
