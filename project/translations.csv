@@ -4,7 +4,7 @@ BACKTOMENU,Back to menu,Выход в меню
 RETRY,Retry,Попробовать снова
 GAMETITLE,Minesweeper,Сапёр
 FLAGGINGMODE,Cell flagging mode,Ставка флажка на клетку
-TIMECOUNTER,Time solving: ,Затраченное время: %s
+TIMECOUNTER,Time solving: %s,Затраченное время: %s
 WIN,You win.,Вы выиграли!
 LOSE,You lose.,Вы проиграли!
 HELP,Help,Помощь

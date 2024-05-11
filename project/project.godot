@@ -55,7 +55,7 @@ pointing/android/enable_pan_and_scale_gestures=true
 [internationalization]
 
 locale/translations=PackedStringArray("res://translations.en.translation", "res://translations.ru.translation")
-locale/test="ru"
+locale/test="en"
 
 [rendering]
 
