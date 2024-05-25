@@ -96,7 +96,7 @@ void FieldGrid::_ready() {
 
   ResourceLoader *resource_loader = ResourceLoader::get_singleton();
 
-  for (int i = 1; i <= 24; i++) {
+  for (int i = 1; i <= 12; i++) {
     _cells_textures.push_back(resource_loader->load("res://assets/Cell_Page " + Variant(i).stringify() + ".png"));
   }
 }
@@ -205,9 +205,6 @@ void FieldGrid::start_game() {
     button->connect("gui_input", Callable(this, "on_button_pressed").bind(i));
 
     int index = 11;
-    if ((i + i / _game_field->get_field_resolution().x) % 2 == 0) {
-      index = 23;
-    }
     button->set_texture_normal(_cells_textures[index]);
   }
 
@@ -230,9 +227,6 @@ void FieldGrid::retry_game() {
     target->set_disabled(false);
 
     int index = 11;
-    if ((i + i / _game_field->get_field_resolution().x) % 2 == 0) {
-      index = 23;
-    }
     target->set_texture_normal(_cells_textures[index]);
   }
 }
@@ -317,10 +311,6 @@ void FieldGrid::update_grid() {
     TextureButton *target = _grid->get_child(i)->get_node<TextureButton>(".");
     Cell_t current_cell = _game_field->get_cell(i);
     int texture_index = 0;
-
-    if ((i + i / _game_field->get_field_resolution().x) % 2 == 0) {
-      texture_index = 12;
-    }
 
     if (current_cell.flagged) {
       texture_index += 10;

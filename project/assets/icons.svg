@@ -28,12 +28,12 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
      inkscape:zoom="0.14604794"
-     inkscape:cx="7257.8907"
-     inkscape:cy="1122.9189"
-     inkscape:window-width="1920"
-     inkscape:window-height="1050"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:cx="3266.0508"
+     inkscape:cy="612.81247"
+     inkscape:window-width="1888"
+     inkscape:window-height="1011"
+     inkscape:window-x="26"
+     inkscape:window-y="23"
      inkscape:window-maximized="0"
      inkscape:current-layer="layer1">
     <inkscape:page
@@ -141,105 +141,6 @@
        id="page18"
        margin="0"
        bleed="0" />
-    <inkscape:page
-       x="6262.4722"
-       y="0"
-       width="512"
-       height="512"
-       id="page25"
-       margin="0"
-       bleed="0"
-       inkscape:export-filename="./Page 13.png"
-       inkscape:export-xdpi="8"
-       inkscape:export-ydpi="8" />
-    <inkscape:page
-       x="6784.4722"
-       y="0"
-       width="512"
-       height="512"
-       id="page26"
-       margin="0"
-       bleed="0" />
-    <inkscape:page
-       x="7306.4722"
-       y="0"
-       width="512"
-       height="512"
-       id="page3"
-       margin="0"
-       bleed="0" />
-    <inkscape:page
-       x="7828.4722"
-       y="0"
-       width="512"
-       height="512"
-       id="page4"
-       margin="0"
-       bleed="0" />
-    <inkscape:page
-       x="8350.4727"
-       y="0"
-       width="512"
-       height="512"
-       id="page5"
-       margin="0"
-       bleed="0" />
-    <inkscape:page
-       x="8872.4727"
-       y="0"
-       width="512"
-       height="512"
-       id="page6"
-       margin="0"
-       bleed="0" />
-    <inkscape:page
-       x="9394.4727"
-       y="0"
-       width="512"
-       height="512"
-       id="page7"
-       margin="0"
-       bleed="0" />
-    <inkscape:page
-       x="9916.4727"
-       y="0"
-       width="512"
-       height="512"
-       id="page8"
-       margin="0"
-       bleed="0" />
-    <inkscape:page
-       x="10438.473"
-       y="0"
-       width="512"
-       height="512"
-       id="page15"
-       margin="0"
-       bleed="0" />
-    <inkscape:page
-       x="10960.473"
-       y="0"
-       width="512"
-       height="512"
-       id="page16"
-       margin="0"
-       bleed="0" />
-    <inkscape:page
-       x="11482.473"
-       y="0"
-       width="512"
-       height="512"
-       id="page17"
-       margin="0"
-       bleed="0" />
-    <inkscape:page
-       x="12004.473"
-       y="0"
-       width="512"
-       height="512"
-       id="page19"
-       margin="0"
-       bleed="0" />
   </sodipodi:namedview>
   <defs
      id="defs1" />
@@ -248,12 +149,6 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(-33.891253)">
-    <use
-       x="0"
-       y="0"
-       xlink:href="#rect29"
-       id="use51"
-       transform="translate(4175.9994,-2.4450054)" />
     <use
        x="0"
        y="0"
@@ -281,6 +176,15 @@
          id="path3"
          sodipodi:nodetypes="cccc" />
     </g>
+    <rect
+       style="fill:#feaa00;fill-opacity:1;stroke:none;stroke-width:18;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="rect10"
+       width="512"
+       height="512"
+       x="4730.3633"
+       y="0"
+       rx="81.426994"
+       ry="81.426994" />
     <g
        id="g38">
       <path
@@ -302,7 +206,7 @@
          r="193.04523" />
     </g>
     <rect
-       style="fill:#84a6ed;fill-opacity:1;stroke:none;stroke-width:18;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#81ce00;fill-opacity:1;stroke:none;stroke-width:18;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
        id="rect29"
        width="512"
        height="512"
@@ -313,20 +217,23 @@
     <text
        xml:space="preserve"
        style="font-size:489px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:117.884;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-       x="701.80609"
-       y="430.573"
+       x="705.50427"
+       y="433.01801"
        id="text14"><tspan
          sodipodi:role="line"
          id="tspan14"
-         x="701.80609"
-         y="430.573"
+         x="705.50427"
+         y="433.01801"
          style="stroke-width:117.884">1</tspan></text>
-    <use
-       x="0"
+    <rect
+       style="fill:#a2e10b;fill-opacity:1;stroke:none;stroke-width:18;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="rect1"
+       width="512"
+       height="512"
+       x="1082.2333"
        y="0"
-       xlink:href="#rect29"
-       id="use19"
-       transform="translate(521.99996,-2.4450054)" />
+       rx="81.426994"
+       ry="81.426994" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:489px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:117.884;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
@@ -337,12 +244,15 @@
          id="tspan15"
          x="1223.806"
          y="430.573">2</tspan></text>
-    <use
-       x="0"
+    <rect
+       style="fill:#f79f0d;fill-opacity:1;stroke:none;stroke-width:18;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="rect4"
+       width="512"
+       height="512"
+       x="1600.321"
        y="0"
-       xlink:href="#use19"
-       id="use20"
-       transform="translate(522)" />
+       rx="81.426994"
+       ry="81.426994" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:489px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:117.884;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
@@ -353,18 +263,15 @@
          id="tspan20"
          x="1715.4882"
          y="433.01801">3</tspan></text>
-    <use
-       x="0"
-       y="0"
-       xlink:href="#use21"
-       id="use22"
-       transform="translate(1.9558802)" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#use20"
-       id="use21"
-       transform="translate(522.00005,1.4670054)" />
+    <rect
+       style="fill:#f7670d;fill-opacity:1;stroke:none;stroke-width:18;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="rect5"
+       width="512"
+       height="512"
+       x="2122.3218"
+       y="1.4670054"
+       rx="81.426994"
+       ry="81.426994" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:489px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:117.884;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
@@ -375,12 +282,15 @@
          id="tspan21"
          x="2237.488"
          y="433.01801">4</tspan></text>
-    <use
-       x="0"
+    <rect
+       style="fill:#de0775;fill-opacity:1;stroke:none;stroke-width:18;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="rect9"
+       width="512"
+       height="512"
+       x="3164.3643"
        y="0"
-       xlink:href="#rect29"
-       id="use24"
-       transform="translate(2610,-2.4450054)" />
+       rx="81.426994"
+       ry="81.426994" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:489px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:117.884;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
@@ -391,12 +301,24 @@
          id="tspan27"
          x="3281.488"
          y="433.01801">6</tspan></text>
-    <use
-       x="0"
+    <rect
+       style="fill:#f72d67;fill-opacity:1;stroke:none;stroke-width:18;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="rect7"
+       width="512"
+       height="512"
+       x="3686.3665"
        y="0"
-       xlink:href="#rect29"
-       id="use25"
-       transform="translate(3132,-2.4450054)" />
+       rx="81.426994"
+       ry="81.426994" />
+    <rect
+       style="fill:#da0909;fill-opacity:1;stroke:none;stroke-width:18;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="rect8"
+       width="512"
+       height="512"
+       x="4208.3647"
+       y="-1.4670054"
+       rx="81.426994"
+       ry="81.426994" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:489px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:117.884;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
@@ -407,12 +329,15 @@
          id="tspan28"
          x="3783.4636"
          y="428.12799">7</tspan></text>
-    <use
-       x="0"
+    <rect
+       style="fill:#de3407;fill-opacity:1;stroke:none;stroke-width:18;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="rect6"
+       width="512"
+       height="512"
+       x="2644.3201"
        y="0"
-       xlink:href="#rect29"
-       id="use23"
-       transform="translate(2088,-2.4450054)" />
+       rx="81.426994"
+       ry="81.426994" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:489px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:117.884;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
@@ -423,12 +348,6 @@
          id="tspan26"
          x="2757.043"
          y="428.12799">5</tspan></text>
-    <use
-       x="0"
-       y="0"
-       xlink:href="#rect29"
-       id="use26"
-       transform="translate(3652.0437,-2.4450054)" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:489px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:117.884;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
@@ -440,132 +359,6 @@
          x="4325.7324"
          y="430.573">8</tspan></text>
     <rect
-       style="fill:#91d8ee;fill-opacity:1;stroke:none;stroke-width:18;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-       id="rect30"
-       width="511.99973"
-       height="512"
-       x="6818.3628"
-       y="0"
-       rx="81.426994"
-       ry="81.426994" />
-    <rect
-       style="fill:#91d8ee;fill-opacity:1;stroke:none;stroke-width:18;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-       id="use42"
-       width="511.99973"
-       height="512"
-       x="7340.3633"
-       y="0"
-       rx="81.426994"
-       ry="81.426994" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#use42"
-       id="use43"
-       transform="translate(522.0003)" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#use43"
-       id="use44"
-       transform="translate(522.0002)" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#use44"
-       id="use45"
-       transform="translate(522.00031)" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#use45"
-       id="use46"
-       transform="translate(522)" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#use46"
-       id="use47"
-       transform="translate(522)" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#use47"
-       id="use48"
-       transform="translate(522)" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#use48"
-       id="use49"
-       transform="translate(522)" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#text14"
-       id="use31"
-       transform="translate(6263.9999)" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#text15"
-       id="use32"
-       transform="translate(6233.6823,2.445002)" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#text16"
-       id="use33"
-       transform="translate(6265.9553,-2.4450054)" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#text17"
-       id="use34"
-       transform="translate(6262.7778,-1.4670054)" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#text26"
-       id="use35"
-       transform="translate(6263.9997)" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#text18"
-       id="use36"
-       transform="translate(6261.066,-2.4450054)" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#text19"
-       id="use37"
-       transform="translate(6284.2689,2.4450093)" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#text29"
-       id="use38"
-       transform="translate(6263.7556)" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#g38"
-       id="use39"
-       transform="translate(6285.2479,-1.5381893)" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#rect32"
-       id="use53"
-       transform="translate(-522)" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#g39"
-       id="use40"
-       transform="translate(6270.3147,9.4918539)" />
-    <rect
        style="fill:#4275e5;fill-opacity:1;stroke:none;stroke-width:18;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
        id="rect31"
        width="512"
@@ -575,16 +368,7 @@
        rx="86.889305"
        ry="86.889305" />
     <rect
-       style="fill:#42bae3;fill-opacity:1;stroke:none;stroke-width:18;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-       id="rect32"
-       width="511.99973"
-       height="512"
-       x="12038.364"
-       y="0"
-       rx="76.536995"
-       ry="76.536995" />
-    <rect
-       style="fill:#cf98fb;fill-opacity:1;stroke:none;stroke-width:18;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#4ac8e6;fill-opacity:1;stroke:none;stroke-width:18;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
        id="rect3"
        width="512"
        height="512"
@@ -592,11 +376,5 @@
        y="0"
        rx="81.426994"
        ry="81.426994" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#rect3"
-       id="use3"
-       transform="translate(6262.4708)" />
   </g>
 </svg>

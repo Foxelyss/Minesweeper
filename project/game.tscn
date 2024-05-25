@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://b81dt7bbbxlb6"]
+[gd_scene load_steps=45 format=3 uid="uid://b81dt7bbbxlb6"]
 
 [ext_resource type="Theme" uid="uid://m313wodg5ka8" path="res://game_theme.tres" id="1_mbmnw"]
 [ext_resource type="AudioStream" uid="uid://ctealllnkdbt6" path="res://sfx/lose.wav" id="2_fv6d6"]
@@ -21,6 +21,12 @@
 [ext_resource type="AudioStream" uid="uid://dmayv7wro1v1x" path="res://sfx/pop.wav" id="18_o2ar3"]
 [ext_resource type="AudioStream" uid="uid://dwpirb4bgwpdr" path="res://sfx/music.mp3" id="20_e02jb"]
 [ext_resource type="PackedScene" uid="uid://c7ys7shsyvbh7" path="res://scene.blend" id="23_8ofhm"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_nhay0"]
+dof_blur_far_enabled = true
+dof_blur_far_distance = 19.4
+dof_blur_far_transition = 0.1
+dof_blur_amount = 0.04
 
 [sub_resource type="Animation" id="Animation_rd5ih"]
 resource_name = "exit"
@@ -425,6 +431,7 @@ _data = {
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.799234, 0.60102, 0, -0.60102, 0.799234, 0, 4.0778, 5.17343)
+attributes = SubResource("CameraAttributesPractical_nhay0")
 current = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -654,12 +661,12 @@ text = "
 language = "ru"
 
 [node name="FieldGrid" type="FieldGrid" parent="MainGame"]
-mines_around_label = "../MarginContainer/Control/MinesCounter"
-time_label = "../MarginContainer/Control/TimeSegments/TimeCounter"
-retry_button = "../MarginContainer/Control/RetryButton"
-flagging_radio-button = "../MarginContainer/Control/FlaggingMode"
-game_status_label = "../MarginContainer/Control/GameStatusLabel"
-back_to_menu_button = "../MarginContainer/Control/BackButton"
+mines_around_label = NodePath("../MarginContainer/Control/MinesCounter")
+time_label = NodePath("../MarginContainer/Control/TimeSegments/TimeCounter")
+retry_button = NodePath("../MarginContainer/Control/RetryButton")
+flagging_radio-button = NodePath("../MarginContainer/Control/FlaggingMode")
+game_status_label = NodePath("../MarginContainer/Control/GameStatusLabel")
+back_to_menu_button = NodePath("../MarginContainer/Control/BackButton")
 process_mode = 4
 
 [node name="PopupMenu" type="Popup" parent="MainGame"]
