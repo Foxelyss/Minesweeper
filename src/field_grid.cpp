@@ -87,7 +87,8 @@ void FieldGrid::_ready() {
 
   _ui_tweener = get_node<AnimationPlayer>("/root/Game/AnimationPlayer");
   _pop_animator = get_node<AnimatedSprite2D>("../AnimatedSprite2D");
-  _sfx = get_node<AnimationPlayer>("/root/Game/SFX");
+  _sfx = get_node<AudioStreamPlayer>("/root/Game/SFXPlayer");
+  _music_player = get_node<AudioStreamPlayer>("/root/Game/BackgroundMusicPlayer");
 
   _timer = memnew(Timer);
   add_child(_timer);
@@ -99,6 +100,10 @@ void FieldGrid::_ready() {
   for (int i = 1; i <= 12; i++) {
     _cells_textures.push_back(resource_loader->load("res://assets/Cell_Page " + Variant(i).stringify() + ".png"));
   }
+
+  _win_sound = resource_loader->load("res://sfx/win.wav");
+  _lose_sound = resource_loader->load("res://sfx/lose.wav");
+  _pop_sound = resource_loader->load("res://sfx/pop.wav");
 }
 
 void FieldGrid::create_records_file() {
@@ -210,7 +215,7 @@ void FieldGrid::start_game() {
 
   retry_game();
 
-  _sfx->play("start");
+  _music_player->play();
 }
 
 void FieldGrid::retry_game() {
@@ -292,7 +297,9 @@ void FieldGrid::_on_button_pressed(InputEvent *event, int index) {
         _pop_animator->set_position(target->get_global_position() + target->get_size() / 2);
 
         _pop_animator->play("popit");
-        _sfx->play("pop");
+
+        _sfx->set_stream(_pop_sound);
+        _sfx->play();
         _game_field->reveal(index);
       }
     }
@@ -342,10 +349,17 @@ void FieldGrid::update_game_status() {
     save_record(_time_before_timeout - _timer->get_time_left());
     _ui_tweener->play("win");
 
+    _sfx->set_stream(_win_sound);
+    _sfx->play();
+
     show_best_record();
     break;
   case LOST:
     _ui_tweener->play("lose");
+
+    _sfx->set_stream(_lose_sound);
+    _sfx->play();
+
     _game_status_label->set_text(tr("LOSE"));
     break;
   default:
@@ -355,7 +369,8 @@ void FieldGrid::update_game_status() {
 }
 
 void FieldGrid::go_to_menu() {
-  _sfx->play("exit");
+  _music_player->stop();
+
   _ui_tweener->play_backwards("to_game");
 }
 

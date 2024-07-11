@@ -4,6 +4,8 @@
 #include "field.h"
 #include "godot_cpp/classes/animated_sprite2d.hpp"
 #include "godot_cpp/classes/animation_player.hpp"
+#include "godot_cpp/classes/audio_stream.hpp"
+#include "godot_cpp/classes/audio_stream_player.hpp"
 #include "godot_cpp/classes/resource.hpp"
 #include "godot_cpp/classes/texture2d.hpp"
 #include "godot_cpp/classes/timer.hpp"
@@ -62,8 +64,14 @@ private:
   Timer *_timer;
 
   AnimationPlayer *_ui_tweener;
-  AnimationPlayer *_sfx;
   AnimatedSprite2D *_pop_animator;
+
+  AudioStreamPlayer *_sfx;
+  AudioStreamPlayer *_music_player;
+
+  Ref<AudioStream> _pop_sound;
+  Ref<AudioStream> _win_sound;
+  Ref<AudioStream> _lose_sound;
 
   Array _cells_textures;
 

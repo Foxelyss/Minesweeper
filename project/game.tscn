@@ -1,26 +1,23 @@
-[gd_scene load_steps=45 format=3 uid="uid://b81dt7bbbxlb6"]
+[gd_scene load_steps=37 format=3 uid="uid://b81dt7bbbxlb6"]
 
 [ext_resource type="Theme" uid="uid://m313wodg5ka8" path="res://game_theme.tres" id="1_mbmnw"]
-[ext_resource type="AudioStream" uid="uid://ctealllnkdbt6" path="res://sfx/lose.wav" id="2_fv6d6"]
-[ext_resource type="Texture2D" uid="uid://cpmxgbowp1uwh" path="res://assets/pop_animation/pop_Page 1.png" id="3_oryvk"]
-[ext_resource type="Texture2D" uid="uid://ou4geovc44lr" path="res://assets/pop_animation/pop_Page 2.png" id="4_5twn2"]
-[ext_resource type="AudioStream" uid="uid://bm5lj6ooyhsww" path="res://sfx/win.wav" id="4_fs11t"]
-[ext_resource type="Texture2D" uid="uid://gniyjqxuhmj6" path="res://assets/pop_animation/pop_Page 3.png" id="5_pvnlq"]
-[ext_resource type="Texture2D" uid="uid://cc5ilebf6dnyl" path="res://assets/pop_animation/pop_Page 4.png" id="6_7mm7i"]
-[ext_resource type="Texture2D" uid="uid://dpkupcqcior4l" path="res://assets/pop_animation/pop_Page 5.png" id="7_paa88"]
-[ext_resource type="Texture2D" uid="uid://b72r5qe32rp3p" path="res://assets/pop_animation/pop_Page 6.png" id="8_fxwpk"]
-[ext_resource type="Texture2D" uid="uid://dc5h3c1edxj2i" path="res://assets/pop_animation/pop_Page 7.png" id="9_s1l4v"]
-[ext_resource type="Texture2D" uid="uid://c3rify7or5vyr" path="res://assets/pop_animation/pop_Page 8.png" id="10_v63ak"]
-[ext_resource type="Texture2D" uid="uid://bep3nxl061ims" path="res://assets/pop_animation/pop_Page 9.png" id="11_fd5c6"]
-[ext_resource type="Texture2D" uid="uid://gmn5gleqib8n" path="res://assets/pop_animation/pop_Page 10.png" id="12_bubr1"]
-[ext_resource type="Texture2D" uid="uid://bcyyl25ypw34b" path="res://assets/pop_animation/pop_Page 11.png" id="13_4jyya"]
-[ext_resource type="Texture2D" uid="uid://cycrbavhh654c" path="res://assets/pop_animation/pop_Page 12.png" id="14_43t6i"]
-[ext_resource type="Texture2D" uid="uid://c5dhrbwmivh0k" path="res://assets/tiles/background.png" id="14_aun53"]
+[ext_resource type="Texture2D" uid="uid://lmwkgrkj57a6" path="res://assets/pop_animation/pop_Page 1.png" id="3_oryvk"]
+[ext_resource type="Texture2D" uid="uid://u7trspupuy80" path="res://assets/pop_animation/pop_Page 2.png" id="4_5twn2"]
+[ext_resource type="Texture2D" uid="uid://c3ajmj8trcf24" path="res://assets/pop_animation/pop_Page 3.png" id="5_pvnlq"]
+[ext_resource type="Texture2D" uid="uid://y3miowl0f0g6" path="res://assets/pop_animation/pop_Page 4.png" id="6_7mm7i"]
+[ext_resource type="Texture2D" uid="uid://pbesy1fyesym" path="res://assets/pop_animation/pop_Page 5.png" id="7_paa88"]
+[ext_resource type="Texture2D" uid="uid://0ujt3dnrhxxg" path="res://assets/pop_animation/pop_Page 6.png" id="8_fxwpk"]
+[ext_resource type="Texture2D" uid="uid://cfuo54tmjp8h8" path="res://assets/pop_animation/pop_Page 7.png" id="9_s1l4v"]
+[ext_resource type="Texture2D" uid="uid://ht62n14wrcrn" path="res://assets/pop_animation/pop_Page 8.png" id="10_v63ak"]
+[ext_resource type="Texture2D" uid="uid://cy1lrcmg41jax" path="res://assets/pop_animation/pop_Page 9.png" id="11_fd5c6"]
+[ext_resource type="Texture2D" uid="uid://ban30n36rraoe" path="res://assets/pop_animation/pop_Page 10.png" id="12_bubr1"]
+[ext_resource type="Texture2D" uid="uid://0t6l5ihepj6k" path="res://assets/pop_animation/pop_Page 11.png" id="13_4jyya"]
+[ext_resource type="Texture2D" uid="uid://b81eljjarqa23" path="res://assets/pop_animation/pop_Page 12.png" id="14_43t6i"]
+[ext_resource type="Texture2D" uid="uid://fum5us11325x" path="res://assets/tiles/background.png" id="14_aun53"]
 [ext_resource type="Shader" path="res://assets/tiles/moving_background.gdshader" id="14_qsn47"]
-[ext_resource type="FontFile" uid="uid://d4hk2iledhqfc" path="res://IBM_Plex_Sans/IBMPlexSans-Medium.ttf" id="18_43cos"]
-[ext_resource type="AudioStream" uid="uid://dmayv7wro1v1x" path="res://sfx/pop.wav" id="18_o2ar3"]
-[ext_resource type="AudioStream" uid="uid://dwpirb4bgwpdr" path="res://sfx/music.mp3" id="20_e02jb"]
-[ext_resource type="PackedScene" uid="uid://c7ys7shsyvbh7" path="res://scene.blend" id="23_8ofhm"]
+[ext_resource type="FontFile" uid="uid://55rr3phu2pv1" path="res://IBM_Plex_Sans/IBMPlexSans-Medium.ttf" id="18_43cos"]
+[ext_resource type="AudioStream" uid="uid://bq5jtmvmebg1n" path="res://sfx/music.mp3" id="20_e02jb"]
+[ext_resource type="PackedScene" uid="uid://dfm8o5ii1spjk" path="res://scene.blend" id="23_8ofhm"]
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_nhay0"]
 dof_blur_far_enabled = true
@@ -35,28 +32,13 @@ resource_name = "exit"
 resource_name = "lose"
 length = 0.279
 step = 0.01
-tracks/0/type = "audio"
+tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("SFXPlayer")
-tracks/0/interp = 1
+tracks/0/path = NodePath("MainGame/MarginContainer:position")
+tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"clips": [{
-"end_offset": 0.0,
-"start_offset": 0.0,
-"stream": ExtResource("2_fv6d6")
-}],
-"times": PackedFloat32Array(0.08)
-}
-tracks/0/use_blend = true
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("MainGame/MarginContainer:position")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.05, 0.1, 0.15),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
@@ -72,32 +54,6 @@ resource_name = "pop_out"
 [sub_resource type="Animation" id="Animation_1cya3"]
 resource_name = "start"
 length = 0.25
-tracks/0/type = "method"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("BackgroundMusicPlayer")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [0.0],
-"method": &"play"
-}]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("BackgroundMusicPlayer:volume_db")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [-34.0, 0.0]
-}
 
 [sub_resource type="Animation" id="Animation_ia1ov"]
 resource_name = "to_game"
@@ -176,21 +132,6 @@ tracks/5/keys = PackedFloat32Array(0, 1, -0.316833, 0, 0, 0.948481, 0.2, 1, 1.38
 [sub_resource type="Animation" id="Animation_841ue"]
 resource_name = "win"
 length = 0.279
-tracks/0/type = "audio"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("SFXPlayer")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"clips": [{
-"end_offset": 0.0,
-"start_offset": 0.0,
-"stream": ExtResource("4_fs11t")
-}],
-"times": PackedFloat32Array(0)
-}
-tracks/0/use_blend = true
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2tner"]
 _data = {
@@ -319,112 +260,6 @@ tracks/3/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1.31, 1, 0, 2.265, 0, 2.67, 1,
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_175g2"]
 _data = {
 "flow": SubResource("Animation_22f3t")
-}
-
-[sub_resource type="Animation" id="Animation_636ax"]
-resource_name = "exit"
-length = 0.2
-step = 0.01
-tracks/0/type = "method"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("BackgroundMusicPlayer")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0.2),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"stop"
-}]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("BackgroundMusicPlayer:volume_db")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.19),
-"transitions": PackedFloat32Array(1, 1.10957, 3.86374),
-"update": 0,
-"values": [0.0, -24.405, -34.64]
-}
-
-[sub_resource type="Animation" id="Animation_rl2ac"]
-resource_name = "lose"
-length = 0.1
-tracks/0/type = "audio"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("SFXPlayer")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"clips": [{
-"end_offset": 0.0,
-"start_offset": 0.0,
-"stream": ExtResource("18_o2ar3")
-}],
-"times": PackedFloat32Array(0)
-}
-tracks/0/use_blend = true
-
-[sub_resource type="Animation" id="Animation_6v36d"]
-resource_name = "pop"
-length = 0.1
-tracks/0/type = "audio"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("SFXPlayer")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"clips": [{
-"end_offset": 0.0,
-"start_offset": 0.0,
-"stream": ExtResource("18_o2ar3")
-}],
-"times": PackedFloat32Array(0)
-}
-tracks/0/use_blend = true
-
-[sub_resource type="Animation" id="Animation_w67h7"]
-resource_name = "start"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("BackgroundMusicPlayer:volume_db")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [-34.0, 0.0]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("BackgroundMusicPlayer")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [1.0],
-"method": &"play"
-}]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_8frhu"]
-_data = {
-"exit": SubResource("Animation_636ax"),
-"lose": SubResource("Animation_rl2ac"),
-"pop": SubResource("Animation_6v36d"),
-"start": SubResource("Animation_w67h7")
 }
 
 [node name="Game" type="Node3D"]
@@ -783,11 +618,7 @@ volume_db = -5.0
 
 [node name="BackgroundMusicPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("20_e02jb")
-
-[node name="SFX" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_8frhu")
-}
+volume_db = -8.721
 
 [node name="scene" parent="." instance=ExtResource("23_8ofhm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.40887, -1.00941)
